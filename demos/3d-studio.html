@@ -124,7 +124,7 @@ function selectMaterial(index){
  originalTexture=pbr.baseColorTexture&&pbr.baseColorTexture.texture||null;
  textureReady=false;baseTextureImage=null;
  if(originalTexture&&originalTexture.source&&originalTexture.source.createThumbnail){
-   originalTexture.source.createThumbnail(1024,1024).then(function(url){var img=new Image();img.onload=function(){baseTextureImage=img;textureReady=true;drawTexture();};img.onerror=function(){textureReady=true;drawTexture();};img.src=url;}).catch(function(){textureReady=true;drawTexture();});
+   originalTexture.source.createThumbnail(1024,1024).then(function(url){var img=new Image();img.onload=function(){baseTextureImage=img;textureReady=true;refreshTexture();};img.onerror=function(){textureReady=true;drawTexture();};img.src=url;}).catch(function(){textureReady=true;drawTexture();});
  }else{textureReady=true;drawTexture();}
  applyGarmentColour();
  setStatus('3D fabric material selected: '+(targetMaterial.name||('Material '+index))+'. Print artwork is being applied to its UV texture.');
@@ -138,9 +138,8 @@ function populateMaterials(){
 }
 function applyGarmentColour(){
  if(!targetMaterial)return;
- var rgb=hexRgb(selectedColour),factor=targetMaterial.pbrMetallicRoughness.baseColorFactor||[1,1,1,1];
- targetMaterial.pbrMetallicRoughness.setBaseColorFactor([rgb[0],rgb[1],rgb[2],factor[3]||1]);
- drawTexture();
+ targetMaterial.pbrMetallicRoughness.setBaseColorFactor([1,1,1,1]);
+ refreshTexture();
 }
 function drawTexture(){
  if(!targetMaterial||!textureReady)return;
