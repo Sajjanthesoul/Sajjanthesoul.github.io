@@ -1,17 +1,31 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>3D Product Configurator — Sajjan Ali</title><link rel="stylesheet" href="../assets/demo.css">
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>3D Product Configurator — Sajjan Ali</title>
+<link rel="stylesheet" href="../assets/demo.css">
 <style>
-.stage{position:relative;min-height:370px;overflow:hidden;perspective:900px;background:radial-gradient(ellipse at 50% 45%,#35432b 0%,#20271d 58%,#171c15 100%)}
-#scene{position:absolute;inset:0;display:grid;place-items:center;touch-action:none;cursor:grab;perspective:900px}
-#scene:active{cursor:grabbing}
-.cube-wrap{width:190px;height:190px;position:relative;transform-style:preserve-3d;will-change:transform}
-.cube-face{position:absolute;width:190px;height:190px;box-sizing:border-box;border:1px solid rgba(255,255,255,.32);background:var(--cube-color);box-shadow:inset 0 0 35px rgba(255,255,255,.12)}\n@supports (background:color-mix(in srgb,red,black)){.cube-face{background:linear-gradient(145deg,color-mix(in srgb,var(--cube-color) 92%,white),var(--cube-color) 52%,color-mix(in srgb,var(--cube-color) 65%,black))}}
-.cube-front{transform:translateZ(95px)}.cube-back{transform:rotateY(180deg) translateZ(95px)}.cube-right{transform:rotateY(90deg) translateZ(95px);filter:brightness(.76)}.cube-left{transform:rotateY(-90deg) translateZ(95px);filter:brightness(.88)}.cube-top{transform:rotateX(90deg) translateZ(95px);filter:brightness(1.2)}.cube-bottom{transform:rotateX(-90deg) translateZ(95px);filter:brightness(.58)}
-.orbit-ring{position:absolute;width:315px;height:315px;border:2px solid rgba(201,243,106,.55);border-radius:50%;transform:rotateX(68deg) rotateY(-18deg);box-shadow:0 0 18px rgba(201,243,106,.13);pointer-events:none}
-.cube-shadow{position:absolute;width:210px;height:55px;background:rgba(0,0,0,.38);filter:blur(18px);border-radius:50%;transform:translateY(150px);pointer-events:none}
-.stage-label{z-index:2;pointer-events:none}
+.stage{position:relative;min-height:390px;display:grid;place-items:center;overflow:hidden;background:radial-gradient(ellipse at 50% 48%,#35432b 0%,#20271d 58%,#171c15 100%)}
+#scene{width:100%;min-height:390px;display:grid;place-items:center;touch-action:pan-y}
+#cubeSvg{width:min(82%,340px);height:auto;overflow:visible;filter:drop-shadow(0 24px 22px rgba(0,0,0,.38))}
+#cubeGroup{transform-box:view-box;transform-origin:180px 160px;transition:transform .12s linear}
+.cube-top{fill:var(--cube-color,#c9f36a);filter:brightness(1.22)}.cube-left{fill:var(--cube-color,#c9f36a);filter:brightness(.78)}.cube-right{fill:var(--cube-color,#c9f36a);filter:brightness(.58)}
+.cube-edge{fill:none;stroke:rgba(255,255,255,.45);stroke-width:2;stroke-linejoin:round}
+.orbit{fill:none;stroke:rgba(201,243,106,.5);stroke-width:1.5;stroke-dasharray:5 8}
+.stage-label{position:absolute;left:18px;bottom:16px;z-index:2;color:#d5e4c1;font-size:11px;letter-spacing:2px}
 </style></head>
-<body><header><a href="../index.html">← BACK TO PORTFOLIO</a><span>INTERACTIVE CONCEPT / 01</span></header>
-<main><section><div class="eyebrow">INTERACTIVE 3D · PRODUCT EXPERIENCE</div><h1>Product <em>playground.</em></h1><p>Explore a 3D product concept. Change its finish and drag the object to inspect it from every angle.</p>
-<div class="controls"><label>FINISH<select id="finish"><option value="#c9f36a">Lime</option><option value="#d7d9df">Silver</option><option value="#d88b5b">Copper</option><option value="#6b8fc7">Blue</option></select></label><label>ROTATION<input id="rotation" type="range" min="0" max="6.28" step=".01" value=".7"></label></div><a class="back" href="../index.html#work">Return to selected work ↗</a></section>
-<div class="stage"><div id="scene" aria-label="Interactive 3D product cube"><div class="orbit-ring"></div><div class="cube-shadow"></div><div class="cube-wrap" id="cube" style="--cube-color:#c9f36a"><div class="cube-face cube-front"></div><div class="cube-face cube-back"></div><div class="cube-face cube-right"></div><div class="cube-face cube-left"></div><div class="cube-face cube-top"></div><div class="cube-face cube-bottom"></div></div></div><div class="stage-label">3D VIEW / DRAG TO ROTATE</div></div></main><script src="./configurator.js"></script></body></html>
+<body>
+<header><a href="../index.html">← BACK TO PORTFOLIO</a><span>INTERACTIVE CONCEPT / 01</span></header>
+<main><section><div class="eyebrow">INTERACTIVE 3D · PRODUCT EXPERIENCE</div><h1>Product <em>playground.</em></h1><p>Explore a dimensional product concept. Change its finish and rotate the object with the controls.</p>
+<div class="controls"><label>FINISH<select id="finish"><option value="#c9f36a">Lime</option><option value="#d7d9df">Silver</option><option value="#d88b5b">Copper</option><option value="#6b8fc7">Blue</option></select></label><label>ROTATION<input id="rotation" type="range" min="-180" max="180" step="1" value="-25"></label></div><a class="back" href="../index.html#work">Return to selected work ↗</a></section>
+<div class="stage"><div id="scene" aria-label="Interactive dimensional product preview">
+<svg id="cubeSvg" viewBox="0 0 360 320" role="img" aria-label="Three dimensional cube product preview">
+<ellipse class="orbit" cx="180" cy="165" rx="150" ry="58" transform="rotate(-22 180 165)"/>
+<g id="cubeGroup" style="--cube-color:#c9f36a">
+<polygon class="cube-top" points="180,35 285,95 180,155 75,95"/>
+<polygon class="cube-left" points="75,95 180,155 180,275 75,215"/>
+<polygon class="cube-right" points="180,155 285,95 285,215 180,275"/>
+<path class="cube-edge" d="M180 35L285 95V215L180 275L75 215V95Z M75 95L180 155L285 95 M180 155V275"/>
+<path d="M180 68L238 101L180 134L122 101Z" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="2"/>
+</g></svg></div><div class="stage-label">LIVE PRODUCT PREVIEW / ADJUST ROTATION BELOW</div></div>
+</main><script src="./configurator.js"></script></body></html>
