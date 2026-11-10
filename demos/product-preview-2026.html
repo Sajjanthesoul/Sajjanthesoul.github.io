@@ -4,175 +4,133 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#10140e">
-<title>Interactive Product Studio | Sajjan Ali</title>
+<title>3D Sneaker Studio | Sajjan Ali</title>
 <style>
 :root{--bg:#10140e;--panel:#191f16;--line:#303b29;--muted:#aab39f;--lime:#c9f36a;--white:#f4f6ee}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--white);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-a{color:inherit;text-decoration:none}
-.wrap{width:min(1120px,100%);margin:auto;padding:24px 26px 34px}
-.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:5px 0 22px;border-bottom:1px solid #ffffff12}
-.back{font-size:12px;color:#d7e5c7;letter-spacing:.8px}.back:hover{color:var(--lime)}
-.brand{font-size:11px;letter-spacing:2px;color:var(--lime);font-weight:800}
-.eyebrow{margin:34px 0 9px;color:var(--lime);font-size:10px;font-weight:800;letter-spacing:2.5px}
-h1{font-size:clamp(34px,6vw,58px);line-height:1.02;letter-spacing:-2px;margin:0;max-width:700px}
-h1 span{color:var(--lime)}
-.intro{color:var(--muted);max-width:650px;margin:14px 0 0;font-size:14px}
-.layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.75fr);gap:18px;margin-top:28px;align-items:stretch}
-.viewer-card,.controls-card{border:1px solid var(--line);border-radius:20px;background:var(--panel);overflow:hidden}
-.viewer-head{display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid #ffffff10}
-.live{display:flex;align-items:center;gap:8px;color:#dce8d1;font-size:10px;font-weight:750;letter-spacing:1.5px}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 12px #c9f36a99}
-.model-tag{font-size:10px;color:#84917b;letter-spacing:1px}
-.stage{height:440px;position:relative;display:grid;place-items:center;overflow:hidden;touch-action:none;cursor:grab;user-select:none;background:radial-gradient(ellipse at 50% 46%,#35432a 0%,#222d1d 38%,#171e14 76%)}
-.stage.dragging{cursor:grabbing}
-.stage:before{content:"";position:absolute;width:72%;aspect-ratio:1;border:1px solid #c9f36a16;border-radius:50%;transform:rotate(-20deg) scaleY(.35);box-shadow:0 0 0 28px #c9f36a08,0 0 0 58px #c9f36a05;pointer-events:none}
-.stage svg{width:min(94%,510px);height:auto;overflow:visible;pointer-events:none;filter:drop-shadow(0 22px 20px #0005)}
-.drag-tip{position:absolute;top:16px;left:0;right:0;text-align:center;color:#e0e9d4a6;font-size:10px;letter-spacing:1.2px;pointer-events:none}
-.viewer-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 17px;border-top:1px solid #ffffff10;color:#899582;font-size:10px;letter-spacing:.7px}
-.viewer-foot strong{color:#d6e7c0;font-weight:650}
-.controls-card{padding:22px}
-.card-kicker{font-size:10px;color:var(--lime);font-weight:800;letter-spacing:2px;margin-bottom:7px}
-h2{font-size:20px;letter-spacing:-.4px;margin:0 0 5px}
-.sub{font-size:12px;color:var(--muted);margin:0 0 22px}
-.section{padding:17px 0;border-top:1px solid #ffffff12}
-.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.section-title{font-size:10px;color:#dce6d2;font-weight:800;letter-spacing:1.5px}
-.selected{font-size:11px;color:var(--lime)}
-.swatches{display:flex;gap:12px;flex-wrap:wrap}
-.swatch{width:38px;height:38px;border-radius:50%;border:2px solid #ffffff24;background:var(--swatch);cursor:pointer;position:relative;box-shadow:inset 0 0 0 3px #171e14;transition:transform .18s,border-color .18s}
-.swatch[aria-pressed=true]{border-color:var(--lime);transform:scale(1.08);box-shadow:0 0 0 3px #c9f36a20,inset 0 0 0 3px #171e14}
-.swatch:focus-visible,.tool-btn:focus-visible,.reset:focus-visible,input:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
-.range-row{display:flex;align-items:center;gap:12px}
-input[type=range]{width:100%;accent-color:var(--lime);cursor:pointer}
-.range-value{font-size:11px;color:var(--lime);min-width:40px;text-align:right;font-variant-numeric:tabular-nums}
-.zoom-tools{display:flex;align-items:center;gap:9px}
-.tool-btn{height:34px;min-width:36px;border:1px solid #45513b;border-radius:9px;background:#11170f;color:#e9efdf;font-size:17px;cursor:pointer}
-.tool-btn:active{background:#2a3820}
-.zoom-tools input{flex:1;min-width:0}
-.reset{width:100%;padding:13px 15px;border:1px solid #526342;border-radius:11px;background:#222d1b;color:var(--lime);font-size:11px;font-weight:800;letter-spacing:1.3px;cursor:pointer;transition:background .18s,border-color .18s}
-.reset:hover{background:#2d3b22;border-color:var(--lime)}
-.helper{font-size:11px;color:#899582;line-height:1.6;margin:15px 0 0}
-.footer{display:flex;justify-content:space-between;gap:12px;margin-top:22px;color:#788370;font-size:10px;letter-spacing:.6px}
-.footer a{color:#c9f36a}
-@media(max-width:760px){
- .wrap{padding:17px 14px 26px}.top{padding-bottom:15px}.brand{font-size:9px;letter-spacing:1.3px}
- .eyebrow{margin-top:27px;font-size:9px}h1{font-size:clamp(34px,10vw,48px);letter-spacing:-1.5px}
- .intro{font-size:13px;margin-top:10px}.layout{grid-template-columns:1fr;gap:12px;margin-top:20px}
- .viewer-card,.controls-card{border-radius:16px}.viewer-head{padding:12px 14px}
- .stage{height:clamp(285px,88vw,390px)}.stage svg{width:100%;max-width:440px}
- .viewer-foot{padding:10px 13px;font-size:9px}.controls-card{padding:19px}
- .controls-card h2{font-size:19px}.sub{margin-bottom:14px}
- .section{padding:14px 0}.swatches{gap:14px}.swatch{width:42px;height:42px}
- .reset{min-height:46px}.footer{font-size:9px;line-height:1.5}
-}
-@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--white);font:15px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{width:min(1160px,100%);margin:auto;padding:22px 24px 32px}.top{display:flex;justify-content:space-between;align-items:center;padding:5px 0 18px;border-bottom:1px solid #ffffff12}
+.back{font-size:11px;color:#d7e5c7;letter-spacing:.8px;text-decoration:none}.brand{font-size:10px;letter-spacing:2px;color:var(--lime);font-weight:800}
+.eyebrow{margin:30px 0 8px;color:var(--lime);font-size:10px;font-weight:800;letter-spacing:2.5px}h1{font-size:clamp(34px,6vw,56px);line-height:1.02;letter-spacing:-2px;margin:0}h1 span{color:var(--lime)}
+.intro{color:var(--muted);max-width:690px;margin:12px 0 0;font-size:14px}
+.layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(290px,.7fr);gap:16px;margin-top:26px}
+.viewer,.controls{border:1px solid var(--line);border-radius:19px;background:var(--panel);overflow:hidden}
+.viewer-head{height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 17px;border-bottom:1px solid #ffffff10}
+.live{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:1.5px;font-weight:800}.dot{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 12px #c9f36a99}
+.model-tag{font-size:10px;color:#899582;letter-spacing:1px}
+#viewport{height:490px;position:relative;background:radial-gradient(ellipse at 50% 48%,#35432a 0%,#202a1b 43%,#151b12 82%);touch-action:none;overflow:hidden}
+#viewport canvas{display:block;width:100%;height:100%;outline:none}
+.hint{position:absolute;bottom:14px;left:0;right:0;text-align:center;color:#e0e9d4a6;font-size:10px;letter-spacing:1px;pointer-events:none}
+.loading{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:25px;color:#dce8d1;font-size:13px;background:#151b12;z-index:2}
+.loading small{display:block;color:#9ba791;margin-top:8px}.viewer-foot{display:flex;justify-content:space-between;gap:10px;padding:12px 16px;border-top:1px solid #ffffff10;color:#899582;font-size:10px;letter-spacing:.6px}.viewer-foot strong{color:#d6e7c0}
+.controls{padding:21px}.kicker{font-size:10px;color:var(--lime);font-weight:800;letter-spacing:2px;margin-bottom:7px}h2{font-size:20px;margin:0 0 4px}.sub{font-size:12px;color:var(--muted);margin:0 0 18px}
+.section{padding:16px 0;border-top:1px solid #ffffff12}.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.section-title{font-size:10px;color:#dce6d2;font-weight:800;letter-spacing:1.4px}.selected,.range-value{font-size:11px;color:var(--lime)}
+.swatches{display:flex;gap:12px;flex-wrap:wrap}.swatch{width:37px;height:37px;border-radius:50%;border:2px solid #ffffff30;background:var(--swatch);cursor:pointer;box-shadow:inset 0 0 0 3px #171e14}.swatch[aria-pressed=true]{outline:2px solid var(--lime);outline-offset:3px}
+.range-row{display:flex;align-items:center;gap:10px}input[type=range]{width:100%;accent-color:var(--lime);cursor:pointer}
+.tool-row{display:flex;align-items:center;gap:9px}.tool{height:34px;min-width:36px;border:1px solid #45513b;border-radius:9px;background:#11170f;color:#e9efdf;font-size:17px;cursor:pointer}
+.reset{width:100%;padding:13px;border:1px solid #526342;border-radius:10px;background:#222d1b;color:var(--lime);font-size:11px;font-weight:800;letter-spacing:1.2px;cursor:pointer}
+.helper{font-size:11px;color:#899582;line-height:1.6;margin:14px 0 0}.footer{display:flex;justify-content:space-between;gap:12px;margin-top:20px;color:#788370;font-size:10px;letter-spacing:.6px}.footer a{color:var(--lime);text-decoration:none}
+@media(max-width:760px){.wrap{padding:16px 13px 24px}.brand{font-size:9px;letter-spacing:1px}.eyebrow{margin-top:25px}h1{font-size:clamp(34px,10vw,47px)}.layout{grid-template-columns:1fr;gap:12px;margin-top:19px}#viewport{height:clamp(300px,88vw,410px)}.viewer,.controls{border-radius:15px}.controls{padding:18px}.swatch{width:41px;height:41px}.reset{min-height:46px}.footer{font-size:9px}}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header class="top"><a class="back" href="../index.html">← &nbsp; BACK TO PORTFOLIO</a><div class="brand">SAJJAN ALI &nbsp;·&nbsp; DIGITAL CRAFT</div></header>
 <main>
-<div class="eyebrow">INTERACTIVE 3D CONCEPT &nbsp; / &nbsp; 001</div>
-<h1>Product <span>Studio.</span></h1>
-<p class="intro">A hands-on footwear configurator concept. Customize the upper finish, explore the silhouette and inspect your design right from your phone.</p>
+<div class="eyebrow">REAL-TIME 3D CONFIGURATOR &nbsp; / &nbsp; 002</div>
+<h1>Sneaker <span>Studio.</span></h1>
+<p class="intro">A real-time 3D footwear concept. Rotate the sneaker freely, zoom in and customize its upper finish — powered by WebGL.</p>
 <div class="layout">
-<section class="viewer-card" aria-label="Interactive product viewer">
-<div class="viewer-head"><div class="live"><span class="dot"></span> LIVE PREVIEW</div><div class="model-tag">MODEL 002 &nbsp;·&nbsp; SNEAKER</div></div>
-<div class="stage" id="stage" aria-label="Drag or swipe to rotate the product model">
-<div class="drag-tip">↔ &nbsp; DRAG OR SWIPE TO ROTATE</div>
-<svg id="shoeModel" viewBox="0 0 620 420" role="img" aria-label="Interactive low-top sneaker product model">
-<defs>
-<radialGradient id="floorGlow"><stop offset="0" stop-color="#c9f36a" stop-opacity=".22"/><stop offset="1" stop-color="#c9f36a" stop-opacity="0"/></radialGradient>
-<filter id="softShadow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="13"/></filter>
-<linearGradient id="soleGrad" x2="0" y2="1"><stop stop-color="#f8f5e9"/><stop offset="1" stop-color="#aeb4a5"/></linearGradient>
-<linearGradient id="upperGrad" x2="0" y2="1"><stop stop-color="#ffffff" stop-opacity=".28"/><stop offset="1" stop-color="#000000" stop-opacity=".25"/></linearGradient>
-</defs>
-<ellipse cx="310" cy="337" rx="225" ry="27" fill="#000" opacity=".42" filter="url(#softShadow)"/>
-<ellipse cx="310" cy="335" rx="240" ry="45" fill="url(#floorGlow)"/>
-<g id="shoe" transform="translate(0 0)">
-<!-- outsole -->
-<path d="M75 282 Q95 268 130 273 L190 278 Q225 264 265 258 L360 254 Q405 249 440 268 L510 285 Q550 294 562 316 Q566 329 548 337 Q508 350 423 349 L167 349 Q105 348 78 332 Q61 319 75 282Z" fill="url(#soleGrad)" stroke="#eef0e4" stroke-width="3"/>
-<path d="M76 316 Q190 335 294 331 Q438 331 559 310 L556 327 Q531 348 423 349 L167 349 Q102 347 78 332Z" fill="#8d9685" opacity=".55"/>
-<path d="M102 328 Q250 345 530 326" fill="none" stroke="#6d7867" stroke-width="3" stroke-dasharray="5 7" opacity=".7"/>
-<!-- main upper -->
-<path id="upper" d="M91 278 Q110 247 158 235 L226 219 Q254 193 291 182 Q325 172 357 192 L401 221 Q439 241 480 254 L530 276 Q548 284 550 302 Q535 315 499 315 L161 315 Q111 314 88 300 Q78 291 91 278Z" fill="#c9f36a" stroke="#e6f5c7" stroke-width="3"/>
-<path d="M91 278 Q110 247 158 235 L226 219 Q254 193 291 182 Q325 172 357 192 L401 221 Q439 241 480 254 L530 276 Q548 284 550 302 Q535 315 499 315 L161 315 Q111 314 88 300Z" fill="url(#upperGrad)"/>
-<!-- toe cap -->
-<path d="M91 278 Q115 254 161 250 Q177 274 169 314 L111 312 Q80 300 91 278Z" fill="#ffffff" opacity=".17" stroke="#ffffff" stroke-opacity=".4" stroke-width="2"/>
-<!-- heel panel -->
-<path d="M357 193 Q389 208 411 235 L397 313 L347 313 L333 210Z" fill="#111a12" opacity=".3" stroke="#ffffff" stroke-opacity=".5" stroke-width="2"/>
-<!-- side stripe -->
-<path d="M205 242 Q259 224 291 211 Q316 202 341 214 L389 251 Q338 245 300 260 L223 285 Q201 278 205 242Z" fill="#f2f3e8" fill-opacity=".88" stroke="#ffffff" stroke-width="2"/>
-<!-- overlays -->
-<path d="M158 235 Q178 245 205 242 L223 285 Q192 300 169 314" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="3"/>
-<path d="M226 219 Q244 233 259 253 M291 182 Q306 207 300 260 M357 193 Q348 222 341 270" fill="none" stroke="#fff" stroke-opacity=".52" stroke-width="3"/>
-<!-- laces -->
-<path d="M250 218 L323 239 M242 231 L315 251 M235 245 L307 264 M229 258 L299 276" fill="none" stroke="#f8f8ed" stroke-width="7" stroke-linecap="round"/>
-<path d="M250 218 L323 239 M242 231 L315 251 M235 245 L307 264 M229 258 L299 276" fill="none" stroke="#7d8970" stroke-width="1.5" stroke-linecap="round"/>
-<!-- eyelets -->
-<g fill="#e9eddf" stroke="#65715c" stroke-width="1.5"><circle cx="250" cy="218" r="4"/><circle cx="242" cy="231" r="4"/><circle cx="235" cy="245" r="4"/><circle cx="229" cy="258" r="4"/><circle cx="323" cy="239" r="4"/><circle cx="315" cy="251" r="4"/><circle cx="307" cy="264" r="4"/><circle cx="299" cy="276" r="4"/></g>
-<!-- collar and tongue -->
-<path d="M264 202 Q279 165 314 157 Q340 158 353 194 L328 218 L288 220Z" fill="#e9eddf" stroke="#fff" stroke-width="3"/>
-<path d="M286 201 Q295 170 316 165 Q334 169 340 198 L319 215Z" fill="#c9f36a" stroke="#fff" stroke-opacity=".5" stroke-width="2"/>
-<path d="M291 185 Q312 177 332 190" stroke="#64745a" stroke-width="2" fill="none"/>
-<!-- heel pull tab -->
-<path d="M367 195 Q376 174 389 176 L404 217 L390 222Z" fill="#e8ecdf" stroke="#fff" stroke-width="2"/>
-<!-- seams -->
-<path d="M113 289 Q146 299 175 295 M404 238 Q451 257 506 281" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2" stroke-dasharray="4 5"/>
-<text x="285" y="304" font-size="13" font-family="Arial,sans-serif" font-weight="800" letter-spacing="3" fill="#1d2818" opacity=".8">SA / STUDIO</text>
-</g>
-</svg>
-</div>
-<div class="viewer-foot"><span><strong>INTERACTIVE MODEL</strong> &nbsp;·&nbsp; SVG RENDER</span><span id="angleLabel">ANGLE 036°</span></div>
+<section class="viewer" aria-label="Real-time 3D sneaker viewer">
+<div class="viewer-head"><div class="live"><span class="dot"></span> REAL-TIME 3D</div><div class="model-tag">LOW-TOP / SA-01</div></div>
+<div id="viewport"><div class="loading" id="loading">Building your 3D sneaker…<small>Loading the real-time 3D engine</small></div><div class="hint">DRAG TO ROTATE &nbsp;·&nbsp; PINCH OR SCROLL TO ZOOM</div></div>
+<div class="viewer-foot"><span><strong>WEBGL MODEL</strong> &nbsp;·&nbsp; THREE.JS</span><span id="angle">360° VIEW</span></div>
 </section>
-<aside class="controls-card">
-<div class="card-kicker">PERSONALIZE</div><h2>Make it yours.</h2><p class="sub">Adjust the look and explore the model.</p>
-<div class="section">
-<div class="section-head"><span class="section-title">SURFACE FINISH</span><span class="selected" id="finishName">Signature lime</span></div>
-<div class="swatches" role="group" aria-label="Choose surface finish">
-<button class="swatch" type="button" style="--swatch:#c9f36a" data-color="#c9f36a" data-name="Signature lime" aria-label="Signature lime" aria-pressed="true"></button>
-<button class="swatch" type="button" style="--swatch:#d7d9df" data-color="#d7d9df" data-name="Brushed silver" aria-label="Brushed silver" aria-pressed="false"></button>
-<button class="swatch" type="button" style="--swatch:#d88b5b" data-color="#d88b5b" data-name="Warm copper" aria-label="Warm copper" aria-pressed="false"></button>
-<button class="swatch" type="button" style="--swatch:#6b8fc7" data-color="#6b8fc7" data-name="Ocean blue" aria-label="Ocean blue" aria-pressed="false"></button>
-<button class="swatch" type="button" style="--swatch:#e9e4d7" data-color="#e9e4d7" data-name="Soft ivory" aria-label="Soft ivory" aria-pressed="false"></button>
-</div>
-</div>
-<div class="section">
-<div class="section-head"><label class="section-title" for="zoom">ZOOM LEVEL</label><span class="range-value" id="zoomValue">100%</span></div>
-<div class="zoom-tools"><button class="tool-btn" id="zoomOut" type="button" aria-label="Zoom out">−</button><input id="zoom" type="range" min="65" max="150" value="100" aria-label="Zoom level"><button class="tool-btn" id="zoomIn" type="button" aria-label="Zoom in">+</button></div>
-</div>
-<div class="section">
-<div class="section-head"><label class="section-title" for="rotation">ROTATION</label><span class="range-value" id="rotationValue">36°</span></div>
-<input id="rotation" type="range" min="-180" max="180" value="36" aria-label="Rotation angle">
-</div>
-<button class="reset" id="reset" type="button">↺ &nbsp; RESET VIEW</button>
-<p class="helper">Tip: Swipe across the model to rotate. Use the sliders for precise control. This lightweight demo runs without WebGL or external 3D libraries.</p>
+<aside class="controls">
+<div class="kicker">CUSTOMIZE</div><h2>Your colourway.</h2><p class="sub">Change the upper material and inspect every angle.</p>
+<div class="section"><div class="section-head"><span class="section-title">UPPER COLOUR</span><span class="selected" id="colourName">Volt green</span></div>
+<div class="swatches" role="group" aria-label="Choose sneaker colour">
+<button class="swatch" style="--swatch:#b9e65a" data-colour="#b9e65a" data-name="Volt green" aria-label="Volt green" aria-pressed="true"></button>
+<button class="swatch" style="--swatch:#e5e3d8" data-colour="#e5e3d8" data-name="Cloud white" aria-label="Cloud white" aria-pressed="false"></button>
+<button class="swatch" style="--swatch:#22252b" data-colour="#22252b" data-name="Carbon black" aria-label="Carbon black" aria-pressed="false"></button>
+<button class="swatch" style="--swatch:#bd7655" data-colour="#bd7655" data-name="Terra orange" aria-label="Terra orange" aria-pressed="false"></button>
+<button class="swatch" style="--swatch:#6689c1" data-colour="#6689c1" data-name="Ocean blue" aria-label="Ocean blue" aria-pressed="false"></button>
+</div></div>
+<div class="section"><div class="section-head"><label class="section-title" for="zoom">CAMERA ZOOM</label><span class="range-value" id="zoomValue">100%</span></div><div class="tool-row"><button class="tool" id="zoomOut" aria-label="Zoom out">−</button><input id="zoom" type="range" min="65" max="145" value="100"><button class="tool" id="zoomIn" aria-label="Zoom in">+</button></div></div>
+<div class="section"><div class="section-head"><label class="section-title" for="rotate">ROTATION</label><span class="range-value" id="rotateValue">0°</span></div><input id="rotate" type="range" min="-180" max="180" value="0"></div>
+<button class="reset" id="reset">↺ &nbsp; RESET CAMERA</button>
+<p class="helper">This is a procedural 3D concept model, not a scanned retail shoe. It uses real 3D geometry, lighting and camera perspective. On mobile, drag with one finger to rotate.</p>
 </aside>
 </div>
 </main>
 <footer class="footer"><span>DESIGNED & BUILT BY SAJJAN ALI</span><a href="../index.html#work">EXPLORE MORE WORK ↗</a></footer>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r160/three.min.js"></script>
 <script>
 (function(){
-const stage=document.getElementById('stage'),shoe=document.getElementById('shoe'),model=document.getElementById('shoeModel');
-const zoom=document.getElementById('zoom'),zoomValue=document.getElementById('zoomValue'),rotation=document.getElementById('rotation'),rotationValue=document.getElementById('rotationValue'),angleLabel=document.getElementById('angleLabel'),finishName=document.getElementById('finishName'),upper=document.getElementById('upper');
-let angle=0,scale=1,dragging=false,lastX=0,baseColor='#c9f36a';
-const swatches=document.querySelectorAll('.swatch');
-function render(){shoe.style.transform='translate(0px,0px)';model.style.transform='scale('+scale+') rotateY('+angle+'deg)';model.style.transformOrigin='50% 50%';rotation.value=Math.round(angle);rotationValue.textContent=Math.round(angle)+'°';angleLabel.textContent='ANGLE '+String(Math.abs(Math.round(angle))%360).padStart(3,'0')+'°';}
-function setZoom(v){scale=Number(v)/100;zoom.value=v;zoomValue.textContent=v+'%';render();}
-function setAngle(v){angle=Number(v);render();}
-swatches.forEach(btn=>btn.addEventListener('click',()=>{baseColor=btn.dataset.color;upper.setAttribute('fill',baseColor);finishName.textContent=btn.dataset.name;swatches.forEach(b=>b.setAttribute('aria-pressed',b===btn?'true':'false'));}));
-stage.addEventListener('pointerdown',e=>{dragging=true;lastX=e.clientX;stage.classList.add('dragging');stage.setPointerCapture(e.pointerId);});
-stage.addEventListener('pointermove',e=>{if(!dragging)return;angle=Math.max(-180,Math.min(180,angle+(e.clientX-lastX)*.55));lastX=e.clientX;render();});
-function stop(){dragging=false;stage.classList.remove('dragging');}
-stage.addEventListener('pointerup',stop);stage.addEventListener('pointercancel',stop);stage.addEventListener('lostpointercapture',stop);
-stage.addEventListener('wheel',e=>{e.preventDefault();setZoom(Math.max(65,Math.min(150,Number(zoom.value)+(e.deltaY<0?5:-5))));},{passive:false});
-zoom.addEventListener('input',()=>setZoom(zoom.value));rotation.addEventListener('input',()=>setAngle(rotation.value));
-document.getElementById('zoomIn').addEventListener('click',()=>setZoom(Math.min(150,Number(zoom.value)+10)));
-document.getElementById('zoomOut').addEventListener('click',()=>setZoom(Math.max(65,Number(zoom.value)-10)));
-document.getElementById('reset').addEventListener('click',()=>{angle=0;setZoom(100);render();});
-render();
+const viewport=document.getElementById('viewport'),loading=document.getElementById('loading');
+if(!window.THREE){loading.innerHTML='3D engine could not load.<small>Check your internet connection and reload the page.</small>';return;}
+let renderer,scene,camera,shoe,upperMat,sideMat,soleMat,drag=false,lastX=0,lastY=0,zoom=1,rotY=-.55,rotX=-.12;
+try{
+scene=new THREE.Scene();scene.background=new THREE.Color(0x202a1b);
+camera=new THREE.PerspectiveCamera(34,viewport.clientWidth/viewport.clientHeight,.1,100);camera.position.set(0,2.1,9.8);
+renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));renderer.setSize(viewport.clientWidth,viewport.clientHeight);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.12;viewport.insertBefore(renderer.domElement,viewport.firstChild);
+const hemi=new THREE.HemisphereLight(0xeaf4d8,0x293222,2.1);scene.add(hemi);
+const key=new THREE.DirectionalLight(0xfff4dc,3.1);key.position.set(-3,7,5);key.castShadow=true;key.shadow.mapSize.set(1024,1024);scene.add(key);
+const rim=new THREE.DirectionalLight(0xb7d7ff,2.2);rim.position.set(4,3,-5);scene.add(rim);
+const fill=new THREE.PointLight(0xc9f36a,24,12);fill.position.set(1,1,4);scene.add(fill);
+const floor=new THREE.Mesh(new THREE.CircleGeometry(7,64),new THREE.MeshStandardMaterial({color:0x273222,roughness:.88,metalness:.05}));floor.rotation.x=-Math.PI/2;floor.position.y=-.84;floor.receiveShadow=true;scene.add(floor);
+const shadow=new THREE.Mesh(new THREE.CircleGeometry(2.6,48),new THREE.MeshBasicMaterial({color:0x000000,transparent:true,opacity:.25}));shadow.rotation.x=-Math.PI/2;shadow.scale.set(1.55,.55,1);shadow.position.y=-.825;scene.add(shadow);
+shoe=new THREE.Group();scene.add(shoe);
+const upperColor=0xb9e65a;
+upperMat=new THREE.MeshStandardMaterial({color:upperColor,roughness:.72,metalness:.02});
+sideMat=new THREE.MeshStandardMaterial({color:0x9fc94d,roughness:.78});
+soleMat=new THREE.MeshStandardMaterial({color:0xe6e4d9,roughness:.82});
+const darkMat=new THREE.MeshStandardMaterial({color:0x343a30,roughness:.82});
+const trimMat=new THREE.MeshStandardMaterial({color:0xf4f0df,roughness:.6});
+const laceMat=new THREE.MeshStandardMaterial({color:0xf2f0e6,roughness:.7});
+function extruded(shape,depth,mat,z,bevel=.07){const g=new THREE.ExtrudeGeometry(shape,{depth:depth,bevelEnabled:true,bevelSegments:3,steps:1,bevelSize:bevel,bevelThickness:bevel,curveSegments:12});const m=new THREE.Mesh(g,mat);m.position.z=z-depth/2;m.castShadow=true;m.receiveShadow=true;shoe.add(m);return m;}
+function shoeShape(){const s=new THREE.Shape();s.moveTo(-2.55,-.34);s.quadraticCurveTo(-2.62,-.16,-2.42,.02);s.lineTo(-1.92,.22);s.quadraticCurveTo(-1.55,.3,-1.3,.62);s.quadraticCurveTo(-1.02,.91,-.63,.87);s.quadraticCurveTo(-.32,.83,-.12,.55);s.quadraticCurveTo(.24,.28,.73,.19);s.lineTo(1.65,.08);s.quadraticCurveTo(2.2,.02,2.5,-.25);s.quadraticCurveTo(2.68,-.47,2.43,-.57);s.lineTo(-2.18,-.57);s.quadraticCurveTo(-2.52,-.55,-2.55,-.34);return s;}
+function soleShape(){const s=new THREE.Shape();s.moveTo(-2.62,-.57);s.quadraticCurveTo(-2.68,-.43,-2.5,-.37);s.lineTo(2.37,-.37);s.quadraticCurveTo(2.68,-.39,2.67,-.57);s.quadraticCurveTo(2.61,-.77,2.34,-.78);s.lineTo(-2.28,-.78);s.quadraticCurveTo(-2.58,-.77,-2.62,-.57);return s;}
+extruded(soleShape(),1.45,soleMat,0,.09);
+const soleBand=new THREE.Mesh(new THREE.BoxGeometry(4.75,.035,1.42),new THREE.MeshStandardMaterial({color:0xb9b9ac,roughness:.9}));soleBand.position.set(-.03,-.64,0);soleBand.castShadow=true;shoe.add(soleBand);
+extruded(shoeShape(),1.25,upperMat,0,.12);
+// Side reinforcement panel on both sides
+function panelShape(){const s=new THREE.Shape();s.moveTo(-2.12,-.28);s.quadraticCurveTo(-1.98,.02,-1.58,.12);s.lineTo(-.95,.45);s.quadraticCurveTo(-.68,.58,-.42,.42);s.lineTo(.2,.12);s.quadraticCurveTo(.7,-.02,1.18,-.1);s.lineTo(1.65,-.28);s.lineTo(-2.12,-.28);return s;}
+const panelGeom=new THREE.ShapeGeometry(panelShape(),18);
+[-.64,.64].forEach(z=>{const p=new THREE.Mesh(panelGeom,new THREE.MeshStandardMaterial({color:0xffffff,transparent:true,opacity:.12,side:THREE.DoubleSide,roughness:.75}));p.position.z=z;p.castShadow=true;shoe.add(p);});
+// Toe bumper and heel counter
+const toe=new THREE.Mesh(new THREE.SphereGeometry(1,32,18),new THREE.MeshStandardMaterial({color:0xffffff,roughness:.72,transparent:true,opacity:.16}));toe.scale.set(.72,.31,.64);toe.position.set(1.85,-.17,0);shoe.add(toe);
+const heel=new THREE.Mesh(new THREE.SphereGeometry(1,28,16),sideMat);heel.scale.set(.42,.49,.67);heel.position.set(-1.88,.02,0);shoe.add(heel);
+// Tongue and padded collar
+const tongue=new THREE.Mesh(new THREE.CapsuleGeometry(.24,.75,8,16),trimMat);tongue.position.set(-.55,.72,0);tongue.rotation.z=-.18;tongue.scale.set(1,.82,1.4);tongue.castShadow=true;shoe.add(tongue);
+const collar=new THREE.Mesh(new THREE.TorusGeometry(.38,.105,12,40,Math.PI*1.45),darkMat);collar.rotation.y=Math.PI/2;collar.rotation.x=.22;collar.position.set(-1.2,.42,0);collar.scale.set(1,1,1.65);shoe.add(collar);
+// Side swoosh-like original stripe on both sides
+function stripeShape(){const s=new THREE.Shape();s.moveTo(-1.35,.13);s.quadraticCurveTo(-.9,.34,-.48,.24);s.quadraticCurveTo(.12,.1,.55,-.02);s.quadraticCurveTo(.12,.24,-.4,.42);s.quadraticCurveTo(-.9,.56,-1.35,.13);return s;}
+const stripeGeo=new THREE.ShapeGeometry(stripeShape(),24);[-.652,.652].forEach(z=>{const m=new THREE.Mesh(stripeGeo,trimMat);m.position.set(.12,.02,z);m.scale.set(1.12,1.05,1);m.castShadow=true;shoe.add(m);});
+// Lace eyelets and crossing laces across top
+function tube(points,r,mat){const curve=new THREE.CatmullRomCurve3(points.map(p=>new THREE.Vector3(p[0],p[1],p[2])));const mesh=new THREE.Mesh(new THREE.TubeGeometry(curve,24,r,8,false),mat);mesh.castShadow=true;shoe.add(mesh);}
+for(let i=0;i<5;i++){const x=-.9+i*.22,y=.53-i*.045;[-.34,.34].forEach(z=>{const ring=new THREE.Mesh(new THREE.TorusGeometry(.045,.012,8,16),darkMat);ring.position.set(x,y,z);ring.rotation.x=Math.PI/2;shoe.add(ring);});tube([[x-.03,y+.035,-.38],[x+.13,y+.015,0],[x+.2,y-.025,.38]],.027,laceMat);}
+tube([[-.95,.72,0],[-.8,.82,0],[-.62,.72,0]],.025,laceMat);
+// Stitching detail along visible side
+for(let i=0;i<15;i++){const x=-1.8+i*.24;const line=new THREE.Mesh(new THREE.BoxGeometry(.075,.012,.012),trimMat);line.position.set(x,-.34,.635);line.rotation.z=-.06;shoe.add(line);}
+// outsole tread blocks
+for(let i=0;i<13;i++){const x=-2.2+i*.36;const tread=new THREE.Mesh(new THREE.BoxGeometry(.18,.035,.19),darkMat);tread.position.set(x,-.785,.35);shoe.add(tread);const tread2=tread.clone();tread2.position.z=-.35;shoe.add(tread2);}
+shoe.rotation.y=rotY;shoe.rotation.x=rotX;shoe.position.y=.02;
+loading.style.display='none';
+}catch(err){loading.innerHTML='This browser could not start WebGL.<small>Try opening this page in Chrome with hardware acceleration enabled.</small>';console.error(err);}
+function render(){if(!renderer)return;shoe.rotation.y=rotY;shoe.rotation.x=rotX;renderer.render(scene,camera);requestAnimationFrame(render);}if(renderer)render();
+function resize(){if(!renderer)return;const w=viewport.clientWidth,h=viewport.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);}
+window.addEventListener('resize',resize);
+viewport.addEventListener('pointerdown',e=>{drag=true;lastX=e.clientX;lastY=e.clientY;viewport.setPointerCapture(e.pointerId);});
+viewport.addEventListener('pointermove',e=>{if(!drag)return;rotY+=(e.clientX-lastX)*.009;rotX=Math.max(-.65,Math.min(.55,rotX+(e.clientY-lastY)*.006));lastX=e.clientX;lastY=e.clientY;document.getElementById('rotateValue').textContent=Math.round(rotY*57.2958)+'°';document.getElementById('angle').textContent='ROTATING · 360°';document.getElementById('rotate').value=Math.max(-180,Math.min(180,Math.round(rotY*57.2958)));});
+function stop(){drag=false;}viewport.addEventListener('pointerup',stop);viewport.addEventListener('pointercancel',stop);viewport.addEventListener('lostpointercapture',stop);
+viewport.addEventListener('wheel',e=>{e.preventDefault();setZoom(zoom+(e.deltaY<0?.05:-.05));},{passive:false});
+function setZoom(v){zoom=Math.max(.65,Math.min(1.45,v));camera.position.z=9.8/zoom;document.getElementById('zoom').value=Math.round(zoom*100);document.getElementById('zoomValue').textContent=Math.round(zoom*100)+'%';}
+document.getElementById('zoom').addEventListener('input',e=>setZoom(Number(e.target.value)/100));
+document.getElementById('zoomIn').addEventListener('click',()=>setZoom(zoom+.1));document.getElementById('zoomOut').addEventListener('click',()=>setZoom(zoom-.1));
+document.getElementById('rotate').addEventListener('input',e=>{rotY=Number(e.target.value)*Math.PI/180;document.getElementById('rotateValue').textContent=e.target.value+'°';document.getElementById('angle').textContent='ANGLE '+e.target.value+'°';});
+document.querySelectorAll('.swatch').forEach(btn=>btn.addEventListener('click',()=>{const c=new THREE.Color(btn.dataset.colour);upperMat.color.copy(c);sideMat.color.copy(c).multiplyScalar(.78);document.getElementById('colourName').textContent=btn.dataset.name;document.querySelectorAll('.swatch').forEach(b=>b.setAttribute('aria-pressed',b===btn?'true':'false'));}));
+document.getElementById('reset').addEventListener('click',()=>{rotY=-.55;rotX=-.12;setZoom(1);document.getElementById('rotate').value=0;document.getElementById('rotateValue').textContent='0°';document.getElementById('angle').textContent='360° VIEW';});
 })();
 </script>
 </body>
