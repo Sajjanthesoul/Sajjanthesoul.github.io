@@ -126,15 +126,32 @@ function makeTube(a,b,r1,r2,material){
  const g=new THREE.CylinderGeometry(r2,r1,len,32,1,true);
  const m=new THREE.Mesh(g,material);m.position.copy(a).add(b).multiplyScalar(.5);m.quaternion.copy(q);m.castShadow=true;m.receiveShadow=true;group.add(m);return m;
 }
-// Softly rounded torso silhouette with a bevelled fabric edge.
-const body=new THREE.Shape();
-body.moveTo(-.43,1.12);body.quadraticCurveTo(-.24,1.20,0,1.08);body.quadraticCurveTo(.24,1.20,.43,1.12);
-body.quadraticCurveTo(.51,1.05,.52,.91);body.lineTo(.49,-.88);body.quadraticCurveTo(.49,-1.02,.38,-1.02);
-body.lineTo(-.38,-1.02);body.quadraticCurveTo(-.49,-1.02,-.49,-.88);body.lineTo(-.52,.91);
-body.quadraticCurveTo(-.51,1.05,-.43,1.12);
-const bodyGeo=new THREE.ExtrudeGeometry(body,{depth:.17,bevelEnabled:true,bevelSegments:7,steps:1,bevelSize:.045,bevelThickness:.045,curveSegments:28});
-bodyGeo.computeVertexNormals();
-const torso=new THREE.Mesh(bodyGeo,fabric);torso.position.z=-.085;torso.castShadow=true;torso.receiveShadow=true;group.add(torso);
+// Curved fabric panels: front and back are separate cloth-like surfaces, not an extruded block.
+function makeBodyPanel(front){
+ const cols=36,rows=42,vertices=[],uvs=[],indices=[];
+ for(let j=0;j<=rows;j++){
+  const v=j/rows;
+  for(let i=0;i<=cols;i++){
+   const u=i/cols,nx=u*2-1;
+   const top=1.08-.27*Math.exp(-Math.pow(nx/.34,2));
+   const y=-1.02+v*(top+1.02);
+   const chest=Math.exp(-Math.pow((y-.48)/.48,2));
+   const waist=Math.exp(-Math.pow((y+.18)/.34,2));
+   const width=.49+.055*chest-.025*waist;
+   const x=nx*width;
+   const dome=.105*(1-nx*nx);
+   const drape=(Math.sin((y+1.1)*8+nx*2)+.45*Math.sin(y*15-nx*4))*.006;
+   const z=front ? .105+dome+drape : -.105-dome-drape;
+   vertices.push(x,y,z);uvs.push(u,v);
+   if(j<rows&&i<cols){const k=j*(cols+1)+i;indices.push(k,k+1,k+cols+2,k,k+cols+2,k+cols+1);}
+  }
+ }
+ const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));g.setAttribute('uv',new THREE.Float32BufferAttribute(uvs,2));g.setIndex(indices);g.computeVertexNormals();
+ const m=new THREE.Mesh(g,fabric);m.castShadow=true;m.receiveShadow=true;group.add(m);return m;
+}
+makeBodyPanel(true);makeBodyPanel(false);
+// Fine edge piping suggests stitched side seams and a finished lower hem.
+const hemPoints=[];for(let i=0;i<=20;i++){const nx=-1+i/10;const x=nx*.49;hemPoints.push(new THREE.Vector3(x,-.99,.15));}
 // Separate softly tapered sleeves give the garment a proper three-dimensional silhouette.
 makeTube(new THREE.Vector3(-.39,.91,0),new THREE.Vector3(-.91,.43,-.005),.235,.165,fabric);
 makeTube(new THREE.Vector3(.39,.91,0),new THREE.Vector3(.91,.43,-.005),.235,.165,fabric);
@@ -145,17 +162,17 @@ seamLine([new THREE.Vector3(.84,.49,.12),new THREE.Vector3(.91,.43,.12),new THRE
 seamLine([new THREE.Vector3(-.42,-.96,.145),new THREE.Vector3(0,-.98,.145),new THREE.Vector3(.42,-.96,.145)],.009,darkSeam);
 // Raised ribbed collar ring with an open neckline.
 const collar=new THREE.Mesh(new THREE.TorusGeometry(.205,.045,16,64),new THREE.MeshStandardMaterial({color:'#d2d1c8',roughness:1}));
-collar.position.set(0,1.105,.025);collar.scale.set(1,.66,1);group.add(collar);
-const collarInner=new THREE.Mesh(new THREE.TorusGeometry(.166,.014,10,64),darkSeam);collarInner.position.set(0,1.108,.03);collarInner.scale.y=.66;group.add(collarInner);
+collar.position.set(0,.91,.025);collar.scale.set(1,.66,1);group.add(collar);
+const collarInner=new THREE.Mesh(new THREE.TorusGeometry(.166,.014,10,64),darkSeam);collarInner.position.set(0,.912,.03);collarInner.scale.y=.66;group.add(collarInner);
 // Curved print panel follows the rounded chest instead of floating as a flat card.
 const printCanvas=document.createElement('canvas');printCanvas.width=1024;printCanvas.height=768;
 const ctx=printCanvas.getContext('2d');const printTexture=new THREE.CanvasTexture(printCanvas);printTexture.colorSpace=THREE.SRGBColorSpace;
 const printMat=new THREE.MeshBasicMaterial({map:printTexture,transparent:true,side:THREE.DoubleSide,depthWrite:false});
 const printGeo=new THREE.PlaneGeometry(.68,.48,18,12);
 const pos=printGeo.attributes.position;
-for(let i=0;i<pos.count;i++){const x=pos.getX(i),y=pos.getY(i);pos.setZ(i,.055*(1-Math.pow(x/.34,2))+.012*Math.cos(y*5));}
+for(let i=0;i<pos.count;i++){const x=pos.getX(i),y=pos.getY(i);pos.setZ(i,.045*(1-Math.pow(x/.34,2))+.008*Math.cos(y*5));}
 printGeo.computeVertexNormals();
-const printPlane=new THREE.Mesh(printGeo,printMat);printPlane.position.set(0,.34,.145);group.add(printPlane);
+const printPlane=new THREE.Mesh(printGeo,printMat);printPlane.position.set(0,.30,.19);group.add(printPlane);
 // Subtle natural fabric drape lines on the torso.
 seamLine([new THREE.Vector3(-.37,.64,.17),new THREE.Vector3(-.29,.22,.19),new THREE.Vector3(-.32,-.35,.18)],.006,new THREE.MeshBasicMaterial({color:'#b8b8ae',transparent:true,opacity:.55}));
 seamLine([new THREE.Vector3(.37,.64,.17),new THREE.Vector3(.29,.22,.19),new THREE.Vector3(.32,-.35,.18)],.006,new THREE.MeshBasicMaterial({color:'#b8b8ae',transparent:true,opacity:.55}));
