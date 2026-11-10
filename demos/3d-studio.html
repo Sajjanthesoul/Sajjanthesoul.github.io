@@ -175,8 +175,11 @@ function setupCanvasTexture(){
 }
 function refreshTexture(){
  if(!targetMaterial)return;
- if(!canvasTexture){try{canvasTexture=viewer.createCanvasTexture();}catch(e){return;}}
- var el=canvasTexture.source.element,tc=el.getContext('2d');
+ if(!canvasTexture){try{canvasTexture=viewer.createCanvasTexture();}catch(e){setStatus('Could not create the 3D canvas texture: '+e.message);return;}}
+ var el=canvasTexture.source.element;
+ // model-viewer creates a default 300x150 canvas; enlarge it before drawing the UV map.
+ if(el.width!==1024||el.height!==1024){el.width=1024;el.height=1024;}
+ var tc=el.getContext('2d');
  tc.clearRect(0,0,1024,1024);
  if(baseTextureImage){tc.drawImage(baseTextureImage,0,0,1024,1024);tc.globalCompositeOperation='multiply';tc.fillStyle=selectedColour;tc.fillRect(0,0,1024,1024);tc.globalCompositeOperation='source-over';}
  else{tc.fillStyle=selectedColour;tc.fillRect(0,0,1024,1024);}
@@ -187,8 +190,8 @@ function refreshTexture(){
  tc.fillStyle='rgba(255,255,255,.45)';tc.font='20px Arial';tc.fillText('DESIGNED BY YOU',512,980);
  canvasTexture.source.update();
  var pbr=targetMaterial.pbrMetallicRoughness;
- if(pbr.baseColorTexture)pbr.baseColorTexture.setTexture(canvasTexture);
- setStatus('Live UV texture applied to '+(targetMaterial.name||'selected garment material')+'. Rotate the shirt to inspect the artwork.');
+ try{pbr.baseColorTexture.setTexture(canvasTexture);}catch(e){setStatus('Could not attach the UV texture: '+e.message);return;}
+ setStatus('Live UV texture attached to '+(targetMaterial.name||'selected garment material')+'. Rotate the shirt to inspect the artwork.');
  // Mirror the exact texture canvas in the UI.
  ctx.clearRect(0,0,1024,1024);ctx.drawImage(el,0,0);
 }
