@@ -75,17 +75,53 @@ input[type=range]{width:100%;accent-color:var(--lime);cursor:pointer}
 <main>
 <div class="eyebrow">INTERACTIVE 3D CONCEPT &nbsp; / &nbsp; 001</div>
 <h1>Product <span>Studio.</span></h1>
-<p class="intro">A hands-on product visualization concept. Explore the model, test different finishes and inspect it from every angle — right from your phone.</p>
+<p class="intro">A hands-on footwear configurator concept. Customize the upper finish, explore the silhouette and inspect your design right from your phone.</p>
 <div class="layout">
 <section class="viewer-card" aria-label="Interactive product viewer">
-<div class="viewer-head"><div class="live"><span class="dot"></span> LIVE PREVIEW</div><div class="model-tag">MODEL 001 &nbsp;·&nbsp; CUBE</div></div>
+<div class="viewer-head"><div class="live"><span class="dot"></span> LIVE PREVIEW</div><div class="model-tag">MODEL 002 &nbsp;·&nbsp; SNEAKER</div></div>
 <div class="stage" id="stage" aria-label="Drag or swipe to rotate the product model">
 <div class="drag-tip">↔ &nbsp; DRAG OR SWIPE TO ROTATE</div>
-<svg viewBox="0 0 500 420" role="img" aria-label="Shaded interactive cube">
-<defs><radialGradient id="floorGlow"><stop offset="0" stop-color="#c9f36a" stop-opacity=".2"/><stop offset="1" stop-color="#c9f36a" stop-opacity="0"/></radialGradient><filter id="softShadow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="13"/></filter></defs>
-<ellipse cx="250" cy="330" rx="145" ry="28" fill="#000" opacity=".42" filter="url(#softShadow)"/>
-<ellipse cx="250" cy="330" rx="170" ry="45" fill="url(#floorGlow)"/>
-<g id="faces"></g>
+<svg id="shoeModel" viewBox="0 0 620 420" role="img" aria-label="Interactive low-top sneaker product model">
+<defs>
+<radialGradient id="floorGlow"><stop offset="0" stop-color="#c9f36a" stop-opacity=".22"/><stop offset="1" stop-color="#c9f36a" stop-opacity="0"/></radialGradient>
+<filter id="softShadow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="13"/></filter>
+<linearGradient id="soleGrad" x2="0" y2="1"><stop stop-color="#f8f5e9"/><stop offset="1" stop-color="#aeb4a5"/></linearGradient>
+<linearGradient id="upperGrad" x2="0" y2="1"><stop stop-color="#ffffff" stop-opacity=".28"/><stop offset="1" stop-color="#000000" stop-opacity=".25"/></linearGradient>
+</defs>
+<ellipse cx="310" cy="337" rx="225" ry="27" fill="#000" opacity=".42" filter="url(#softShadow)"/>
+<ellipse cx="310" cy="335" rx="240" ry="45" fill="url(#floorGlow)"/>
+<g id="shoe" transform="translate(0 0)">
+<!-- outsole -->
+<path d="M75 282 Q95 268 130 273 L190 278 Q225 264 265 258 L360 254 Q405 249 440 268 L510 285 Q550 294 562 316 Q566 329 548 337 Q508 350 423 349 L167 349 Q105 348 78 332 Q61 319 75 282Z" fill="url(#soleGrad)" stroke="#eef0e4" stroke-width="3"/>
+<path d="M76 316 Q190 335 294 331 Q438 331 559 310 L556 327 Q531 348 423 349 L167 349 Q102 347 78 332Z" fill="#8d9685" opacity=".55"/>
+<path d="M102 328 Q250 345 530 326" fill="none" stroke="#6d7867" stroke-width="3" stroke-dasharray="5 7" opacity=".7"/>
+<!-- main upper -->
+<path id="upper" d="M91 278 Q110 247 158 235 L226 219 Q254 193 291 182 Q325 172 357 192 L401 221 Q439 241 480 254 L530 276 Q548 284 550 302 Q535 315 499 315 L161 315 Q111 314 88 300 Q78 291 91 278Z" fill="#c9f36a" stroke="#e6f5c7" stroke-width="3"/>
+<path d="M91 278 Q110 247 158 235 L226 219 Q254 193 291 182 Q325 172 357 192 L401 221 Q439 241 480 254 L530 276 Q548 284 550 302 Q535 315 499 315 L161 315 Q111 314 88 300Z" fill="url(#upperGrad)"/>
+<!-- toe cap -->
+<path d="M91 278 Q115 254 161 250 Q177 274 169 314 L111 312 Q80 300 91 278Z" fill="#ffffff" opacity=".17" stroke="#ffffff" stroke-opacity=".4" stroke-width="2"/>
+<!-- heel panel -->
+<path d="M357 193 Q389 208 411 235 L397 313 L347 313 L333 210Z" fill="#111a12" opacity=".3" stroke="#ffffff" stroke-opacity=".5" stroke-width="2"/>
+<!-- side stripe -->
+<path d="M205 242 Q259 224 291 211 Q316 202 341 214 L389 251 Q338 245 300 260 L223 285 Q201 278 205 242Z" fill="#f2f3e8" fill-opacity=".88" stroke="#ffffff" stroke-width="2"/>
+<!-- overlays -->
+<path d="M158 235 Q178 245 205 242 L223 285 Q192 300 169 314" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="3"/>
+<path d="M226 219 Q244 233 259 253 M291 182 Q306 207 300 260 M357 193 Q348 222 341 270" fill="none" stroke="#fff" stroke-opacity=".52" stroke-width="3"/>
+<!-- laces -->
+<path d="M250 218 L323 239 M242 231 L315 251 M235 245 L307 264 M229 258 L299 276" fill="none" stroke="#f8f8ed" stroke-width="7" stroke-linecap="round"/>
+<path d="M250 218 L323 239 M242 231 L315 251 M235 245 L307 264 M229 258 L299 276" fill="none" stroke="#7d8970" stroke-width="1.5" stroke-linecap="round"/>
+<!-- eyelets -->
+<g fill="#e9eddf" stroke="#65715c" stroke-width="1.5"><circle cx="250" cy="218" r="4"/><circle cx="242" cy="231" r="4"/><circle cx="235" cy="245" r="4"/><circle cx="229" cy="258" r="4"/><circle cx="323" cy="239" r="4"/><circle cx="315" cy="251" r="4"/><circle cx="307" cy="264" r="4"/><circle cx="299" cy="276" r="4"/></g>
+<!-- collar and tongue -->
+<path d="M264 202 Q279 165 314 157 Q340 158 353 194 L328 218 L288 220Z" fill="#e9eddf" stroke="#fff" stroke-width="3"/>
+<path d="M286 201 Q295 170 316 165 Q334 169 340 198 L319 215Z" fill="#c9f36a" stroke="#fff" stroke-opacity=".5" stroke-width="2"/>
+<path d="M291 185 Q312 177 332 190" stroke="#64745a" stroke-width="2" fill="none"/>
+<!-- heel pull tab -->
+<path d="M367 195 Q376 174 389 176 L404 217 L390 222Z" fill="#e8ecdf" stroke="#fff" stroke-width="2"/>
+<!-- seams -->
+<path d="M113 289 Q146 299 175 295 M404 238 Q451 257 506 281" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2" stroke-dasharray="4 5"/>
+<text x="285" y="304" font-size="13" font-family="Arial,sans-serif" font-weight="800" letter-spacing="3" fill="#1d2818" opacity=".8">SA / STUDIO</text>
+</g>
 </svg>
 </div>
 <div class="viewer-foot"><span><strong>INTERACTIVE MODEL</strong> &nbsp;·&nbsp; SVG RENDER</span><span id="angleLabel">ANGLE 036°</span></div>
@@ -119,27 +155,24 @@ input[type=range]{width:100%;accent-color:var(--lime);cursor:pointer}
 </div>
 <script>
 (function(){
-var stage=document.getElementById('stage'),faces=document.getElementById('faces'),zoom=document.getElementById('zoom'),zoomValue=document.getElementById('zoomValue'),rotation=document.getElementById('rotation'),rotationValue=document.getElementById('rotationValue'),angleLabel=document.getElementById('angleLabel'),finishName=document.getElementById('finishName');
-var rx=-.48,ry=.62,scale=1,dragging=false,lastX=0,lastY=0,base=118,color='#c9f36a';
-var vertices=[[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]];
-var sides=[{v:[0,1,2,3],shade:.48},{v:[4,5,6,7],shade:1.08},{v:[0,1,5,4],shade:.78},{v:[3,2,6,7],shade:.68},{v:[0,3,7,4],shade:.88},{v:[1,2,6,5],shade:.58}];
-function colour(hex,f){var n=parseInt(hex.slice(1),16),r=n>>16,g=(n>>8)&255,b=n&255;return 'rgb('+Math.round(Math.min(255,r*f))+','+Math.round(Math.min(255,g*f))+','+Math.round(Math.min(255,b*f))+')'}
-function project(v){var x=v[0]*base,y=v[1]*base,z=v[2]*base,cy=Math.cos(ry),sy=Math.sin(ry),cx=Math.cos(rx),sx=Math.sin(rx),x1=x*cy-z*sy,z1=x*sy+z*cy,y1=y*cx-z1*sx,z2=y*sx+z1*cx,perspective=680/(680+z2);return [250+x1*perspective*scale,205+y1*perspective*scale,z2]}
-function updateLabels(){var deg=Math.round((((ry*180/Math.PI)%360)+360)%360);rotation.value=Math.max(-180,Math.min(180,Math.round((ry-.0)*180/Math.PI)));rotationValue.textContent=rotation.value+'°';angleLabel.textContent='ANGLE '+String(deg).padStart(3,'0')+'°'}
-function draw(){var pts=vertices.map(project),ordered=sides.map(function(side){var p=side.v.map(function(i){return pts[i]});return {p:p,depth:p.reduce(function(a,b){return a+b[2]},0)/4,shade:side.shade}}).sort(function(a,b){return b.depth-a.depth});faces.innerHTML=ordered.map(function(face){var ps=face.p.map(function(p){return p[0].toFixed(1)+','+p[1].toFixed(1)}).join(' ');return '<polygon points="'+ps+'" fill="'+colour(color,face.shade)+'" stroke="#ffffff" stroke-opacity=".58" stroke-width="2.2" stroke-linejoin="round"/>'}).join('');updateLabels()}
-function setZoom(v){scale=Number(v)/100;zoom.value=v;zoomValue.textContent=v+'%';draw()}
-function setRotation(deg){ry=Number(deg)*Math.PI/180;draw()}
-document.querySelectorAll('.swatch').forEach(function(btn){btn.addEventListener('click',function(){color=btn.dataset.color;finishName.textContent=btn.dataset.name;document.querySelectorAll('.swatch').forEach(function(b){b.setAttribute('aria-pressed',b===btn?'true':'false')});draw()})});
-stage.addEventListener('pointerdown',function(e){dragging=true;lastX=e.clientX;lastY=e.clientY;stage.classList.add('dragging');if(stage.setPointerCapture)stage.setPointerCapture(e.pointerId)});
-stage.addEventListener('pointermove',function(e){if(!dragging)return;var dx=e.clientX-lastX,dy=e.clientY-lastY;lastX=e.clientX;lastY=e.clientY;ry+=dx*.009;rx=Math.max(-1.35,Math.min(1.35,rx-dy*.009));draw()});
-function stop(){dragging=false;stage.classList.remove('dragging')}
+const stage=document.getElementById('stage'),shoe=document.getElementById('shoe'),model=document.getElementById('shoeModel');
+const zoom=document.getElementById('zoom'),zoomValue=document.getElementById('zoomValue'),rotation=document.getElementById('rotation'),rotationValue=document.getElementById('rotationValue'),angleLabel=document.getElementById('angleLabel'),finishName=document.getElementById('finishName'),upper=document.getElementById('upper');
+let angle=0,scale=1,dragging=false,lastX=0,baseColor='#c9f36a';
+const swatches=document.querySelectorAll('.swatch');
+function render(){shoe.style.transform='translate(0px,0px)';model.style.transform='scale('+scale+') rotateY('+angle+'deg)';model.style.transformOrigin='50% 50%';rotation.value=Math.round(angle);rotationValue.textContent=Math.round(angle)+'°';angleLabel.textContent='ANGLE '+String(Math.abs(Math.round(angle))%360).padStart(3,'0')+'°';}
+function setZoom(v){scale=Number(v)/100;zoom.value=v;zoomValue.textContent=v+'%';render();}
+function setAngle(v){angle=Number(v);render();}
+swatches.forEach(btn=>btn.addEventListener('click',()=>{baseColor=btn.dataset.color;upper.setAttribute('fill',baseColor);finishName.textContent=btn.dataset.name;swatches.forEach(b=>b.setAttribute('aria-pressed',b===btn?'true':'false'));}));
+stage.addEventListener('pointerdown',e=>{dragging=true;lastX=e.clientX;stage.classList.add('dragging');stage.setPointerCapture(e.pointerId);});
+stage.addEventListener('pointermove',e=>{if(!dragging)return;angle=Math.max(-180,Math.min(180,angle+(e.clientX-lastX)*.55));lastX=e.clientX;render();});
+function stop(){dragging=false;stage.classList.remove('dragging');}
 stage.addEventListener('pointerup',stop);stage.addEventListener('pointercancel',stop);stage.addEventListener('lostpointercapture',stop);
-stage.addEventListener('wheel',function(e){e.preventDefault();setZoom(Math.max(65,Math.min(150,Number(zoom.value)+(e.deltaY<0?5:-5))))},{passive:false});
-zoom.addEventListener('input',function(){setZoom(this.value)});rotation.addEventListener('input',function(){setRotation(this.value)});
-document.getElementById('zoomIn').addEventListener('click',function(){setZoom(Math.min(150,Number(zoom.value)+10))});
-document.getElementById('zoomOut').addEventListener('click',function(){setZoom(Math.max(65,Number(zoom.value)-10))});
-document.getElementById('reset').addEventListener('click',function(){rx=-.48;ry=.62;setZoom(100);draw()});
-draw();
+stage.addEventListener('wheel',e=>{e.preventDefault();setZoom(Math.max(65,Math.min(150,Number(zoom.value)+(e.deltaY<0?5:-5))));},{passive:false});
+zoom.addEventListener('input',()=>setZoom(zoom.value));rotation.addEventListener('input',()=>setAngle(rotation.value));
+document.getElementById('zoomIn').addEventListener('click',()=>setZoom(Math.min(150,Number(zoom.value)+10)));
+document.getElementById('zoomOut').addEventListener('click',()=>setZoom(Math.max(65,Number(zoom.value)-10)));
+document.getElementById('reset').addEventListener('click',()=>{angle=0;setZoom(100);render();});
+render();
 })();
 </script>
 </body>
