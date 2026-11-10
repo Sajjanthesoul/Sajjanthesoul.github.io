@@ -184,10 +184,14 @@ function refreshTexture(){
  if(baseTextureImage){tc.drawImage(baseTextureImage,0,0,1024,1024);tc.globalCompositeOperation='multiply';tc.fillStyle=selectedColour;tc.fillRect(0,0,1024,1024);tc.globalCompositeOperation='source-over';}
  else{tc.fillStyle=selectedColour;tc.fillRect(0,0,1024,1024);}
  var raw=document.getElementById('teePrintText').value.trim()||'YOUR BRAND',place=document.getElementById('teePrintPlacement').value,ink=document.getElementById('teePrintColour').value,style=document.getElementById('teePrintStyle').value;
- var x=512,y=512;
- tc.save();tc.textAlign='center';tc.textBaseline='middle';tc.fillStyle=ink;tc.strokeStyle=ink;tc.font=(style==='minimal'?'600':'900')+' 142px Arial,sans-serif';
- if(style==='outline'){tc.lineWidth=9;tc.strokeText(raw,x,y,900);}else{tc.fillText(raw,x,y,900);}tc.restore();
- tc.fillStyle='rgba(255,255,255,.45)';tc.font='20px Arial';tc.fillText('DESIGNED BY YOU',512,980);
+ // The asset's UV islands do not sit at the centre of the 0-1 texture.
+ // Stamp a clear test print over the atlas so it intersects the shirt's actual UV islands.
+ tc.save();tc.textAlign='center';tc.textBaseline='middle';tc.fillStyle=ink;tc.strokeStyle=ink;
+ tc.font=(style==='minimal'?'600':'900')+' 88px Arial,sans-serif';
+ var positions=[[256,256],[768,256],[256,512],[512,512],[768,512],[256,768],[768,768]];
+ positions.forEach(function(pos){if(style==='outline'){tc.lineWidth=7;tc.strokeText(raw,pos[0],pos[1],470);}else{tc.fillText(raw,pos[0],pos[1],470);}});
+ tc.restore();
+ tc.fillStyle='rgba(255,255,255,.55)';tc.font='18px Arial';tc.textAlign='center';tc.fillText('CUSTOM PRINT',512,1000);
  canvasTexture.source.update();
  var pbr=targetMaterial.pbrMetallicRoughness;
  try{pbr.baseColorTexture.setTexture(canvasTexture);}catch(e){setStatus('Could not attach the UV texture: '+e.message);return;}
