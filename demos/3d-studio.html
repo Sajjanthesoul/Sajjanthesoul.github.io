@@ -19,10 +19,10 @@
 .model-loader{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:#0c100bea;z-index:3;text-align:center}.model-loader.hide{display:none}.spinner{width:32px;height:32px;border:3px solid #ffffff40;border-top-color:white;border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.loader-label{font-size:12px;font-weight:800;letter-spacing:1px}.loader-percent{font-size:24px;font-weight:800}.loader-track{height:6px;width:min(240px,70%);background:#ffffff35;border-radius:9px;overflow:hidden}.loader-fill{height:100%;width:0;background:#fff}
 .model-picker{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:14px}.model-choice{background:#20271d;border:1px solid #394431;border-radius:12px;color:#e9eddf;padding:12px;text-align:left;cursor:pointer;min-height:76px}.model-choice.active{border-color:var(--lime);background:#2b3522}.model-choice b{display:block;font-size:12px}.model-choice small{display:block;color:#aab39f;font-size:10px;margin-top:4px}.model-choice:hover{border-color:#b6d96a}
 .model-note{border-top:1px solid #ffffff10;padding:12px 16px;color:#87917d;font-size:10px}.model-note a{color:var(--lime)}
-.config-layout{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,.8fr);gap:0}.tee-real-stage{height:clamp(360px,52vw,560px);background:radial-gradient(ellipse at 50% 45%,#46543a 0%,#202a1b 75%)}.tee-real-stage model-viewer{width:100%;height:100%;display:block;background:transparent;--poster-color:transparent}
+.config-layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.85fr);gap:0}.tee-custom-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(270px,.82fr);gap:0}.tee-custom-controls{padding:20px;border-left:1px solid #ffffff10}.tee-custom-controls h3{margin:0 0 5px;font-size:19px}.tee-custom-controls>p{margin:0 0 16px;color:var(--muted);font-size:11px}.tee-preview{margin-top:16px;border:1px solid #394431;border-radius:12px;background:radial-gradient(ellipse at 50% 45%,#35432c,#151c12);overflow:hidden}.tee-preview-head{padding:10px 12px;border-bottom:1px solid #ffffff14;color:#c9f36a;font-size:9px;font-weight:900;letter-spacing:1.3px}.tee-preview svg{display:block;width:100%;height:auto;max-height:230px}.field-hint{display:block;color:#899582;font-size:10px;margin-top:6px}.size-options{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}.size-option{padding:9px 2px;border-radius:7px;border:1px solid #3b4732;background:#11170f;color:#dce5d1;font-size:10px;cursor:pointer}.size-option.active{border-color:var(--lime);color:var(--lime);background:#2b3522}.tee-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px}.tee-real-stage{height:clamp(360px,52vw,560px);background:radial-gradient(ellipse at 50% 45%,#46543a 0%,#202a1b 75%)}.tee-real-stage model-viewer{width:100%;height:100%;display:block;background:transparent;--poster-color:transparent}
 .controls{padding:22px;border-left:1px solid #ffffff10}.controls h3{margin:0 0 5px;font-size:19px}.controls>p{margin:0 0 20px;color:var(--muted);font-size:11px}.field{margin-top:17px}.field label{display:block;margin-bottom:8px;color:#dce5d1;font-size:10px;font-weight:800;letter-spacing:1.2px}.swatches{display:flex;gap:9px;flex-wrap:wrap}.swatch{width:30px;height:30px;border-radius:50%;border:2px solid #ffffff55;cursor:pointer;box-shadow:0 0 0 2px transparent}.swatch.active{box-shadow:0 0 0 2px var(--lime);border-color:#fff}.control-input,.control-select{width:100%;background:#11170f;border:1px solid #3b4732;border-radius:8px;padding:11px 12px;color:#f4f6ee;font:12px Inter,system-ui,sans-serif;outline:none}.control-input:focus,.control-select:focus{border-color:var(--lime)}.inline-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}.color-input{width:100%;height:40px;border:1px solid #3b4732;border-radius:8px;background:#11170f;padding:4px}.actions{display:flex;gap:9px;margin-top:22px}.action{flex:1;border:0;border-radius:8px;padding:12px 10px;background:var(--lime);color:#171a11;font-size:11px;font-weight:900;cursor:pointer}.action.secondary{background:#2b3525;color:#eaf1df;border:1px solid #46533b}.action:hover{filter:brightness(1.08)}
 .footer{display:flex;justify-content:space-between;gap:12px;margin-top:25px;color:#788370;font-size:10px;letter-spacing:.6px}.footer a{color:var(--lime);text-decoration:none}
-@media(max-width:760px){.wrap{padding:16px 13px 30px}.brand{font-size:9px;letter-spacing:1px}.eyebrow{margin-top:25px}.section{margin-top:27px}.section-head{display:block}.section-head p{margin-top:5px}.model-stage{height:360px}.model-picker{grid-template-columns:repeat(2,1fr);gap:8px;padding:10px}.model-choice{min-height:65px;padding:10px}.config-layout{grid-template-columns:1fr}.tee-real-stage{height:390px}.controls{border-left:0;border-top:1px solid #ffffff10;padding:18px}.footer{font-size:9px;flex-wrap:wrap}}
+@media(max-width:760px){.tee-custom-layout{grid-template-columns:1fr}.tee-custom-controls{border-left:0;border-top:1px solid #ffffff10;padding:18px}.wrap{padding:16px 13px 30px}.brand{font-size:9px;letter-spacing:1px}.eyebrow{margin-top:25px}.section{margin-top:27px}.section-head{display:block}.section-head p{margin-top:5px}.model-stage{height:360px}.model-picker{grid-template-columns:repeat(2,1fr);gap:8px;padding:10px}.model-choice{min-height:65px;padding:10px}.config-layout{grid-template-columns:1fr}.tee-real-stage{height:390px}.controls{border-left:0;border-top:1px solid #ffffff10;padding:18px}.footer{font-size:9px;flex-wrap:wrap}}
 </style>
 </head>
 <body>
@@ -57,10 +57,27 @@
 <div class="section-head"><h2>T-shirt configurator</h2><p>Real garment asset · rotate and zoom</p></div>
 <div class="config-shell">
 <div class="product-top"><div class="live"><span class="dot"></span> REAL 3D GARMENT MODEL</div><div class="model-tag">CC0 / GLB / 1,012 TRIANGLES</div></div>
+<div class="tee-custom-layout">
+<div>
 <div class="model-stage tee-real-stage">
-<model-viewer id="teeViewer" src="https://cdn.3dassets.dev/assets/35447/v1/model.glb?v=1" alt="Terracotta T-shirt hanging naturally on a velvet clothes hanger" camera-controls auto-rotate rotation-per-second="14deg" shadow-intensity="1" exposure="1.15" environment-image="neutral" camera-orbit="0deg 75deg auto" field-of-view="28deg" min-camera-orbit="auto auto auto" max-camera-orbit="auto auto auto" interaction-prompt="auto" loading="eager" reveal="auto"></model-viewer>
+<model-viewer id="teeViewer" src="https://cdn.3dassets.dev/assets/35447/v1/model.glb?v=1" alt="Customisable 3D T-shirt hanging naturally on a velvet clothes hanger" camera-controls auto-rotate rotation-per-second="14deg" shadow-intensity="1" exposure="1.15" environment-image="neutral" camera-orbit="0deg 75deg auto" field-of-view="28deg" min-camera-orbit="auto auto auto" max-camera-orbit="auto auto auto" interaction-prompt="auto" loading="eager" reveal="auto"></model-viewer>
 </div>
-<div class="model-note" id="teeModelStatus">Real CC0 T-shirt mesh with shaped shoulders, short sleeves, turned cuffs, ribbed crew neck and velvet hanger. Drag to rotate and pinch / scroll to zoom. This is a fixed terracotta garment model; live fabric recolouring and print placement are not enabled yet. <a href="https://3dassets.dev/assets/clothing-rail-and-wardrobe-tshirt-on-hanger-c0e0e17d" target="_blank" rel="noopener">View original asset ↗</a></div>
+<div class="model-note" id="teeModelStatus">Loading real CC0 garment… Drag to rotate and pinch / scroll to zoom. <a href="https://3dassets.dev/assets/clothing-rail-and-wardrobe-tshirt-on-hanger-c0e0e17d" target="_blank" rel="noopener">View original asset ↗</a></div>
+</div>
+<aside class="tee-custom-controls">
+<h3>Make it yours.</h3><p>Change the garment colour and build a print design.</p>
+<div class="field"><label>GARMENT COLOUR</label><div class="swatches" id="teeSwatches">
+<button class="swatch active" type="button" data-colour="#b86e55" aria-label="Terracotta" style="background:#b86e55"></button><button class="swatch" type="button" data-colour="#f0eee5" aria-label="Off white" style="background:#f0eee5"></button><button class="swatch" type="button" data-colour="#202326" aria-label="Black" style="background:#202326"></button><button class="swatch" type="button" data-colour="#526b91" aria-label="Navy blue" style="background:#526b91"></button><button class="swatch" type="button" data-colour="#73866b" aria-label="Sage green" style="background:#73866b"></button><button class="swatch" type="button" data-colour="#c9a64b" aria-label="Mustard" style="background:#c9a64b"></button>
+</div><span class="field-hint" id="teeColourName">Terracotta</span></div>
+<div class="field"><label>SIZE</label><div class="size-options" id="teeSizes"><button class="size-option" type="button">XS</button><button class="size-option" type="button">S</button><button class="size-option active" type="button">M</button><button class="size-option" type="button">L</button><button class="size-option" type="button">XL</button><button class="size-option" type="button">XXL</button></div><span class="field-hint">Size selection is saved with your exported design; the 3D asset keeps its original proportions.</span></div>
+<div class="field"><label>PRINT TEXT</label><input class="control-input" id="teePrintText" maxlength="22" value="YOUR BRAND" placeholder="Enter your text"></div>
+<div class="inline-fields"><div class="field"><label>PRINT COLOUR</label><input class="color-input" id="teePrintColour" type="color" value="#f7f4e9"></div><div class="field"><label>PRINT STYLE</label><select class="control-select" id="teePrintStyle"><option value="bold">Bold</option><option value="minimal">Minimal</option><option value="outline">Outline</option></select></div></div>
+<div class="field"><label>PRINT PLACEMENT</label><select class="control-select" id="teePrintPlacement"><option value="chest">Left chest</option><option value="center">Center chest</option><option value="back">Upper back</option></select></div>
+<div class="tee-preview"><div class="tee-preview-head">2D PRINT PLACEMENT PREVIEW</div><div id="teeDesignPreview"></div></div>
+<div class="tee-actions"><button class="action" type="button" id="teeExport">Export PNG</button><button class="action secondary" type="button" id="teeReset">Reset design</button></div>
+<p class="field-hint">Colour is applied to the garment material when supported by the model. Print placement is shown in the flat preview and exported PNG; it is not yet wrapped onto the rotating 3D fabric.</p>
+</aside>
+</div>
 </div>
 </section>
 </main>
@@ -88,6 +105,51 @@ showLoader();type.textContent=btn.dataset.type;viewer.alt=btn.dataset.alt;viewer
 });});
 viewer.addEventListener('model-visibility',function(){});
 showLoader();
+})();
+
+
+(function(){
+var viewer=document.getElementById('teeViewer');if(!viewer)return;
+var colourNames={'#b86e55':'Terracotta','#f0eee5':'Off white','#202326':'Black','#526b91':'Navy blue','#73866b':'Sage green','#c9a64b':'Mustard'};
+var selectedColour='#b86e55',selectedSize='M',originalFactors=[];
+function hexRgb(hex){return [1,3,5].map(function(i){return parseInt(hex.slice(i,i+2),16)/255;});}
+function applyGarmentColour(){
+ if(!viewer.model)return;var mats=viewer.model.materials||[];
+ if(!originalFactors.length)originalFactors=mats.map(function(m){return {m:m,factor:m.pbrMetallicRoughness.getBaseColorFactor()};});
+ var candidates=originalFactors.filter(function(x){return /shirt|cloth|fabric|cotton|t.?shirt|garment/i.test(x.m.name||'');});
+ if(!candidates.length)candidates=originalFactors.filter(function(x){var f=x.factor||[];return f.length>=3&&f[0]>.25&&f[0]>f[1]*1.12&&f[0]>f[2]*1.12;});
+ if(!candidates.length)candidates=originalFactors.slice(0,1);
+ candidates.forEach(function(x){var rgb=hexRgb(selectedColour);x.m.pbrMetallicRoughness.setBaseColorFactor([rgb[0],rgb[1],rgb[2],(x.factor&&x.factor[3])||1]);});
+}
+function esc(s){return String(s).replace(/[&<>"']/g,function(ch){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch];});}
+function previewSvg(){
+ var raw=document.getElementById('teePrintText').value.trim()||'YOUR BRAND',place=document.getElementById('teePrintPlacement').value,ink=document.getElementById('teePrintColour').value,style=document.getElementById('teePrintStyle').value;
+ var pos=place==='chest'?{x:198,y:155,anchor:'start',size:13}:place==='back'?{x:160,y:125,anchor:'middle',size:16}:{x:160,y:165,anchor:'middle',size:17};
+ var weight=style==='minimal'?500:900,stroke=style==='outline'?'stroke="'+ink+'" stroke-width="0.8" fill="none"':'fill="'+ink+'"';
+ return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 250" role="img" aria-label="Flat T-shirt print design preview"><defs><linearGradient id="shirtShade" x1="0" y1="0" x2="1" y2="1"><stop stop-color="'+selectedColour+'"/><stop offset="1" stop-color="'+selectedColour+'" stop-opacity=".72"/></linearGradient></defs><path d="M112 42 137 28 Q160 48 183 28 L208 42 258 75 235 111 213 97 213 220 107 220 107 97 85 111 62 75Z" fill="url(#shirtShade)" stroke="#ffffff55" stroke-width="2"/><path d="M137 29 Q160 57 183 29" fill="none" stroke="#ffffff66" stroke-width="7"/><path d="M137 29 Q160 54 183 29" fill="none" stroke="#172016" stroke-opacity=".55" stroke-width="2"/><path d="M108 97 107 220 M212 97 213 220" stroke="#ffffff30" fill="none"/><text x="'+pos.x+'" y="'+pos.y+'" text-anchor="'+pos.anchor+'" font-family="Arial,sans-serif" font-size="'+pos.size+'" font-weight="'+weight+'" letter-spacing="'+(style==='minimal'?'.5':'1.2')+'" '+stroke+'>'+esc(raw)+'</text><text x="160" y="240" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" fill="#dbe5d0" letter-spacing="1.5">'+place.toUpperCase()+' PRINT · SIZE '+selectedSize+'</text></svg>';
+}
+function renderPreview(){document.getElementById('teeDesignPreview').innerHTML=previewSvg();}
+document.querySelectorAll('#teeSwatches .swatch').forEach(function(btn){btn.addEventListener('click',function(){
+ document.querySelectorAll('#teeSwatches .swatch').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');selectedColour=btn.dataset.colour;document.getElementById('teeColourName').textContent=colourNames[selectedColour]||selectedColour;applyGarmentColour();renderPreview();
+});});
+document.querySelectorAll('#teeSizes .size-option').forEach(function(btn){btn.addEventListener('click',function(){
+ document.querySelectorAll('#teeSizes .size-option').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');selectedSize=btn.textContent;renderPreview();
+});});
+['teePrintText','teePrintColour','teePrintStyle','teePrintPlacement'].forEach(function(id){document.getElementById(id).addEventListener('input',renderPreview);document.getElementById(id).addEventListener('change',renderPreview);});
+viewer.addEventListener('load',function(){originalFactors=[];applyGarmentColour();document.getElementById('teeModelStatus').textContent='3D garment loaded · choose a colour and create your print design below.';});
+document.getElementById('teeExport').addEventListener('click',function(){
+ var svg=previewSvg(),blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}),url=URL.createObjectURL(blob),img=new Image();
+ img.onload=function(){var canvas=document.createElement('canvas');canvas.width=960;canvas.height=750;var ctx=canvas.getContext('2d');ctx.fillStyle='#151c12';ctx.fillRect(0,0,960,750);ctx.drawImage(img,0,0,960,750);URL.revokeObjectURL(url);var a=document.createElement('a');a.download='tshirt-design-'+selectedSize.toLowerCase()+'.png';a.href=canvas.toDataURL('image/png');a.click();};
+ img.onerror=function(){URL.revokeObjectURL(url);};img.src=url;
+});
+document.getElementById('teeReset').addEventListener('click',function(){
+ selectedColour='#b86e55';selectedSize='M';
+ document.querySelectorAll('#teeSwatches .swatch').forEach(function(b){b.classList.toggle('active',b.dataset.colour===selectedColour);});
+ document.querySelectorAll('#teeSizes .size-option').forEach(function(b){b.classList.toggle('active',b.textContent==='M');});
+ document.getElementById('teeColourName').textContent='Terracotta';document.getElementById('teePrintText').value='YOUR BRAND';document.getElementById('teePrintColour').value='#f7f4e9';document.getElementById('teePrintStyle').value='bold';document.getElementById('teePrintPlacement').value='chest';
+ if(originalFactors.length)originalFactors.forEach(function(x){x.m.pbrMetallicRoughness.setBaseColorFactor(x.factor);});applyGarmentColour();renderPreview();
+});
+renderPreview();
 })();
 
 </script>
