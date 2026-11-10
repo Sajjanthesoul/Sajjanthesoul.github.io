@@ -93,7 +93,33 @@ function shoeShape(){const s=new THREE.Shape();s.moveTo(-2.55,-.34);s.quadraticC
 function soleShape(){const s=new THREE.Shape();s.moveTo(-2.62,-.57);s.quadraticCurveTo(-2.68,-.43,-2.5,-.37);s.lineTo(2.37,-.37);s.quadraticCurveTo(2.68,-.39,2.67,-.57);s.quadraticCurveTo(2.61,-.77,2.34,-.78);s.lineTo(-2.28,-.78);s.quadraticCurveTo(-2.58,-.77,-2.62,-.57);return s;}
 extruded(soleShape(),1.45,soleMat,0,.09);
 const soleBand=new THREE.Mesh(new THREE.BoxGeometry(4.75,.035,1.42),new THREE.MeshStandardMaterial({color:0xb9b9ac,roughness:.9}));soleBand.position.set(-.03,-.64,0);soleBand.castShadow=true;shoe.add(soleBand);
-extruded(shoeShape(),1.25,upperMat,0,.12);
+// Rounded 3D upper built from lofted elliptical cross-sections (not a flat extruded silhouette)
+function buildUpper(){
+ const positions=[],indices=[],segments=40,steps=64;
+ for(let i=0;i<=steps;i++){
+  const t=i/steps,x=-2.42+t*4.82;
+  const toe=Math.max(0,(t-.72)/.28),heel=Math.max(0,(.22-t)/.22);
+  const width=(.48+.18*Math.sin(Math.PI*t)+.06*heel-.12*toe);
+  const bottom=-.49+.035*Math.sin(Math.PI*t);
+  const crown=.12+.62*Math.exp(-Math.pow((t-.40)/.22,2))+.17*heel-.08*toe;
+  for(let j=0;j<=segments;j++){
+   const a=(j/segments)*Math.PI*2;
+   const sn=Math.sin(a),cs=Math.cos(a);
+   const y=bottom+(crown-bottom)*(.5+.5*sn);
+   const z=width*cs;
+   positions.push(x,y,z);
+  }
+ }
+ for(let i=0;i<steps;i++)for(let j=0;j<segments;j++){
+  const a=i*(segments+1)+j,b=a+segments+1;
+  indices.push(a,b,a+1,b,b+1,a+1);
+ }
+ const g=new THREE.BufferGeometry();
+ g.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
+ g.setIndex(indices);g.computeVertexNormals();
+ const mesh=new THREE.Mesh(g,upperMat);mesh.castShadow=true;mesh.receiveShadow=true;shoe.add(mesh);
+}
+buildUpper();
 // Side reinforcement panel on both sides
 function panelShape(){const s=new THREE.Shape();s.moveTo(-2.12,-.28);s.quadraticCurveTo(-1.98,.02,-1.58,.12);s.lineTo(-.95,.45);s.quadraticCurveTo(-.68,.58,-.42,.42);s.lineTo(.2,.12);s.quadraticCurveTo(.7,-.02,1.18,-.1);s.lineTo(1.65,-.28);s.lineTo(-2.12,-.28);return s;}
 const panelGeom=new THREE.ShapeGeometry(panelShape(),18);
