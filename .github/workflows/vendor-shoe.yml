@@ -1,0 +1,37 @@
+name: Vendor 3D shoe asset
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "demos/product-preview-2026.html"
+      - ".github/workflows/vendor-shoe.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  download-model:
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Download GLB into this repository
+        run: |
+          mkdir -p assets/models
+          curl --fail --location --retry 3 --output assets/models/running-sneaker.glb "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/MaterialsVariantsShoe/glTF-Binary/MaterialsVariantsShoe.glb"
+          test "$(stat -c%s assets/models/running-sneaker.glb)" -gt 1000000
+          file assets/models/running-sneaker.glb
+      - name: Commit downloaded model
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/models/running-sneaker.glb
+          if git diff --cached --quiet; then
+            echo "GLB already current"
+          else
+            git commit -m "Vendor 3D sneaker GLB [skip ci]"
+            git push
+          fi
