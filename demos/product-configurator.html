@@ -1,1 +1,27 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>3D Product Configurator — Sajjan Ali</title><link rel="stylesheet" href="../assets/demo.css"></head><body><header><a href="../index.html">← BACK TO PORTFOLIO</a><span>INTERACTIVE CONCEPT / 01</span></header><main><section><div class="eyebrow">THREE.JS · PRODUCT EXPERIENCE</div><h1>Product <em>playground.</em></h1><p>Explore a simple 3D product concept. Change its finish and rotate the object to inspect it from every angle.</p><div class="controls"><label>FINISH<select id="finish"><option value="#c9f36a">Lime</option><option value="#d7d9df">Silver</option><option value="#d88b5b">Copper</option><option value="#6b8fc7">Blue</option></select></label><label>ROTATION<input id="rotation" type="range" min="0" max="6.28" step=".01" value=".7"></label></div><a class="back" href="../index.html#work">Return to selected work ↗</a></section><div class="stage"><canvas id="scene"></canvas><div class="stage-label">3D VIEW / DRAG TO ROTATE</div></div></main><script type="module" src="./configurator.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>3D Product Configurator — Sajjan Ali</title>
+<link rel="stylesheet" href="../assets/demo.css">
+</head>
+<body>
+<header><a href="../index.html">← BACK TO PORTFOLIO</a><span>INTERACTIVE CONCEPT / 01</span></header>
+<main>
+<section>
+<div class="eyebrow">THREE.JS · PRODUCT EXPERIENCE</div>
+<h1>Product <em>playground.</em></h1>
+<p>Explore a simple 3D product concept. Change its finish and rotate the object to inspect it from every angle.</p>
+<div class="controls">
+<label>FINISH<select id="finish"><option value="#c9f36a">Lime</option><option value="#d7d9df">Silver</option><option value="#d88b5b">Copper</option><option value="#6b8fc7">Blue</option></select></label>
+<label>ROTATION<input id="rotation" type="range" min="0" max="6.28" step=".01" value=".7"></label>
+</div>
+<a class="back" href="../index.html#work">Return to selected work ↗</a>
+</section>
+<div class="stage"><canvas id="scene"></canvas><div class="stage-label">3D VIEW / DRAG TO ROTATE</div></div>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js'"></script>
+<script src="./configurator.js"></script>
+</body>
+</html>
