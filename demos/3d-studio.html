@@ -19,10 +19,10 @@
 .model-loader{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:#0c100bea;z-index:3;text-align:center}.model-loader.hide{display:none}.spinner{width:32px;height:32px;border:3px solid #ffffff40;border-top-color:white;border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.loader-label{font-size:12px;font-weight:800;letter-spacing:1px}.loader-percent{font-size:24px;font-weight:800}.loader-track{height:6px;width:min(240px,70%);background:#ffffff35;border-radius:9px;overflow:hidden}.loader-fill{height:100%;width:0;background:#fff}
 .model-picker{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:14px}.model-choice{background:#20271d;border:1px solid #394431;border-radius:12px;color:#e9eddf;padding:12px;text-align:left;cursor:pointer;min-height:76px}.model-choice.active{border-color:var(--lime);background:#2b3522}.model-choice b{display:block;font-size:12px}.model-choice small{display:block;color:#aab39f;font-size:10px;margin-top:4px}.model-choice:hover{border-color:#b6d96a}
 .model-note{border-top:1px solid #ffffff10;padding:12px 16px;color:#87917d;font-size:10px}.model-note a{color:var(--lime)}
-.config-layout{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,.8fr);gap:0}.tee-stage{position:relative;min-height:440px;background:radial-gradient(ellipse at 50% 45%,#394630,#1a2117 70%)}#teeCanvas{width:100%;height:100%;min-height:440px;display:block;touch-action:none}.tee-help{position:absolute;bottom:14px;left:16px;color:#aab39f;font-size:10px;letter-spacing:.7px;pointer-events:none}
+.config-layout{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,.8fr);gap:0}.tee-real-stage{height:clamp(360px,52vw,560px);background:radial-gradient(ellipse at 50% 45%,#46543a 0%,#202a1b 75%)}.tee-real-stage model-viewer{width:100%;height:100%;display:block;background:transparent;--poster-color:transparent}
 .controls{padding:22px;border-left:1px solid #ffffff10}.controls h3{margin:0 0 5px;font-size:19px}.controls>p{margin:0 0 20px;color:var(--muted);font-size:11px}.field{margin-top:17px}.field label{display:block;margin-bottom:8px;color:#dce5d1;font-size:10px;font-weight:800;letter-spacing:1.2px}.swatches{display:flex;gap:9px;flex-wrap:wrap}.swatch{width:30px;height:30px;border-radius:50%;border:2px solid #ffffff55;cursor:pointer;box-shadow:0 0 0 2px transparent}.swatch.active{box-shadow:0 0 0 2px var(--lime);border-color:#fff}.control-input,.control-select{width:100%;background:#11170f;border:1px solid #3b4732;border-radius:8px;padding:11px 12px;color:#f4f6ee;font:12px Inter,system-ui,sans-serif;outline:none}.control-input:focus,.control-select:focus{border-color:var(--lime)}.inline-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}.color-input{width:100%;height:40px;border:1px solid #3b4732;border-radius:8px;background:#11170f;padding:4px}.actions{display:flex;gap:9px;margin-top:22px}.action{flex:1;border:0;border-radius:8px;padding:12px 10px;background:var(--lime);color:#171a11;font-size:11px;font-weight:900;cursor:pointer}.action.secondary{background:#2b3525;color:#eaf1df;border:1px solid #46533b}.action:hover{filter:brightness(1.08)}
 .footer{display:flex;justify-content:space-between;gap:12px;margin-top:25px;color:#788370;font-size:10px;letter-spacing:.6px}.footer a{color:var(--lime);text-decoration:none}
-@media(max-width:760px){.wrap{padding:16px 13px 30px}.brand{font-size:9px;letter-spacing:1px}.eyebrow{margin-top:25px}.section{margin-top:27px}.section-head{display:block}.section-head p{margin-top:5px}.model-stage{height:360px}.model-picker{grid-template-columns:repeat(2,1fr);gap:8px;padding:10px}.model-choice{min-height:65px;padding:10px}.config-layout{grid-template-columns:1fr}.tee-stage,#teeCanvas{min-height:350px;height:350px}.controls{border-left:0;border-top:1px solid #ffffff10;padding:18px}.footer{font-size:9px;flex-wrap:wrap}}
+@media(max-width:760px){.wrap{padding:16px 13px 30px}.brand{font-size:9px;letter-spacing:1px}.eyebrow{margin-top:25px}.section{margin-top:27px}.section-head{display:block}.section-head p{margin-top:5px}.model-stage{height:360px}.model-picker{grid-template-columns:repeat(2,1fr);gap:8px;padding:10px}.model-choice{min-height:65px;padding:10px}.config-layout{grid-template-columns:1fr}.tee-real-stage{height:390px}.controls{border-left:0;border-top:1px solid #ffffff10;padding:18px}.footer{font-size:9px;flex-wrap:wrap}}
 </style>
 </head>
 <body>
@@ -54,30 +54,13 @@
 </section>
 
 <section class="section">
-<div class="section-head"><h2>T-shirt configurator</h2><p>Customise the garment and artwork live</p></div>
+<div class="section-head"><h2>T-shirt configurator</h2><p>Real garment asset · rotate and zoom</p></div>
 <div class="config-shell">
-<div class="config-layout">
-<div class="tee-stage"><canvas id="teeCanvas"></canvas><div class="tee-help">DRAG TO ROTATE &nbsp;·&nbsp; SCROLL TO ZOOM</div></div>
-<aside class="controls">
-<h3>Your T-shirt</h3><p>Choose a fabric colour, size and custom front print.</p>
-<div class="field"><label>FABRIC COLOUR</label><div class="swatches">
-<button class="swatch active" data-color="#e9e8df" style="background:#e9e8df" aria-label="Off white"></button>
-<button class="swatch" data-color="#171a1d" style="background:#171a1d" aria-label="Black"></button>
-<button class="swatch" data-color="#243b63" style="background:#243b63" aria-label="Navy"></button>
-<button class="swatch" data-color="#7d3436" style="background:#7d3436" aria-label="Burgundy"></button>
-<button class="swatch" data-color="#697b55" style="background:#697b55" aria-label="Olive"></button>
-<button class="swatch" data-color="#d5b98e" style="background:#d5b98e" aria-label="Sand"></button>
-</div></div>
-<div class="inline-fields">
-<div class="field"><label for="shirtSize">SIZE</label><select class="control-select" id="shirtSize"><option>XS</option><option>S</option><option selected>M</option><option>L</option><option>XL</option><option>XXL</option></select></div>
-<div class="field"><label for="printColor">PRINT COLOUR</label><input class="color-input" id="printColor" type="color" value="#c9f36a"></div>
+<div class="product-top"><div class="live"><span class="dot"></span> REAL 3D GARMENT MODEL</div><div class="model-tag">CC0 / GLB / 1,012 TRIANGLES</div></div>
+<div class="model-stage tee-real-stage">
+<model-viewer id="teeViewer" src="https://cdn.3dassets.dev/assets/35447/v1/model.glb" alt="Terracotta T-shirt hanging naturally on a velvet clothes hanger" camera-controls auto-rotate rotation-per-second="14deg" shadow-intensity="1" exposure="1.15" environment-image="neutral" camera-orbit="0deg 75deg auto" field-of-view="28deg" min-camera-orbit="auto auto auto" max-camera-orbit="auto auto auto" interaction-prompt="auto" loading="eager" reveal="auto"></model-viewer>
 </div>
-<div class="field"><label for="printText">FRONT PRINT TEXT</label><input class="control-input" id="printText" maxlength="18" value="YOUR BRAND" placeholder="Enter your text"></div>
-<div class="field"><label for="printStyle">PRINT STYLE</label><select class="control-select" id="printStyle"><option value="bold">Bold / Modern</option><option value="serif">Editorial / Serif</option><option value="mono">Minimal / Mono</option></select></div>
-<div class="actions"><button class="action" id="exportDesign">Export mockup ↓</button><button class="action secondary" id="resetDesign">Reset</button></div>
-</aside>
-</div>
-<div class="model-note">Interactive 3D concept configurator. The mockup can be exported as a PNG; no order or payment is submitted.</div>
+<div class="model-note">Real CC0 T-shirt mesh with shaped shoulders, short sleeves, turned cuffs, ribbed crew neck and velvet hanger. Drag to rotate and pinch / scroll to zoom. This is a fixed terracotta garment model; live fabric recolouring and print placement are not enabled yet. <a href="https://3dassets.dev/assets/clothing-rail-and-wardrobe-tshirt-on-hanger-c0e0e17d" target="_blank" rel="noopener">View original asset ↗</a></div>
 </div>
 </section>
 </main>
@@ -104,95 +87,6 @@ viewer.addEventListener('model-visibility',function(){});
 showLoader();
 })();
 
-(function(){
-const canvas=document.getElementById('teeCanvas');
-if(!window.THREE){document.querySelector('.tee-help').textContent='3D engine unavailable — refresh to retry.';return;}
-const THREE=window.THREE;
-const scene=new THREE.Scene();scene.background=new THREE.Color('#20291d');
-const camera=new THREE.PerspectiveCamera(34,1,.1,100);camera.position.set(0,.18,5.1);
-const renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,preserveDrawingBuffer:true});
-renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
-scene.add(new THREE.HemisphereLight(0xffffff,0x34412b,2.1));
-const key=new THREE.DirectionalLight(0xffffff,3.1);key.position.set(-3,4,5);key.castShadow=true;scene.add(key);
-const fillLight=new THREE.DirectionalLight(0xffffff,1.15);fillLight.position.set(3,1,4);scene.add(fillLight);
-const rim=new THREE.DirectionalLight(0xc9f36a,1.25);rim.position.set(3,1,-3);scene.add(rim);
-const group=new THREE.Group();scene.add(group);
-const fabric=new THREE.MeshStandardMaterial({color:'#e9e8df',roughness:.94,metalness:0,side:THREE.DoubleSide});
-const seamMat=new THREE.MeshStandardMaterial({color:'#c9c9bf',roughness:1});
-const darkSeam=new THREE.MeshStandardMaterial({color:'#9c9d92',roughness:1});
-function makeTube(a,b,r1,r2,material){
- const axis=new THREE.Vector3().subVectors(b,a),len=axis.length(),dir=axis.clone().normalize();
- const q=new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0,1,0),dir);
- const g=new THREE.CylinderGeometry(r2,r1,len,32,1,true);
- const m=new THREE.Mesh(g,material);m.position.copy(a).add(b).multiplyScalar(.5);m.quaternion.copy(q);m.castShadow=true;m.receiveShadow=true;group.add(m);return m;
-}
-// Curved fabric panels: front and back are separate cloth-like surfaces, not an extruded block.
-function makeBodyPanel(front){
- const cols=36,rows=42,vertices=[],uvs=[],indices=[];
- for(let j=0;j<=rows;j++){
-  const v=j/rows;
-  for(let i=0;i<=cols;i++){
-   const u=i/cols,nx=u*2-1;
-   const top=1.08-.27*Math.exp(-Math.pow(nx/.34,2));
-   const y=-1.02+v*(top+1.02);
-   const chest=Math.exp(-Math.pow((y-.48)/.48,2));
-   const waist=Math.exp(-Math.pow((y+.18)/.34,2));
-   const width=.49+.055*chest-.025*waist;
-   const x=nx*width;
-   const dome=.105*(1-nx*nx);
-   const drape=(Math.sin((y+1.1)*8+nx*2)+.45*Math.sin(y*15-nx*4))*.006;
-   const z=front ? .105+dome+drape : -.105-dome-drape;
-   vertices.push(x,y,z);uvs.push(u,v);
-   if(j<rows&&i<cols){const k=j*(cols+1)+i;indices.push(k,k+1,k+cols+2,k,k+cols+2,k+cols+1);}
-  }
- }
- const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));g.setAttribute('uv',new THREE.Float32BufferAttribute(uvs,2));g.setIndex(indices);g.computeVertexNormals();
- const m=new THREE.Mesh(g,fabric);m.castShadow=true;m.receiveShadow=true;group.add(m);return m;
-}
-makeBodyPanel(true);makeBodyPanel(false);
-// Fine edge piping suggests stitched side seams and a finished lower hem.
-const hemPoints=[];for(let i=0;i<=20;i++){const nx=-1+i/10;const x=nx*.49;hemPoints.push(new THREE.Vector3(x,-.99,.15));}
-// Separate softly tapered sleeves give the garment a proper three-dimensional silhouette.
-makeTube(new THREE.Vector3(-.39,.91,0),new THREE.Vector3(-.91,.43,-.005),.235,.165,fabric);
-makeTube(new THREE.Vector3(.39,.91,0),new THREE.Vector3(.91,.43,-.005),.235,.165,fabric);
-// Sleeve cuff stitching and lower hem.
-function seamLine(points,r=.009,mat=seamMat){const curve=new THREE.CatmullRomCurve3(points);const mesh=new THREE.Mesh(new THREE.TubeGeometry(curve,40,r,6,false),mat);group.add(mesh);return mesh;}
-seamLine([new THREE.Vector3(-.84,.49,.12),new THREE.Vector3(-.91,.43,.12),new THREE.Vector3(-.98,.37,.10)],.012);
-seamLine([new THREE.Vector3(.84,.49,.12),new THREE.Vector3(.91,.43,.12),new THREE.Vector3(.98,.37,.10)],.012);
-seamLine([new THREE.Vector3(-.42,-.96,.145),new THREE.Vector3(0,-.98,.145),new THREE.Vector3(.42,-.96,.145)],.009,darkSeam);
-// Raised ribbed collar ring with an open neckline.
-const collar=new THREE.Mesh(new THREE.TorusGeometry(.205,.045,16,64),new THREE.MeshStandardMaterial({color:'#d2d1c8',roughness:1}));
-collar.position.set(0,.91,.025);collar.scale.set(1,.66,1);group.add(collar);
-const collarInner=new THREE.Mesh(new THREE.TorusGeometry(.166,.014,10,64),darkSeam);collarInner.position.set(0,.912,.03);collarInner.scale.y=.66;group.add(collarInner);
-// Curved print panel follows the rounded chest instead of floating as a flat card.
-const printCanvas=document.createElement('canvas');printCanvas.width=1024;printCanvas.height=768;
-const ctx=printCanvas.getContext('2d');const printTexture=new THREE.CanvasTexture(printCanvas);printTexture.colorSpace=THREE.SRGBColorSpace;
-const printMat=new THREE.MeshBasicMaterial({map:printTexture,transparent:true,side:THREE.DoubleSide,depthWrite:false});
-const printGeo=new THREE.PlaneGeometry(.68,.48,18,12);
-const pos=printGeo.attributes.position;
-for(let i=0;i<pos.count;i++){const x=pos.getX(i),y=pos.getY(i);pos.setZ(i,.045*(1-Math.pow(x/.34,2))+.008*Math.cos(y*5));}
-printGeo.computeVertexNormals();
-const printPlane=new THREE.Mesh(printGeo,printMat);printPlane.position.set(0,.30,.19);group.add(printPlane);
-// Subtle natural fabric drape lines on the torso.
-seamLine([new THREE.Vector3(-.37,.64,.17),new THREE.Vector3(-.29,.22,.19),new THREE.Vector3(-.32,-.35,.18)],.006,new THREE.MeshBasicMaterial({color:'#b8b8ae',transparent:true,opacity:.55}));
-seamLine([new THREE.Vector3(.37,.64,.17),new THREE.Vector3(.29,.22,.19),new THREE.Vector3(.32,-.35,.18)],.006,new THREE.MeshBasicMaterial({color:'#b8b8ae',transparent:true,opacity:.55}));
-const floor=new THREE.Mesh(new THREE.CircleGeometry(2.1,64),new THREE.MeshStandardMaterial({color:'#263322',roughness:1}));floor.rotation.x=-Math.PI/2;floor.position.y=-1.22;floor.receiveShadow=true;scene.add(floor);
-const shadow=new THREE.Mesh(new THREE.CircleGeometry(.95,48),new THREE.MeshBasicMaterial({color:'#080d07',transparent:true,opacity:.42}));shadow.rotation.x=-Math.PI/2;shadow.scale.set(1.2,.5,1);shadow.position.set(0,-1.205,0);scene.add(shadow);
-let drag=false,lastX=0,lastY=0,rotY=-.22,rotX=0,zoom=5.1;
-function resize(){const w=canvas.clientWidth||600,h=canvas.clientHeight||400;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();}
-function drawPrint(){ctx.clearRect(0,0,1024,768);const text=document.getElementById('printText').value.trim().toUpperCase();const color=document.getElementById('printColor').value;const style=document.getElementById('printStyle').value;let family='800 100px Arial';if(style==='serif')family='bold 100px Georgia';if(style==='mono')family='bold 84px monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color;ctx.font=family;let value=text||' ';while(ctx.measureText(value).width>900&&parseInt(ctx.font,10)>35){ctx.font=ctx.font.replace(/\\d+px/,function(n){return (parseInt(n,10)-5)+'px';});}ctx.fillText(value,512,385);ctx.strokeStyle=color;ctx.globalAlpha=.8;ctx.lineWidth=8;ctx.beginPath();ctx.moveTo(250,510);ctx.lineTo(774,510);ctx.stroke();ctx.globalAlpha=1;printTexture.needsUpdate=true;}
-function animate(){requestAnimationFrame(animate);group.rotation.y=rotY;group.rotation.x=rotX;camera.position.z=zoom;camera.lookAt(0,.1,0);renderer.render(scene,camera);}
-canvas.addEventListener('pointerdown',function(e){drag=true;lastX=e.clientX;lastY=e.clientY;canvas.setPointerCapture(e.pointerId);});
-canvas.addEventListener('pointermove',function(e){if(!drag)return;rotY+=(e.clientX-lastX)*.009;rotX=Math.max(-.28,Math.min(.28,rotX+(e.clientY-lastY)*.004));lastX=e.clientX;lastY=e.clientY;});
-canvas.addEventListener('pointerup',function(){drag=false;});canvas.addEventListener('pointercancel',function(){drag=false;});
-canvas.addEventListener('wheel',function(e){e.preventDefault();zoom=Math.max(3.8,Math.min(7,zoom+e.deltaY*.004));},{passive:false});
-document.querySelectorAll('.swatch').forEach(function(btn){btn.addEventListener('click',function(){document.querySelectorAll('.swatch').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');fabric.color.set(btn.dataset.color);});});
-document.getElementById('shirtSize').addEventListener('change',function(e){const scale={XS:.9,S:.95,M:1,L:1.04,XL:1.08,XXL:1.12}[e.target.value]||1;group.scale.setScalar(scale);});
-['printText','printColor','printStyle'].forEach(function(id){document.getElementById(id).addEventListener('input',drawPrint);document.getElementById(id).addEventListener('change',drawPrint);});
-document.getElementById('resetDesign').addEventListener('click',function(){document.querySelectorAll('.swatch').forEach(function(b){b.classList.toggle('active',b.dataset.color==='#e9e8df');});fabric.color.set('#e9e8df');document.getElementById('shirtSize').value='M';group.scale.setScalar(1);document.getElementById('printText').value='YOUR BRAND';document.getElementById('printColor').value='#c9f36a';document.getElementById('printStyle').value='bold';rotY=-.22;rotX=0;zoom=5.1;drawPrint();});
-document.getElementById('exportDesign').addEventListener('click',function(){renderer.render(scene,camera);const link=document.createElement('a');link.download='sajjan-tshirt-mockup.png';link.href=renderer.domElement.toDataURL('image/png');link.click();});
-const observer=new ResizeObserver(resize);observer.observe(canvas);resize();drawPrint();animate();
-})(););
 </script>
 </body>
 </html>
