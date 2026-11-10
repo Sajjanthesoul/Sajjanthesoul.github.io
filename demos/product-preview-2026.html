@@ -19,7 +19,7 @@
 .live{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:1.5px;font-weight:800}.dot{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 12px #c9f36a99}
 .model-tag{font-size:10px;color:#899582;letter-spacing:1px}
 .frame{position:relative;width:100%;aspect-ratio:1.25;background:#202a1b}
-.frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+.frame model-viewer{position:absolute;inset:0;width:100%;height:100%;display:block;background:radial-gradient(ellipse at 50% 45%,#46543a 0%,#202a1b 75%);--poster-color:transparent}
 .viewer-foot{display:flex;justify-content:space-between;gap:10px;padding:12px 16px;border-top:1px solid #ffffff10;color:#899582;font-size:10px;letter-spacing:.6px}.viewer-foot strong{color:#d6e7c0}
 .info{padding:22px}.kicker{font-size:10px;color:var(--lime);font-weight:800;letter-spacing:2px;margin-bottom:7px}h2{font-size:20px;margin:0 0 8px}.info p{font-size:12px;color:var(--muted);margin:0 0 18px}
 .spec{padding:14px 0;border-top:1px solid #ffffff12}.spec b{display:block;font-size:10px;letter-spacing:1.3px;color:#e5ecd9;margin-bottom:5px}.spec span{font-size:12px;color:var(--muted)}
@@ -27,6 +27,7 @@
 .footer{display:flex;justify-content:space-between;gap:12px;margin-top:20px;color:#788370;font-size:10px;letter-spacing:.6px}.footer a{color:var(--lime);text-decoration:none}
 @media(max-width:760px){.wrap{padding:16px 13px 24px}.brand{font-size:9px;letter-spacing:1px}.eyebrow{margin-top:25px}h1{font-size:clamp(34px,10vw,47px)}.layout{grid-template-columns:1fr;gap:12px;margin-top:19px}.frame{aspect-ratio:1/1.05}.viewer,.info{border-radius:15px}.info{padding:18px}.footer{font-size:9px}}
 </style>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer/dist/model-viewer.min.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -37,19 +38,19 @@
 <p class="intro">Inspect a detailed, textured running-shoe model in a real-time 3D viewer. Orbit, zoom, change viewing modes and explore the model from every angle.</p>
 <div class="layout">
 <section class="viewer" aria-label="Interactive 3D running sneaker model">
-<div class="viewer-head"><div class="live"><span class="dot"></span> LIVE 3D MODEL</div><div class="model-tag">TEXTURED GLB / CC0</div></div>
+<div class="viewer-head"><div class="live"><span class="dot"></span> LIVE 3D MODEL</div><div class="model-tag">GLB / CC BY 4.0</div></div>
 <div class="frame">
-<iframe title="Interactive textured 3D running sneaker" src="https://www.innerscene.com/v/INlUF5zsnZSqN84FLgNXy" allow="fullscreen; autoplay" allowfullscreen loading="eager" referrerpolicy="strict-origin-https"></iframe>
+<model-viewer src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/MaterialsVariantsShoe/glTF-Binary/MaterialsVariantsShoe.glb" alt="Detailed 3D sneaker model" camera-controls auto-rotate rotation-per-second="18deg" shadow-intensity="1" exposure="1.15" environment-image="neutral" camera-orbit="35deg 70deg 2.8m" min-camera-orbit="auto auto 1.5m" max-camera-orbit="auto auto 5m" interaction-prompt="auto" loading="eager" reveal="auto"></model-viewer>
 </div>
 <div class="viewer-foot"><span><strong>REAL MODEL</strong> &nbsp;·&nbsp; PBR MATERIALS</span><span>DRAG · ZOOM · INSPECT</span></div>
 </section>
 <aside class="info">
 <div class="kicker">MODEL DETAILS</div><h2>Running sneaker.</h2>
-<p>A generic, unbranded pair of running shoes with physically based materials and real-world proportions.</p>
-<div class="spec"><b>UPPER</b><span>Blue engineered knit mesh, grey mudguard, white heel counter and dark collar lining.</span></div>
+<p>A detailed shoe model from the Khronos glTF Sample Assets collection, used to demonstrate real-time product viewing and material rendering.</p>
+<div class="spec"><b>UPPER</b><span>Detailed shoe geometry and material variants from the Shopify MaterialsVariantsShoe sample asset.</span></div>
 <div class="spec"><b>CONSTRUCTION</b><span>Flat laces, mesh tongue, EVA foam midsole and black rubber outsole with flex grooves.</span></div>
-<div class="spec"><b>INTERACTION</b><span>Drag to orbit. Pinch or scroll to zoom. Use the viewer toolbar for lighting and display options.</span></div>
-<div class="spec"><b>ASSET LICENSE</b><span>CC0 public domain — free to use and modify.</span><br><a class="credit" href="https://www.innerscene.com/tools/library/3d-parts/running-sneaker-c7a5a7eb" target="_blank" rel="noopener">MODEL SOURCE & LICENSE ↗</a></div>
+<div class="spec"><b>INTERACTION</b><span>Drag to orbit. Pinch or scroll to zoom. The model is served from GitHub raw hosting to avoid the previous Innerscene file-host CORS issue.</span></div>
+<div class="spec"><b>ASSET LICENSE</b><span>CC BY 4.0 — attribution required. Source: Shopify / Khronos glTF Sample Assets.</span><br><a class="credit" href="https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/MaterialsVariantsShoe" target="_blank" rel="noopener">MODEL SOURCE & ATTRIBUTION ↗</a></div>
 </aside>
 </div>
 </main>
