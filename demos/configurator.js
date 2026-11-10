@@ -1,72 +1,64 @@
-const canvas = document.querySelector("#scene");
-const stage = document.querySelector(".stage");
+(function () {
+  const canvas = document.querySelector("#scene");
+  const stage = document.querySelector(".stage");
 
-function showError(message) {
-  const notice = document.createElement("div");
-  notice.style.cssText = "position:absolute;inset:0;display:grid;place-content:center;padding:28px;text-align:center;background:#171b15;color:#f1f1e9;font:14px/1.6 Arial,sans-serif;z-index:2";
-  notice.innerHTML = '<strong style="color:#c9f36a;font-size:18px;margin-bottom:10px">3D preview could not start</strong><span></span><small style="margin-top:12px;color:#a3a69b">Try opening this page in Chrome and enable hardware acceleration/WebGL.</small>';
-  notice.querySelector("span").textContent = message;
-  stage.appendChild(notice);
-}
-
-async function loadThree() {
-  try {
-    return await import("https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js");
-  } catch (firstError) {
-    try {
-      return await import("https://unpkg.com/three@0.160.0/build/three.module.js");
-    } catch (secondError) {
-      throw new Error("The 3D library could not be downloaded. Check your internet connection or try Chrome.");
-    }
+  function showError(message) {
+    const notice = document.createElement("div");
+    notice.style.cssText = "position:absolute;inset:0;display:grid;place-content:center;padding:28px;text-align:center;background:#171b15;color:#f1f1e9;font:14px/1.6 Arial,sans-serif;z-index:3";
+    const heading = document.createElement("strong");
+    heading.textContent = "3D preview could not start";
+    heading.style.cssText = "color:#c9f36a;font-size:18px;margin-bottom:10px";
+    const detail = document.createElement("span");
+    detail.textContent = message;
+    const hint = document.createElement("small");
+    hint.textContent = "Open this demo in Chrome and check that WebGL is enabled.";
+    hint.style.cssText = "margin-top:12px;color:#a3a69b";
+    notice.append(heading, detail, hint);
+    stage.appendChild(notice);
   }
-}
 
-async function start() {
-  try {
-    const THREE = await loadThree();
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color("#20271d");
+  function start() {
+    if (!window.THREE) {
+      showError("The 3D engine did not load. Please check your internet connection and reload.");
+      return;
+    }
 
-    const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
-    camera.position.set(4, 3, 5);
-
+    const THREE = window.THREE;
     let renderer;
     try {
       renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
     } catch (error) {
-      throw new Error("WebGL is unavailable in this browser or device.");
+      showError("WebGL is disabled or unavailable on this browser/device.");
+      return;
     }
 
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color("#20271d");
+    const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+    camera.position.set(4, 3, 5);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+    renderer.setClearColor("#20271d", 1);
 
     const group = new THREE.Group();
     scene.add(group);
 
-    const material = new THREE.MeshStandardMaterial({
-      color: "#c9f36a",
-      metalness: 0.45,
-      roughness: 0.24
-    });
+    const material = new THREE.MeshStandardMaterial({ color: "#c9f36a", metalness: 0.4, roughness: 0.3 });
     const geometry = new THREE.BoxGeometry(2.1, 2.1, 2.1);
-    const body = new THREE.Mesh(geometry, material);
-    group.add(body);
-
-    const edge = new THREE.LineSegments(
+    group.add(new THREE.Mesh(geometry, material));
+    group.add(new THREE.LineSegments(
       new THREE.EdgesGeometry(geometry),
-      new THREE.LineBasicMaterial({ color: "#f0ffd1", transparent: true, opacity: 0.4 })
-    );
-    group.add(edge);
+      new THREE.LineBasicMaterial({ color: "#f0ffd1", transparent: true, opacity: 0.45 })
+    ));
 
     const ring = new THREE.Mesh(
-      new THREE.TorusGeometry(1.55, 0.035, 12, 100),
-      new THREE.MeshStandardMaterial({ color: "#a2b77b", metalness: 0.6, roughness: 0.3 })
+      new THREE.TorusGeometry(1.55, 0.035, 10, 80),
+      new THREE.MeshStandardMaterial({ color: "#a2b77b", metalness: 0.5, roughness: 0.35 })
     );
     ring.rotation.x = Math.PI / 2.6;
     group.add(ring);
 
-    scene.add(new THREE.HemisphereLight(0xffffff, 0x536044, 2));
-    const light = new THREE.DirectionalLight(0xffffff, 3);
+    scene.add(new THREE.HemisphereLight(0xffffff, 0x536044, 1.8));
+    const light = new THREE.DirectionalLight(0xffffff, 2.5);
     light.position.set(4, 5, 5);
     scene.add(light);
 
@@ -77,34 +69,30 @@ async function start() {
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
     }
-
-    if ("ResizeObserver" in window) {
-      new ResizeObserver(resize).observe(stage);
-    }
     window.addEventListener("resize", resize);
+    if (window.ResizeObserver) new ResizeObserver(resize).observe(stage);
     resize();
 
     let dragging = false;
     let lastX = 0;
     canvas.style.touchAction = "none";
-
-    canvas.addEventListener("pointerdown", event => {
+    canvas.addEventListener("pointerdown", function (event) {
       dragging = true;
       lastX = event.clientX;
-      canvas.setPointerCapture(event.pointerId);
+      if (canvas.setPointerCapture) canvas.setPointerCapture(event.pointerId);
     });
-    canvas.addEventListener("pointerup", () => dragging = false);
-    canvas.addEventListener("pointercancel", () => dragging = false);
-    canvas.addEventListener("pointermove", event => {
+    canvas.addEventListener("pointerup", function () { dragging = false; });
+    canvas.addEventListener("pointercancel", function () { dragging = false; });
+    canvas.addEventListener("pointermove", function (event) {
       if (!dragging) return;
       group.rotation.y += (event.clientX - lastX) * 0.009;
       lastX = event.clientX;
     });
 
-    document.querySelector("#finish").addEventListener("change", event => {
+    document.querySelector("#finish").addEventListener("change", function (event) {
       material.color.set(event.target.value);
     });
-    document.querySelector("#rotation").addEventListener("input", event => {
+    document.querySelector("#rotation").addEventListener("input", function (event) {
       group.rotation.y = Number(event.target.value);
     });
 
@@ -114,10 +102,11 @@ async function start() {
       renderer.render(scene, camera);
     }
     animate();
-  } catch (error) {
-    console.error("3D configurator:", error);
-    showError(error && error.message ? error.message : "An unexpected error occurred.");
   }
-}
 
-start();
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", start);
+  } else {
+    start();
+  }
+})();
