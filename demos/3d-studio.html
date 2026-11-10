@@ -72,7 +72,7 @@
 <div class="field"><label>SIZE</label><div class="size-options" id="teeSizes"><button class="size-option" type="button">XS</button><button class="size-option" type="button">S</button><button class="size-option active" type="button">M</button><button class="size-option" type="button">L</button><button class="size-option" type="button">XL</button><button class="size-option" type="button">XXL</button></div><span class="field-hint">Size selection is saved with your exported design; the 3D asset keeps its original proportions.</span></div>
 <div class="field"><label>3D GARMENT MATERIAL</label><select class="control-select" id="teeMaterialSelect"><option value="">Detecting garment material…</option></select><span class="field-hint">Choose the shirt fabric material from the loaded GLB.</span></div>\n<div class="field"><label>PRINT TEXT</label><input class="control-input" id="teePrintText" maxlength="22" value="YOUR BRAND" placeholder="Enter your text"></div>
 <div class="inline-fields"><div class="field"><label>PRINT COLOUR</label><input class="color-input" id="teePrintColour" type="color" value="#f7f4e9"></div><div class="field"><label>PRINT STYLE</label><select class="control-select" id="teePrintStyle"><option value="bold">Bold</option><option value="minimal">Minimal</option><option value="outline">Outline</option></select></div></div>
-<div class="field"><label>PRINT PLACEMENT</label><select class="control-select" id="teePrintPlacement"><option value="chest">Left chest</option><option value="center">Center chest</option><option value="back">Upper back</option></select></div>
+<div class="field"><label>PRINT PLACEMENT</label><select class="control-select" id="teePrintPlacement"><option value="center" selected>Center chest</option><option value="chest">Left chest</option><option value="back">Upper back</option></select></div>
 <div class="tee-preview"><div class="tee-preview-head">LIVE 3D UV TEXTURE · PRINT ARTWORK</div><canvas id="teeTexturePreview" width="1024" height="1024" style="display:block;width:100%;max-height:220px;object-fit:contain;background:#222"></canvas><div id="teeDesignPreview" style="display:none"></div></div>
 <div class="tee-actions"><button class="action" type="button" id="teeExport">Export PNG</button><button class="action secondary" type="button" id="teeReset">Reset design</button></div>
 <p class="field-hint">Colour is applied to the garment material when supported by the model. Print artwork is drawn into the selected GLB material’s UV texture and applied to the rotating 3D garment. UV layouts differ by model; choose the shirt fabric material if the automatic selection is wrong.</p>
@@ -149,8 +149,8 @@ function drawTexture(){
  var raw=document.getElementById('teePrintText').value.trim()||'YOUR BRAND',place=document.getElementById('teePrintPlacement').value,ink=document.getElementById('teePrintColour').value,style=document.getElementById('teePrintStyle').value;
  var x=place==='chest'?650:512,y=place==='back'?350:place==='center'?535:440;
  ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=ink;ctx.strokeStyle=ink;
- ctx.font=(style==='minimal'?'500':'900')+' 64px Arial,sans-serif';
- if(style==='outline'){ctx.lineWidth=3;ctx.strokeText(raw,x,y,500);}else{ctx.fillText(raw,x,y,500);}
+ ctx.font=(style==='minimal'?'600':'900')+' 142px Arial,sans-serif';
+ if(style==='outline'){ctx.lineWidth=9;ctx.strokeText(raw,x,y,900);}else{ctx.fillText(raw,x,y,900);}
  ctx.restore();
  ctx.fillStyle='rgba(255,255,255,.45)';ctx.font='20px Arial';ctx.fillText('DESIGNED BY YOU',512,980);
  if(canvasTexture&&canvasTexture.source&&canvasTexture.source.update)canvasTexture.source.update();
@@ -184,9 +184,9 @@ function refreshTexture(){
  if(baseTextureImage){tc.drawImage(baseTextureImage,0,0,1024,1024);tc.globalCompositeOperation='multiply';tc.fillStyle=selectedColour;tc.fillRect(0,0,1024,1024);tc.globalCompositeOperation='source-over';}
  else{tc.fillStyle=selectedColour;tc.fillRect(0,0,1024,1024);}
  var raw=document.getElementById('teePrintText').value.trim()||'YOUR BRAND',place=document.getElementById('teePrintPlacement').value,ink=document.getElementById('teePrintColour').value,style=document.getElementById('teePrintStyle').value;
- var x=place==='chest'?660:512,y=place==='back'?350:place==='center'?535:440;
- tc.save();tc.textAlign='center';tc.textBaseline='middle';tc.fillStyle=ink;tc.strokeStyle=ink;tc.font=(style==='minimal'?'500':'900')+' 64px Arial,sans-serif';
- if(style==='outline'){tc.lineWidth=3;tc.strokeText(raw,x,y,500);}else{tc.fillText(raw,x,y,500);}tc.restore();
+ var x=512,y=512;
+ tc.save();tc.textAlign='center';tc.textBaseline='middle';tc.fillStyle=ink;tc.strokeStyle=ink;tc.font=(style==='minimal'?'600':'900')+' 142px Arial,sans-serif';
+ if(style==='outline'){tc.lineWidth=9;tc.strokeText(raw,x,y,900);}else{tc.fillText(raw,x,y,900);}tc.restore();
  tc.fillStyle='rgba(255,255,255,.45)';tc.font='20px Arial';tc.fillText('DESIGNED BY YOU',512,980);
  canvasTexture.source.update();
  var pbr=targetMaterial.pbrMetallicRoughness;
