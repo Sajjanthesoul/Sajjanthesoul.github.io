@@ -20,9 +20,9 @@
 .model-tag{font-size:10px;color:#899582;letter-spacing:1px}
 .frame{position:relative;width:100%;aspect-ratio:1.25;background:#202a1b}
 .frame model-viewer{position:absolute;inset:0;width:100%;height:100%;display:block;background:radial-gradient(ellipse at 50% 45%,#46543a 0%,#202a1b 75%);--poster-color:transparent}
-.load-screen{position:absolute;z-index:3;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;background:radial-gradient(ellipse at 50% 45%,#293522 0%,#171f14 78%);transition:opacity .35s ease,visibility .35s ease}
-.load-screen.done{opacity:0;visibility:hidden;pointer-events:none}.load-spinner{width:34px;height:34px;border:3px solid #ffffff22;border-top-color:var(--lime);border-radius:50%;animation:spin .8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}.load-title{font-size:11px;font-weight:800;letter-spacing:2px;color:#f4f6ee}.load-percent{font-size:25px;line-height:1;font-weight:750;color:var(--lime);font-variant-numeric:tabular-nums}.load-track{width:min(210px,65%);height:4px;border-radius:9px;background:#ffffff20;overflow:hidden}.load-fill{height:100%;width:0;background:var(--lime);border-radius:9px;transition:width .18s ease}.load-hint{font-size:10px;color:#aab39f;letter-spacing:.5px}
+.load-screen{position:absolute;z-index:5;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:15px;text-align:center;background:rgba(8,10,8,.96);transition:opacity .35s ease,visibility .35s ease}
+.load-screen.done{opacity:0;visibility:hidden;pointer-events:none}.load-spinner{width:44px;height:44px;border:4px solid rgba(255,255,255,.28);border-top-color:#fff;border-right-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}.load-title{font-size:14px;font-weight:800;letter-spacing:2px;color:#fff}.load-percent{font-size:36px;line-height:1;font-weight:800;color:#fff;font-variant-numeric:tabular-nums}.load-track{width:min(280px,76%);height:8px;border-radius:20px;background:rgba(255,255,255,.3);overflow:hidden;border:1px solid rgba(255,255,255,.65)}.load-fill{height:100%;width:0;background:#fff;border-radius:20px;transition:width .18s ease}.load-hint{font-size:11px;color:#fff;letter-spacing:.5px}
 .viewer-foot{display:flex;justify-content:space-between;gap:10px;padding:12px 16px;border-top:1px solid #ffffff10;color:#899582;font-size:10px;letter-spacing:.6px}.viewer-foot strong{color:#d6e7c0}
 .info{padding:22px}.kicker{font-size:10px;color:var(--lime);font-weight:800;letter-spacing:2px;margin-bottom:7px}h2{font-size:20px;margin:0 0 8px}.info p{font-size:12px;color:var(--muted);margin:0 0 18px}
 .spec{padding:14px 0;border-top:1px solid #ffffff12}.spec b{display:block;font-size:10px;letter-spacing:1.3px;color:#e5ecd9;margin-bottom:5px}.spec span{font-size:12px;color:var(--muted)}
@@ -42,8 +42,8 @@
 <div class="layout">
 <section class="viewer" aria-label="Interactive 3D running sneaker model">
 <div class="viewer-head"><div class="live"><span class="dot"></span> LIVE 3D MODEL</div><div class="model-tag">GLB / CC BY 4.0</div></div>
-<div class="frame">
-<model-viewer src="../assets/models/running-sneaker.glb" alt="Detailed 3D sneaker model" camera-controls auto-rotate rotation-per-second="18deg" shadow-intensity="1" exposure="1.15" environment-image="neutral" camera-orbit="35deg 70deg 0.85m" field-of-view="25deg" min-camera-orbit="auto auto 0.45m" max-camera-orbit="auto auto 2.5m" interaction-prompt="auto" loading="eager" reveal="auto"></model-viewer>
+<div class="frame">\n<div class="load-screen" id="modelLoader" role="status" aria-live="polite"><div class="load-spinner"></div><div class="load-title">LOADING 3D MODEL</div><div class="load-percent" id="loadPercent">0%</div><div class="load-track"><div class="load-fill" id="loadFill"></div></div><div class="load-hint" id="loadHint">Downloading model and textures…</div></div>
+<model-viewer src="../assets/models/running-sneaker.glb" alt="Detailed 3D sneaker model" camera-controls auto-rotate rotation-per-second="18deg" shadow-intensity="1" exposure="1.15" environment-image="neutral" camera-orbit="35deg 70deg 0.48m" field-of-view="20deg" min-camera-orbit="auto auto 0.3m" max-camera-orbit="auto auto 1.8m" interaction-prompt="auto" loading="eager" reveal="auto"></model-viewer>
 </div>
 <div class="viewer-foot"><span><strong>REAL MODEL</strong> &nbsp;·&nbsp; PBR MATERIALS</span><span>DRAG · ZOOM · INSPECT</span></div>
 </section>
@@ -57,6 +57,9 @@
 </aside>
 </div>
 </main>
+<script>
+(()=>{const v=document.querySelector('model-viewer'),screen=document.getElementById('modelLoader'),pct=document.getElementById('loadPercent'),bar=document.getElementById('loadFill'),hint=document.getElementById('loadHint');if(!v||!screen)return;let done=false;v.addEventListener('progress',e=>{if(done)return;const n=Math.max(0,Math.min(1,Number(e.detail?.totalProgress)||0));const p=Math.round(n*100);pct.textContent=p+'%';bar.style.width=p+'%';hint.textContent=p>=100?'Preparing 3D view…':'Downloading model and textures…';});v.addEventListener('load',()=>{done=true;pct.textContent='100%';bar.style.width='100%';hint.textContent='Model ready';setTimeout(()=>screen.classList.add('done'),500);});v.addEventListener('error',()=>{hint.textContent='Model failed to load. Refresh to retry.';pct.textContent='!';});})();
+</script>
 <footer class="footer"><span>DESIGNED & BUILT BY SAJJAN ALI</span><a href="../index.html#work">EXPLORE MORE WORK ↗</a></footer>
 </div>
 </body>
