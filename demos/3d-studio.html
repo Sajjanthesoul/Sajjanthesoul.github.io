@@ -39,7 +39,7 @@
 <div class="product-top"><div class="live"><span class="dot"></span> LIVE 3D VIEWER</div><div class="model-tag" id="modelType">GLB / PBR MATERIALS</div></div>
 <div class="model-stage">
 <div class="model-loader" id="modelLoader"><div class="spinner"></div><div class="loader-label" id="loaderLabel">LOADING 3D MODEL</div><div class="loader-percent" id="loaderPercent">0%</div><div class="loader-track"><div class="loader-fill" id="loaderFill"></div></div></div>
-<model-viewer id="productViewer" src="../assets/models/running-sneaker.glb" alt="Interactive 3D running sneaker" camera-controls auto-rotate rotation-per-second="18deg" shadow-intensity="1" exposure="1.1" environment-image="neutral" camera-orbit="35deg 70deg 0.95m" field-of-view="28deg" min-camera-orbit="auto auto 0.55m" max-camera-orbit="auto auto 2.4m" interaction-prompt="auto" loading="eager" reveal="auto"></model-viewer>
+<model-viewer id="productViewer" src="../assets/models/running-sneaker.glb" alt="Interactive 3D running sneaker" camera-controls auto-rotate rotation-per-second="18deg" shadow-intensity="1" exposure="1.1" environment-image="neutral" camera-orbit="35deg 70deg auto" field-of-view="28deg" min-camera-orbit="auto auto auto" max-camera-orbit="auto auto auto" interaction-prompt="auto" loading="eager" reveal="auto"></model-viewer>
 </div>
 <div class="model-picker" aria-label="Select a 3D model">
 <button class="model-choice active" data-name="Running sneaker" data-type="FOOTWEAR / GLB" data-src="../assets/models/running-sneaker.glb" data-alt="Detailed 3D running sneaker"><b>01 / Running sneaker</b><small>Textured footwear model</small></button>
@@ -94,11 +94,11 @@ const type=document.getElementById('modelType');
 let loadTimer;
 function showLoader(){loader.classList.remove('hide');percent.textContent='0%';fill.style.width='0%';label.textContent='LOADING 3D MODEL';}
 viewer.addEventListener('progress',function(e){const p=Math.round((e.detail.totalProgress||0)*100);percent.textContent=p+'%';fill.style.width=p+'%';});
-viewer.addEventListener('load',function(){percent.textContent='100%';fill.style.width='100%';label.textContent='MODEL READY';clearTimeout(loadTimer);loadTimer=setTimeout(function(){loader.classList.add('hide');},450);});
+viewer.addEventListener('load',function(){viewer.updateFraming();percent.textContent='100%';fill.style.width='100%';label.textContent='MODEL READY';clearTimeout(loadTimer);loadTimer=setTimeout(function(){loader.classList.add('hide');},450);});
 viewer.addEventListener('error',function(){label.textContent='MODEL FAILED TO LOAD';percent.textContent='!';});
 document.querySelectorAll('.model-choice').forEach(function(btn){btn.addEventListener('click',function(){
 document.querySelectorAll('.model-choice').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');
-showLoader();type.textContent=btn.dataset.type;viewer.alt=btn.dataset.alt;viewer.src=btn.dataset.src;viewer.cameraOrbit='35deg 70deg 1.35m';
+showLoader();type.textContent=btn.dataset.type;viewer.alt=btn.dataset.alt;viewer.src=btn.dataset.src;viewer.cameraOrbit='35deg 70deg auto';
 });});
 viewer.addEventListener('model-visibility',function(){});
 showLoader();
