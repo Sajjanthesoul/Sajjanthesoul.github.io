@@ -1,3 +1,60 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Interactive Product Preview | Sajjan Ali</title><style>
-*{box-sizing:border-box}body{margin:0;background:#11150f;color:#f2f4eb;font:16px/1.6 Arial,sans-serif}.wrap{max-width:1050px;margin:auto;padding:28px 22px}.top{display:flex;justify-content:space-between;gap:15px;color:#c9f36a;font-size:12px;letter-spacing:2px}.top a{color:inherit;text-decoration:none}h1{font-size:clamp(34px,6vw,60px);line-height:1.05;margin:50px 0 12px}h1 span{color:#c9f36a}p{color:#b8c0ad;max-width:620px}.layout{display:grid;grid-template-columns: minmax(0,1fr) minmax(280px,.8fr);gap:28px;align-items:center;margin-top:30px}.stage{min-height:420px;border:1px solid #3b4632;border-radius:18px;background:radial-gradient(ellipse at center,#34422a,#1c2418 68%);display:grid;place-items:center;position:relative;overflow:hidden}svg{width:min(90%,390px);height:auto;filter:drop-shadow(0 22px 18px #0008)}#solid{transform-origin:180px 160px}polygon{fill:var(--finish,#c9f36a)}.topface{filter:brightness(1.2)}.leftface{filter:brightness(.8)}.rightface{filter:brightness(.58)}.edges{fill:none;stroke:#ffffff80;stroke-width:2.3;stroke-linejoin:round}.label{position:absolute;bottom:15px;left:18px;color:#d4e4bd;font-size:10px;letter-spacing:2px}.panel{background:#1b2117;border:1px solid #394332;border-radius:16px;padding:24px}.panel label{display:block;margin:16px 0 8px;color:#c9f36a;font-size:11px;letter-spacing:1.5px}select,input{width:100%;padding:13px;border:1px solid #536047;border-radius:8px;background:#11150f;color:#fff}input{accent-color:#c9f36a}.hint{font-size:13px;color:#9ca792;margin-top:20px}@media(max-width:720px){.layout{grid-template-columns:1fr}.stage{min-height:340px}.wrap{padding:20px 16px}h1{margin-top:38px}}
-</style></head><body><div class="wrap"><nav class="top"><a href="../index.html">← BACK TO PORTFOLIO</a><span>INTERACTIVE CONCEPT / 01</span></nav><h1>Product <span>playground.</span></h1><p>A lightweight, interactive dimensional product preview. No 3D engine, WebGL, external library, or additional download required.</p><div class="layout"><div class="stage"><svg viewBox="0 0 360 320" role="img" aria-label="Three dimensional cube"><ellipse cx="180" cy="165" rx="150" ry="58" fill="none" stroke="#c9f36a88" stroke-dasharray="5 8" stroke-width="2" transform="rotate(-22 180 165)"/><g id="solid"><polygon class="topface" points="180,35 285,95 180,155 75,95"/><polygon class="leftface" points="75,95 180,155 180,275 75,215"/><polygon class="rightface" points="180,155 285,95 285,215 180,275"/><path class="edges" d="M180 35L285 95V215L180 275L75 215V95Z M75 95L180 155L285 95 M180 155V275"/></g></svg><div class="label">LIVE PRODUCT PREVIEW</div></div><aside class="panel"><h2>Customize the finish</h2><p>Change the material colour and rotate the product.</p><label for="finish">SURFACE FINISH</label><select id="finish"><option value="#c9f36a">Lime</option><option value="#d7d9df">Silver</option><option value="#d88b5b">Copper</option><option value="#6b8fc7">Blue</option></select><label for="rotation">ROTATION</label><input id="rotation" type="range" min="-180" max="180" value="-25"><div class="hint">Use the rotation slider to inspect the model from different angles. This preview is rendered with native SVG for broad browser compatibility.</div><p><a href="../index.html#work" style="color:#c9f36a">Return to selected work ↗</a></p></aside></div></div><script>(function(){var g=document.getElementById('solid'),c=document.getElementById('finish'),r=document.getElementById('rotation');function draw(){g.setAttribute('transform','rotate('+r.value+' 180 155)')}c.addEventListener('change',function(){g.style.setProperty('--finish',c.value)});r.addEventListener('input',draw);draw()})();</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Interactive Product Preview | Sajjan Ali</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#11150f;color:#f2f4eb;font:16px/1.6 Arial,sans-serif}.wrap{max-width:1100px;margin:auto;padding:28px 22px}.top{display:flex;justify-content:space-between;gap:15px;color:#c9f36a;font-size:12px;letter-spacing:2px}.top a{color:inherit;text-decoration:none}h1{font-size:clamp(34px,6vw,60px);line-height:1.05;margin:46px 0 12px}h1 span{color:#c9f36a}p{color:#b8c0ad;max-width:620px}.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.72fr);gap:28px;align-items:center;margin-top:30px}.stage{min-height:450px;border:1px solid #3b4632;border-radius:18px;background:radial-gradient(ellipse at 50% 44%,#39482d,#1c2418 68%);display:grid;place-items:center;position:relative;overflow:hidden;touch-action:none;cursor:grab;user-select:none}.stage.dragging{cursor:grabbing}.stage:after{content:"";position:absolute;inset:12% 12%;border:1px solid #c9f36a16;border-radius:50%;transform:rotate(-18deg);pointer-events:none}.stage svg{width:min(94%,520px);height:auto;overflow:visible;pointer-events:none}.label{position:absolute;bottom:15px;left:18px;color:#d4e4bd;font-size:10px;letter-spacing:2px}.drag-note{position:absolute;top:16px;right:18px;color:#d4e4bd99;font-size:10px;letter-spacing:1.4px}.panel{background:#1b2117;border:1px solid #394332;border-radius:16px;padding:24px}.panel h2{margin:0 0 6px}.panel label{display:block;margin:18px 0 8px;color:#c9f36a;font-size:11px;letter-spacing:1.5px}select,input{width:100%;padding:13px;border:1px solid #536047;border-radius:8px;background:#11150f;color:#fff}input{accent-color:#c9f36a;padding:8px 0}.controls{display:flex;align-items:center;gap:12px}.controls input{flex:1}.value{font-size:12px;color:#c9f36a;min-width:42px;text-align:right}.reset{width:100%;margin-top:20px;padding:12px;border:1px solid #c9f36a;border-radius:8px;background:transparent;color:#c9f36a;font-weight:700;cursor:pointer}.reset:hover{background:#c9f36a;color:#11150f}.hint{font-size:13px;color:#9ca792;margin-top:18px}.foot{font-size:12px;color:#8d9881;margin-top:26px}@media(max-width:720px){.layout{grid-template-columns:1fr}.stage{min-height:360px}.wrap{padding:20px 16px}h1{margin-top:36px}.panel{padding:20px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="top"><a href="../index.html">← BACK TO PORTFOLIO</a><span>INTERACTIVE CONCEPT / 01</span></nav>
+<h1>Product <span>playground.</span></h1>
+<p>Explore a dimensional product concept. Drag to rotate, scroll or use the zoom control, and switch surface finishes. Built with native SVG and JavaScript — no WebGL or external 3D library required.</p>
+<div class="layout">
+<div class="stage" id="stage" aria-label="Interactive 3D cube preview. Drag to rotate.">
+<div class="drag-note">DRAG TO ROTATE · SCROLL TO ZOOM</div>
+<svg viewBox="0 0 500 420" role="img" aria-label="Interactive shaded cube">
+<defs><radialGradient id="floorGlow"><stop offset="0" stop-color="#c9f36a" stop-opacity=".16"/><stop offset="1" stop-color="#c9f36a" stop-opacity="0"/></radialGradient><filter id="softShadow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="13"/></filter></defs>
+<ellipse cx="250" cy="330" rx="145" ry="28" fill="#000" opacity=".42" filter="url(#softShadow)"/>
+<ellipse cx="250" cy="330" rx="170" ry="45" fill="url(#floorGlow)"/>
+<g id="faces"></g>
+</svg>
+<div class="label">LIVE PRODUCT PREVIEW · SVG RENDER</div>
+</div>
+<aside class="panel">
+<h2>Customize your model</h2><p>Move the model freely and preview different finishes.</p>
+<label for="finish">SURFACE FINISH</label>
+<select id="finish"><option value="#c9f36a">Lime / Signature</option><option value="#d7d9df">Brushed silver</option><option value="#d88b5b">Warm copper</option><option value="#6b8fc7">Ocean blue</option><option value="#e9e4d7">Soft ivory</option></select>
+<label for="zoom">ZOOM</label><div class="controls"><input id="zoom" type="range" min="65" max="150" value="100"><span class="value" id="zoomValue">100%</span></div>
+<button class="reset" id="reset" type="button">↺ RESET VIEW</button>
+<div class="hint">Desktop: click and drag to rotate, use the mouse wheel to zoom. Mobile: swipe the model to rotate. Use the zoom slider for precise control.</div>
+<p><a href="../index.html#work" style="color:#c9f36a">Return to selected work ↗</a></p>
+</aside>
+</div>
+<div class="foot">Concept demonstration · Interactive product visualization by Sajjan Ali</div>
+</div>
+<script>
+(function(){
+var stage=document.getElementById('stage'),faces=document.getElementById('faces'),finish=document.getElementById('finish'),zoom=document.getElementById('zoom'),zoomValue=document.getElementById('zoomValue'),reset=document.getElementById('reset');
+var rx=-0.48,ry=0.62,scale=1,dragging=false,lastX=0,lastY=0,base=118;
+var vertices=[[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]];
+var sides=[{v:[0,1,2,3],shade:.48},{v:[4,5,6,7],shade:1.08},{v:[0,1,5,4],shade:.78},{v:[3,2,6,7],shade:.68},{v:[0,3,7,4],shade:.88},{v:[1,2,6,5],shade:.58}];
+function colour(hex,f){var n=parseInt(hex.slice(1),16),r=n>>16,g=(n>>8)&255,b=n&255;return 'rgb('+Math.round(Math.min(255,r*f))+','+Math.round(Math.min(255,g*f))+','+Math.round(Math.min(255,b*f))+')'}
+function project(v){var x=v[0]*base,y=v[1]*base,z=v[2]*base;var cy=Math.cos(ry),sy=Math.sin(ry),cx=Math.cos(rx),sx=Math.sin(rx);var x1=x*cy-z*sy,z1=x*sy+z*cy;var y1=y*cx-z1*sx,z2=y*sx+z1*cx;var perspective=680/(680+z2);return [250+x1*perspective*scale,205+y1*perspective*scale,z2]}
+function draw(){var pts=vertices.map(project);var ordered=sides.map(function(side){var p=side.v.map(function(i){return pts[i]});return {p:p,depth:p.reduce(function(a,b){return a+b[2]},0)/4,shade:side.shade}}).sort(function(a,b){return b.depth-a.depth});faces.innerHTML=ordered.map(function(face){var pointString=face.p.map(function(p){return p[0].toFixed(1)+','+p[1].toFixed(1)}).join(' ');return '<polygon points="'+pointString+'" fill="'+colour(finish.value,face.shade)+'" stroke="#ffffff" stroke-opacity=".58" stroke-width="2.2" stroke-linejoin="round"/>'}).join('')}
+function setZoom(v){scale=Number(v)/100;zoom.value=v;zoomValue.textContent=v+'%';draw()}
+stage.addEventListener('pointerdown',function(e){dragging=true;lastX=e.clientX;lastY=e.clientY;stage.classList.add('dragging');stage.setPointerCapture(e.pointerId)});
+stage.addEventListener('pointermove',function(e){if(!dragging)return;var dx=e.clientX-lastX,dy=e.clientY-lastY;lastX=e.clientX;lastY=e.clientY;ry+=dx*.009;rx=Math.max(-1.35,Math.min(1.35,rx-dy*.009));draw()});
+function stop(){dragging=false;stage.classList.remove('dragging')}
+stage.addEventListener('pointerup',stop);stage.addEventListener('pointercancel',stop);stage.addEventListener('lostpointercapture',stop);
+stage.addEventListener('wheel',function(e){e.preventDefault();setZoom(Math.max(65,Math.min(150,Number(zoom.value)+(e.deltaY<0?5:-5))))},{passive:false});
+finish.addEventListener('change',draw);zoom.addEventListener('input',function(){setZoom(this.value)});
+reset.addEventListener('click',function(){rx=-.48;ry=.62;setZoom(100);draw()});
+draw();
+})();
+</script>
+</body>
+</html>
