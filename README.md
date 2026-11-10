@@ -1,14 +1,14 @@
 # Sajjan Ali — Portfolio
 
-Personal portfolio for web development, e-commerce and interactive 3D work.
+Personal portfolio for web development and interactive 3D product experiences.
 
 ## Live site
 https://Sajjanthesoul.github.io/
 
 ## Included
 - Responsive portfolio landing page
-- CLOTHX live project link: https://clothx.store/
-- Three.js product configurator concept
+- Multi-model 3D product studio (sneaker, speaker, avocado and water bottle)
+- Interactive 3D T-shirt configurator with colour and artwork customisation
 - Analytics dashboard UI concept (illustrative sample metrics)
 
 ## Publish with GitHub Pages
@@ -17,4 +17,4 @@ https://Sajjanthesoul.github.io/
 3. Select branch **main** and folder **/(root)**, then Save.
 4. Wait for GitHub Pages to publish the site.
 
-The 3D configurator loads Three.js from jsDelivr, so that demo needs an internet connection.
+The 3D studio uses model-viewer and locally hosted Three.js. Product sample models are loaded on demand from the Khronos glTF Sample Assets repository.
