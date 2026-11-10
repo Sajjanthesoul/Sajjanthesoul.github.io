@@ -109,34 +109,61 @@ const canvas=document.getElementById('teeCanvas');
 if(!window.THREE){document.querySelector('.tee-help').textContent='3D engine unavailable — refresh to retry.';return;}
 const THREE=window.THREE;
 const scene=new THREE.Scene();scene.background=new THREE.Color('#20291d');
-const camera=new THREE.PerspectiveCamera(34,1,.1,100);camera.position.set(0,.25,5.4);
+const camera=new THREE.PerspectiveCamera(34,1,.1,100);camera.position.set(0,.18,5.1);
 const renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,preserveDrawingBuffer:true});
 renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
-scene.add(new THREE.HemisphereLight(0xffffff,0x34412b,2.0));
-const key=new THREE.DirectionalLight(0xffffff,3.0);key.position.set(-3,4,5);key.castShadow=true;scene.add(key);
-const rim=new THREE.DirectionalLight(0xc9f36a,1.4);rim.position.set(3,1,-3);scene.add(rim);
+scene.add(new THREE.HemisphereLight(0xffffff,0x34412b,2.1));
+const key=new THREE.DirectionalLight(0xffffff,3.1);key.position.set(-3,4,5);key.castShadow=true;scene.add(key);
+const fillLight=new THREE.DirectionalLight(0xffffff,1.15);fillLight.position.set(3,1,4);scene.add(fillLight);
+const rim=new THREE.DirectionalLight(0xc9f36a,1.25);rim.position.set(3,1,-3);scene.add(rim);
 const group=new THREE.Group();scene.add(group);
-const shape=new THREE.Shape();
-shape.moveTo(-.23,1.28);shape.quadraticCurveTo(0,1.04,.23,1.28);
-shape.lineTo(.55,1.46);shape.lineTo(.88,1.08);shape.lineTo(.68,.88);shape.lineTo(.52,1.02);
-shape.lineTo(.52,-.94);shape.quadraticCurveTo(.52,-1.02,.42,-1.02);shape.lineTo(-.42,-1.02);shape.quadraticCurveTo(-.52,-1.02,-.52,-.94);
-shape.lineTo(-.52,1.02);shape.lineTo(-.68,.88);shape.lineTo(-.88,1.08);shape.lineTo(-.55,1.46);shape.lineTo(-.23,1.28);
-const geometry=new THREE.ExtrudeGeometry(shape,{depth:.16,bevelEnabled:true,bevelSegments:4,steps:1,bevelSize:.035,bevelThickness:.035,curveSegments:18});
-geometry.computeVertexNormals();
-const fabric=new THREE.MeshStandardMaterial({color:'#e9e8df',roughness:.88,metalness:0});
-const shirt=new THREE.Mesh(geometry,fabric);shirt.castShadow=true;shirt.receiveShadow=true;group.add(shirt);
-const collar=new THREE.Mesh(new THREE.TorusGeometry(.19,.025,10,48),new THREE.MeshStandardMaterial({color:'#c7c7bd',roughness:.9}));
-collar.position.set(0,1.205,.205);collar.scale.y=.56;group.add(collar);
+const fabric=new THREE.MeshStandardMaterial({color:'#e9e8df',roughness:.94,metalness:0,side:THREE.DoubleSide});
+const seamMat=new THREE.MeshStandardMaterial({color:'#c9c9bf',roughness:1});
+const darkSeam=new THREE.MeshStandardMaterial({color:'#9c9d92',roughness:1});
+function makeTube(a,b,r1,r2,material){
+ const axis=new THREE.Vector3().subVectors(b,a),len=axis.length(),dir=axis.clone().normalize();
+ const q=new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0,1,0),dir);
+ const g=new THREE.CylinderGeometry(r2,r1,len,32,1,true);
+ const m=new THREE.Mesh(g,material);m.position.copy(a).add(b).multiplyScalar(.5);m.quaternion.copy(q);m.castShadow=true;m.receiveShadow=true;group.add(m);return m;
+}
+// Softly rounded torso silhouette with a bevelled fabric edge.
+const body=new THREE.Shape();
+body.moveTo(-.43,1.12);body.quadraticCurveTo(-.24,1.20,0,1.08);body.quadraticCurveTo(.24,1.20,.43,1.12);
+body.quadraticCurveTo(.51,1.05,.52,.91);body.lineTo(.49,-.88);body.quadraticCurveTo(.49,-1.02,.38,-1.02);
+body.lineTo(-.38,-1.02);body.quadraticCurveTo(-.49,-1.02,-.49,-.88);body.lineTo(-.52,.91);
+body.quadraticCurveTo(-.51,1.05,-.43,1.12);
+const bodyGeo=new THREE.ExtrudeGeometry(body,{depth:.17,bevelEnabled:true,bevelSegments:7,steps:1,bevelSize:.045,bevelThickness:.045,curveSegments:28});
+bodyGeo.computeVertexNormals();
+const torso=new THREE.Mesh(bodyGeo,fabric);torso.position.z=-.085;torso.castShadow=true;torso.receiveShadow=true;group.add(torso);
+// Separate softly tapered sleeves give the garment a proper three-dimensional silhouette.
+makeTube(new THREE.Vector3(-.39,.91,0),new THREE.Vector3(-.91,.43,-.005),.235,.165,fabric);
+makeTube(new THREE.Vector3(.39,.91,0),new THREE.Vector3(.91,.43,-.005),.235,.165,fabric);
+// Sleeve cuff stitching and lower hem.
+function seamLine(points,r=.009,mat=seamMat){const curve=new THREE.CatmullRomCurve3(points);const mesh=new THREE.Mesh(new THREE.TubeGeometry(curve,40,r,6,false),mat);group.add(mesh);return mesh;}
+seamLine([new THREE.Vector3(-.84,.49,.12),new THREE.Vector3(-.91,.43,.12),new THREE.Vector3(-.98,.37,.10)],.012);
+seamLine([new THREE.Vector3(.84,.49,.12),new THREE.Vector3(.91,.43,.12),new THREE.Vector3(.98,.37,.10)],.012);
+seamLine([new THREE.Vector3(-.42,-.96,.145),new THREE.Vector3(0,-.98,.145),new THREE.Vector3(.42,-.96,.145)],.009,darkSeam);
+// Raised ribbed collar ring with an open neckline.
+const collar=new THREE.Mesh(new THREE.TorusGeometry(.205,.045,16,64),new THREE.MeshStandardMaterial({color:'#d2d1c8',roughness:1}));
+collar.position.set(0,1.105,.025);collar.scale.set(1,.66,1);group.add(collar);
+const collarInner=new THREE.Mesh(new THREE.TorusGeometry(.166,.014,10,64),darkSeam);collarInner.position.set(0,1.108,.03);collarInner.scale.y=.66;group.add(collarInner);
+// Curved print panel follows the rounded chest instead of floating as a flat card.
 const printCanvas=document.createElement('canvas');printCanvas.width=1024;printCanvas.height=768;
-const ctx=printCanvas.getContext('2d');
-const printTexture=new THREE.CanvasTexture(printCanvas);printTexture.colorSpace=THREE.SRGBColorSpace;
+const ctx=printCanvas.getContext('2d');const printTexture=new THREE.CanvasTexture(printCanvas);printTexture.colorSpace=THREE.SRGBColorSpace;
 const printMat=new THREE.MeshBasicMaterial({map:printTexture,transparent:true,side:THREE.DoubleSide,depthWrite:false});
-const printPlane=new THREE.Mesh(new THREE.PlaneGeometry(.72,.54),printMat);printPlane.position.set(0,.34,.215);group.add(printPlane);
-const floor=new THREE.Mesh(new THREE.CircleGeometry(2.1,64),new THREE.MeshStandardMaterial({color:'#263322',roughness:1}));floor.rotation.x=-Math.PI/2;floor.position.y=-1.22;floor.position.z=0;floor.receiveShadow=true;scene.add(floor);
+const printGeo=new THREE.PlaneGeometry(.68,.48,18,12);
+const pos=printGeo.attributes.position;
+for(let i=0;i<pos.count;i++){const x=pos.getX(i),y=pos.getY(i);pos.setZ(i,.055*(1-Math.pow(x/.34,2))+.012*Math.cos(y*5));}
+printGeo.computeVertexNormals();
+const printPlane=new THREE.Mesh(printGeo,printMat);printPlane.position.set(0,.34,.145);group.add(printPlane);
+// Subtle natural fabric drape lines on the torso.
+seamLine([new THREE.Vector3(-.37,.64,.17),new THREE.Vector3(-.29,.22,.19),new THREE.Vector3(-.32,-.35,.18)],.006,new THREE.MeshBasicMaterial({color:'#b8b8ae',transparent:true,opacity:.55}));
+seamLine([new THREE.Vector3(.37,.64,.17),new THREE.Vector3(.29,.22,.19),new THREE.Vector3(.32,-.35,.18)],.006,new THREE.MeshBasicMaterial({color:'#b8b8ae',transparent:true,opacity:.55}));
+const floor=new THREE.Mesh(new THREE.CircleGeometry(2.1,64),new THREE.MeshStandardMaterial({color:'#263322',roughness:1}));floor.rotation.x=-Math.PI/2;floor.position.y=-1.22;floor.receiveShadow=true;scene.add(floor);
 const shadow=new THREE.Mesh(new THREE.CircleGeometry(.95,48),new THREE.MeshBasicMaterial({color:'#080d07',transparent:true,opacity:.42}));shadow.rotation.x=-Math.PI/2;shadow.scale.set(1.2,.5,1);shadow.position.set(0,-1.205,0);scene.add(shadow);
-let drag=false,lastX=0,lastY=0,rotY=-.22,rotX=0,zoom=5.4;
+let drag=false,lastX=0,lastY=0,rotY=-.22,rotX=0,zoom=5.1;
 function resize(){const w=canvas.clientWidth||600,h=canvas.clientHeight||400;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();}
-function drawPrint(){ctx.clearRect(0,0,1024,768);const text=document.getElementById('printText').value.trim().toUpperCase();const color=document.getElementById('printColor').value;const style=document.getElementById('printStyle').value;let family='800 100px Arial';if(style==='serif')family='bold 100px Georgia';if(style==='mono')family='bold 84px monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color;ctx.font=family;let value=text||' ';while(ctx.measureText(value).width>900&&parseInt(ctx.font,10)>35){ctx.font=ctx.font.replace(/\d+px/,function(n){return (parseInt(n,10)-5)+'px';});}ctx.fillText(value,512,385);ctx.strokeStyle=color;ctx.globalAlpha=.8;ctx.lineWidth=8;ctx.beginPath();ctx.moveTo(250,510);ctx.lineTo(774,510);ctx.stroke();ctx.globalAlpha=1;printTexture.needsUpdate=true;}
+function drawPrint(){ctx.clearRect(0,0,1024,768);const text=document.getElementById('printText').value.trim().toUpperCase();const color=document.getElementById('printColor').value;const style=document.getElementById('printStyle').value;let family='800 100px Arial';if(style==='serif')family='bold 100px Georgia';if(style==='mono')family='bold 84px monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color;ctx.font=family;let value=text||' ';while(ctx.measureText(value).width>900&&parseInt(ctx.font,10)>35){ctx.font=ctx.font.replace(/\\d+px/,function(n){return (parseInt(n,10)-5)+'px';});}ctx.fillText(value,512,385);ctx.strokeStyle=color;ctx.globalAlpha=.8;ctx.lineWidth=8;ctx.beginPath();ctx.moveTo(250,510);ctx.lineTo(774,510);ctx.stroke();ctx.globalAlpha=1;printTexture.needsUpdate=true;}
 function animate(){requestAnimationFrame(animate);group.rotation.y=rotY;group.rotation.x=rotX;camera.position.z=zoom;camera.lookAt(0,.1,0);renderer.render(scene,camera);}
 canvas.addEventListener('pointerdown',function(e){drag=true;lastX=e.clientX;lastY=e.clientY;canvas.setPointerCapture(e.pointerId);});
 canvas.addEventListener('pointermove',function(e){if(!drag)return;rotY+=(e.clientX-lastX)*.009;rotX=Math.max(-.28,Math.min(.28,rotX+(e.clientY-lastY)*.004));lastX=e.clientX;lastY=e.clientY;});
@@ -145,10 +172,10 @@ canvas.addEventListener('wheel',function(e){e.preventDefault();zoom=Math.max(3.8
 document.querySelectorAll('.swatch').forEach(function(btn){btn.addEventListener('click',function(){document.querySelectorAll('.swatch').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');fabric.color.set(btn.dataset.color);});});
 document.getElementById('shirtSize').addEventListener('change',function(e){const scale={XS:.9,S:.95,M:1,L:1.04,XL:1.08,XXL:1.12}[e.target.value]||1;group.scale.setScalar(scale);});
 ['printText','printColor','printStyle'].forEach(function(id){document.getElementById(id).addEventListener('input',drawPrint);document.getElementById(id).addEventListener('change',drawPrint);});
-document.getElementById('resetDesign').addEventListener('click',function(){document.querySelectorAll('.swatch').forEach(function(b){b.classList.toggle('active',b.dataset.color==='#e9e8df');});fabric.color.set('#e9e8df');document.getElementById('shirtSize').value='M';group.scale.setScalar(1);document.getElementById('printText').value='YOUR BRAND';document.getElementById('printColor').value='#c9f36a';document.getElementById('printStyle').value='bold';rotY=-.22;rotX=0;zoom=5.4;drawPrint();});
+document.getElementById('resetDesign').addEventListener('click',function(){document.querySelectorAll('.swatch').forEach(function(b){b.classList.toggle('active',b.dataset.color==='#e9e8df');});fabric.color.set('#e9e8df');document.getElementById('shirtSize').value='M';group.scale.setScalar(1);document.getElementById('printText').value='YOUR BRAND';document.getElementById('printColor').value='#c9f36a';document.getElementById('printStyle').value='bold';rotY=-.22;rotX=0;zoom=5.1;drawPrint();});
 document.getElementById('exportDesign').addEventListener('click',function(){renderer.render(scene,camera);const link=document.createElement('a');link.download='sajjan-tshirt-mockup.png';link.href=renderer.domElement.toDataURL('image/png');link.click();});
 const observer=new ResizeObserver(resize);observer.observe(canvas);resize();drawPrint();animate();
-})();
+})(););
 </script>
 </body>
 </html>
