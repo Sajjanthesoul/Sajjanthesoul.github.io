@@ -2,57 +2,143 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Interactive Product Preview | Sajjan Ali</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10140e">
+<title>Interactive Product Studio | Sajjan Ali</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#11150f;color:#f2f4eb;font:16px/1.6 Arial,sans-serif}.wrap{max-width:1100px;margin:auto;padding:28px 22px}.top{display:flex;justify-content:space-between;gap:15px;color:#c9f36a;font-size:12px;letter-spacing:2px}.top a{color:inherit;text-decoration:none}h1{font-size:clamp(34px,6vw,60px);line-height:1.05;margin:46px 0 12px}h1 span{color:#c9f36a}p{color:#b8c0ad;max-width:620px}.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.72fr);gap:28px;align-items:center;margin-top:30px}.stage{min-height:450px;border:1px solid #3b4632;border-radius:18px;background:radial-gradient(ellipse at 50% 44%,#39482d,#1c2418 68%);display:grid;place-items:center;position:relative;overflow:hidden;touch-action:none;cursor:grab;user-select:none}.stage.dragging{cursor:grabbing}.stage:after{content:"";position:absolute;inset:12% 12%;border:1px solid #c9f36a16;border-radius:50%;transform:rotate(-18deg);pointer-events:none}.stage svg{width:min(94%,520px);height:auto;overflow:visible;pointer-events:none}.label{position:absolute;bottom:15px;left:18px;color:#d4e4bd;font-size:10px;letter-spacing:2px}.drag-note{position:absolute;top:16px;right:18px;color:#d4e4bd99;font-size:10px;letter-spacing:1.4px}.panel{background:#1b2117;border:1px solid #394332;border-radius:16px;padding:24px}.panel h2{margin:0 0 6px}.panel label{display:block;margin:18px 0 8px;color:#c9f36a;font-size:11px;letter-spacing:1.5px}select,input{width:100%;padding:13px;border:1px solid #536047;border-radius:8px;background:#11150f;color:#fff}input{accent-color:#c9f36a;padding:8px 0}.controls{display:flex;align-items:center;gap:12px}.controls input{flex:1}.value{font-size:12px;color:#c9f36a;min-width:42px;text-align:right}.reset{width:100%;margin-top:20px;padding:12px;border:1px solid #c9f36a;border-radius:8px;background:transparent;color:#c9f36a;font-weight:700;cursor:pointer}.reset:hover{background:#c9f36a;color:#11150f}.hint{font-size:13px;color:#9ca792;margin-top:18px}.foot{font-size:12px;color:#8d9881;margin-top:26px}@media(max-width:720px){.layout{grid-template-columns:1fr}.stage{min-height:360px}.wrap{padding:20px 16px}h1{margin-top:36px}.panel{padding:20px}}
+:root{--bg:#10140e;--panel:#191f16;--line:#303b29;--muted:#aab39f;--lime:#c9f36a;--white:#f4f6ee}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--white);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1120px,100%);margin:auto;padding:24px 26px 34px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:5px 0 22px;border-bottom:1px solid #ffffff12}
+.back{font-size:12px;color:#d7e5c7;letter-spacing:.8px}.back:hover{color:var(--lime)}
+.brand{font-size:11px;letter-spacing:2px;color:var(--lime);font-weight:800}
+.eyebrow{margin:34px 0 9px;color:var(--lime);font-size:10px;font-weight:800;letter-spacing:2.5px}
+h1{font-size:clamp(34px,6vw,58px);line-height:1.02;letter-spacing:-2px;margin:0;max-width:700px}
+h1 span{color:var(--lime)}
+.intro{color:var(--muted);max-width:650px;margin:14px 0 0;font-size:14px}
+.layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.75fr);gap:18px;margin-top:28px;align-items:stretch}
+.viewer-card,.controls-card{border:1px solid var(--line);border-radius:20px;background:var(--panel);overflow:hidden}
+.viewer-head{display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid #ffffff10}
+.live{display:flex;align-items:center;gap:8px;color:#dce8d1;font-size:10px;font-weight:750;letter-spacing:1.5px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 12px #c9f36a99}
+.model-tag{font-size:10px;color:#84917b;letter-spacing:1px}
+.stage{height:440px;position:relative;display:grid;place-items:center;overflow:hidden;touch-action:none;cursor:grab;user-select:none;background:radial-gradient(ellipse at 50% 46%,#35432a 0%,#222d1d 38%,#171e14 76%)}
+.stage.dragging{cursor:grabbing}
+.stage:before{content:"";position:absolute;width:72%;aspect-ratio:1;border:1px solid #c9f36a16;border-radius:50%;transform:rotate(-20deg) scaleY(.35);box-shadow:0 0 0 28px #c9f36a08,0 0 0 58px #c9f36a05;pointer-events:none}
+.stage svg{width:min(94%,510px);height:auto;overflow:visible;pointer-events:none;filter:drop-shadow(0 22px 20px #0005)}
+.drag-tip{position:absolute;top:16px;left:0;right:0;text-align:center;color:#e0e9d4a6;font-size:10px;letter-spacing:1.2px;pointer-events:none}
+.viewer-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 17px;border-top:1px solid #ffffff10;color:#899582;font-size:10px;letter-spacing:.7px}
+.viewer-foot strong{color:#d6e7c0;font-weight:650}
+.controls-card{padding:22px}
+.card-kicker{font-size:10px;color:var(--lime);font-weight:800;letter-spacing:2px;margin-bottom:7px}
+h2{font-size:20px;letter-spacing:-.4px;margin:0 0 5px}
+.sub{font-size:12px;color:var(--muted);margin:0 0 22px}
+.section{padding:17px 0;border-top:1px solid #ffffff12}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.section-title{font-size:10px;color:#dce6d2;font-weight:800;letter-spacing:1.5px}
+.selected{font-size:11px;color:var(--lime)}
+.swatches{display:flex;gap:12px;flex-wrap:wrap}
+.swatch{width:38px;height:38px;border-radius:50%;border:2px solid #ffffff24;background:var(--swatch);cursor:pointer;position:relative;box-shadow:inset 0 0 0 3px #171e14;transition:transform .18s,border-color .18s}
+.swatch[aria-pressed=true]{border-color:var(--lime);transform:scale(1.08);box-shadow:0 0 0 3px #c9f36a20,inset 0 0 0 3px #171e14}
+.swatch:focus-visible,.tool-btn:focus-visible,.reset:focus-visible,input:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
+.range-row{display:flex;align-items:center;gap:12px}
+input[type=range]{width:100%;accent-color:var(--lime);cursor:pointer}
+.range-value{font-size:11px;color:var(--lime);min-width:40px;text-align:right;font-variant-numeric:tabular-nums}
+.zoom-tools{display:flex;align-items:center;gap:9px}
+.tool-btn{height:34px;min-width:36px;border:1px solid #45513b;border-radius:9px;background:#11170f;color:#e9efdf;font-size:17px;cursor:pointer}
+.tool-btn:active{background:#2a3820}
+.zoom-tools input{flex:1;min-width:0}
+.reset{width:100%;padding:13px 15px;border:1px solid #526342;border-radius:11px;background:#222d1b;color:var(--lime);font-size:11px;font-weight:800;letter-spacing:1.3px;cursor:pointer;transition:background .18s,border-color .18s}
+.reset:hover{background:#2d3b22;border-color:var(--lime)}
+.helper{font-size:11px;color:#899582;line-height:1.6;margin:15px 0 0}
+.footer{display:flex;justify-content:space-between;gap:12px;margin-top:22px;color:#788370;font-size:10px;letter-spacing:.6px}
+.footer a{color:#c9f36a}
+@media(max-width:760px){
+ .wrap{padding:17px 14px 26px}.top{padding-bottom:15px}.brand{font-size:9px;letter-spacing:1.3px}
+ .eyebrow{margin-top:27px;font-size:9px}h1{font-size:clamp(34px,10vw,48px);letter-spacing:-1.5px}
+ .intro{font-size:13px;margin-top:10px}.layout{grid-template-columns:1fr;gap:12px;margin-top:20px}
+ .viewer-card,.controls-card{border-radius:16px}.viewer-head{padding:12px 14px}
+ .stage{height:clamp(285px,88vw,390px)}.stage svg{width:100%;max-width:440px}
+ .viewer-foot{padding:10px 13px;font-size:9px}.controls-card{padding:19px}
+ .controls-card h2{font-size:19px}.sub{margin-bottom:14px}
+ .section{padding:14px 0}.swatches{gap:14px}.swatch{width:42px;height:42px}
+ .reset{min-height:46px}.footer{font-size:9px;line-height:1.5}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
 <body>
 <div class="wrap">
-<nav class="top"><a href="../index.html">← BACK TO PORTFOLIO</a><span>INTERACTIVE CONCEPT / 01</span></nav>
-<h1>Product <span>playground.</span></h1>
-<p>Explore a dimensional product concept. Drag to rotate, scroll or use the zoom control, and switch surface finishes. Built with native SVG and JavaScript — no WebGL or external 3D library required.</p>
+<header class="top"><a class="back" href="../index.html">← &nbsp; BACK TO PORTFOLIO</a><div class="brand">SAJJAN ALI &nbsp;·&nbsp; DIGITAL CRAFT</div></header>
+<main>
+<div class="eyebrow">INTERACTIVE 3D CONCEPT &nbsp; / &nbsp; 001</div>
+<h1>Product <span>Studio.</span></h1>
+<p class="intro">A hands-on product visualization concept. Explore the model, test different finishes and inspect it from every angle — right from your phone.</p>
 <div class="layout">
-<div class="stage" id="stage" aria-label="Interactive 3D cube preview. Drag to rotate.">
-<div class="drag-note">DRAG TO ROTATE · SCROLL TO ZOOM</div>
-<svg viewBox="0 0 500 420" role="img" aria-label="Interactive shaded cube">
-<defs><radialGradient id="floorGlow"><stop offset="0" stop-color="#c9f36a" stop-opacity=".16"/><stop offset="1" stop-color="#c9f36a" stop-opacity="0"/></radialGradient><filter id="softShadow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="13"/></filter></defs>
+<section class="viewer-card" aria-label="Interactive product viewer">
+<div class="viewer-head"><div class="live"><span class="dot"></span> LIVE PREVIEW</div><div class="model-tag">MODEL 001 &nbsp;·&nbsp; CUBE</div></div>
+<div class="stage" id="stage" aria-label="Drag or swipe to rotate the product model">
+<div class="drag-tip">↔ &nbsp; DRAG OR SWIPE TO ROTATE</div>
+<svg viewBox="0 0 500 420" role="img" aria-label="Shaded interactive cube">
+<defs><radialGradient id="floorGlow"><stop offset="0" stop-color="#c9f36a" stop-opacity=".2"/><stop offset="1" stop-color="#c9f36a" stop-opacity="0"/></radialGradient><filter id="softShadow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="13"/></filter></defs>
 <ellipse cx="250" cy="330" rx="145" ry="28" fill="#000" opacity=".42" filter="url(#softShadow)"/>
 <ellipse cx="250" cy="330" rx="170" ry="45" fill="url(#floorGlow)"/>
 <g id="faces"></g>
 </svg>
-<div class="label">LIVE PRODUCT PREVIEW · SVG RENDER</div>
 </div>
-<aside class="panel">
-<h2>Customize your model</h2><p>Move the model freely and preview different finishes.</p>
-<label for="finish">SURFACE FINISH</label>
-<select id="finish"><option value="#c9f36a">Lime / Signature</option><option value="#d7d9df">Brushed silver</option><option value="#d88b5b">Warm copper</option><option value="#6b8fc7">Ocean blue</option><option value="#e9e4d7">Soft ivory</option></select>
-<label for="zoom">ZOOM</label><div class="controls"><input id="zoom" type="range" min="65" max="150" value="100"><span class="value" id="zoomValue">100%</span></div>
-<button class="reset" id="reset" type="button">↺ RESET VIEW</button>
-<div class="hint">Desktop: click and drag to rotate, use the mouse wheel to zoom. Mobile: swipe the model to rotate. Use the zoom slider for precise control.</div>
-<p><a href="../index.html#work" style="color:#c9f36a">Return to selected work ↗</a></p>
+<div class="viewer-foot"><span><strong>INTERACTIVE MODEL</strong> &nbsp;·&nbsp; SVG RENDER</span><span id="angleLabel">ANGLE 036°</span></div>
+</section>
+<aside class="controls-card">
+<div class="card-kicker">PERSONALIZE</div><h2>Make it yours.</h2><p class="sub">Adjust the look and explore the model.</p>
+<div class="section">
+<div class="section-head"><span class="section-title">SURFACE FINISH</span><span class="selected" id="finishName">Signature lime</span></div>
+<div class="swatches" role="group" aria-label="Choose surface finish">
+<button class="swatch" type="button" style="--swatch:#c9f36a" data-color="#c9f36a" data-name="Signature lime" aria-label="Signature lime" aria-pressed="true"></button>
+<button class="swatch" type="button" style="--swatch:#d7d9df" data-color="#d7d9df" data-name="Brushed silver" aria-label="Brushed silver" aria-pressed="false"></button>
+<button class="swatch" type="button" style="--swatch:#d88b5b" data-color="#d88b5b" data-name="Warm copper" aria-label="Warm copper" aria-pressed="false"></button>
+<button class="swatch" type="button" style="--swatch:#6b8fc7" data-color="#6b8fc7" data-name="Ocean blue" aria-label="Ocean blue" aria-pressed="false"></button>
+<button class="swatch" type="button" style="--swatch:#e9e4d7" data-color="#e9e4d7" data-name="Soft ivory" aria-label="Soft ivory" aria-pressed="false"></button>
+</div>
+</div>
+<div class="section">
+<div class="section-head"><label class="section-title" for="zoom">ZOOM LEVEL</label><span class="range-value" id="zoomValue">100%</span></div>
+<div class="zoom-tools"><button class="tool-btn" id="zoomOut" type="button" aria-label="Zoom out">−</button><input id="zoom" type="range" min="65" max="150" value="100" aria-label="Zoom level"><button class="tool-btn" id="zoomIn" type="button" aria-label="Zoom in">+</button></div>
+</div>
+<div class="section">
+<div class="section-head"><label class="section-title" for="rotation">ROTATION</label><span class="range-value" id="rotationValue">36°</span></div>
+<input id="rotation" type="range" min="-180" max="180" value="36" aria-label="Rotation angle">
+</div>
+<button class="reset" id="reset" type="button">↺ &nbsp; RESET VIEW</button>
+<p class="helper">Tip: Swipe across the model to rotate. Use the sliders for precise control. This lightweight demo runs without WebGL or external 3D libraries.</p>
 </aside>
 </div>
-<div class="foot">Concept demonstration · Interactive product visualization by Sajjan Ali</div>
+</main>
+<footer class="footer"><span>DESIGNED & BUILT BY SAJJAN ALI</span><a href="../index.html#work">EXPLORE MORE WORK ↗</a></footer>
 </div>
 <script>
 (function(){
-var stage=document.getElementById('stage'),faces=document.getElementById('faces'),finish=document.getElementById('finish'),zoom=document.getElementById('zoom'),zoomValue=document.getElementById('zoomValue'),reset=document.getElementById('reset');
-var rx=-0.48,ry=0.62,scale=1,dragging=false,lastX=0,lastY=0,base=118;
+var stage=document.getElementById('stage'),faces=document.getElementById('faces'),zoom=document.getElementById('zoom'),zoomValue=document.getElementById('zoomValue'),rotation=document.getElementById('rotation'),rotationValue=document.getElementById('rotationValue'),angleLabel=document.getElementById('angleLabel'),finishName=document.getElementById('finishName');
+var rx=-.48,ry=.62,scale=1,dragging=false,lastX=0,lastY=0,base=118,color='#c9f36a';
 var vertices=[[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]];
 var sides=[{v:[0,1,2,3],shade:.48},{v:[4,5,6,7],shade:1.08},{v:[0,1,5,4],shade:.78},{v:[3,2,6,7],shade:.68},{v:[0,3,7,4],shade:.88},{v:[1,2,6,5],shade:.58}];
 function colour(hex,f){var n=parseInt(hex.slice(1),16),r=n>>16,g=(n>>8)&255,b=n&255;return 'rgb('+Math.round(Math.min(255,r*f))+','+Math.round(Math.min(255,g*f))+','+Math.round(Math.min(255,b*f))+')'}
-function project(v){var x=v[0]*base,y=v[1]*base,z=v[2]*base;var cy=Math.cos(ry),sy=Math.sin(ry),cx=Math.cos(rx),sx=Math.sin(rx);var x1=x*cy-z*sy,z1=x*sy+z*cy;var y1=y*cx-z1*sx,z2=y*sx+z1*cx;var perspective=680/(680+z2);return [250+x1*perspective*scale,205+y1*perspective*scale,z2]}
-function draw(){var pts=vertices.map(project);var ordered=sides.map(function(side){var p=side.v.map(function(i){return pts[i]});return {p:p,depth:p.reduce(function(a,b){return a+b[2]},0)/4,shade:side.shade}}).sort(function(a,b){return b.depth-a.depth});faces.innerHTML=ordered.map(function(face){var pointString=face.p.map(function(p){return p[0].toFixed(1)+','+p[1].toFixed(1)}).join(' ');return '<polygon points="'+pointString+'" fill="'+colour(finish.value,face.shade)+'" stroke="#ffffff" stroke-opacity=".58" stroke-width="2.2" stroke-linejoin="round"/>'}).join('')}
+function project(v){var x=v[0]*base,y=v[1]*base,z=v[2]*base,cy=Math.cos(ry),sy=Math.sin(ry),cx=Math.cos(rx),sx=Math.sin(rx),x1=x*cy-z*sy,z1=x*sy+z*cy,y1=y*cx-z1*sx,z2=y*sx+z1*cx,perspective=680/(680+z2);return [250+x1*perspective*scale,205+y1*perspective*scale,z2]}
+function updateLabels(){var deg=Math.round((((ry*180/Math.PI)%360)+360)%360);rotation.value=Math.max(-180,Math.min(180,Math.round((ry-.0)*180/Math.PI)));rotationValue.textContent=rotation.value+'°';angleLabel.textContent='ANGLE '+String(deg).padStart(3,'0')+'°'}
+function draw(){var pts=vertices.map(project),ordered=sides.map(function(side){var p=side.v.map(function(i){return pts[i]});return {p:p,depth:p.reduce(function(a,b){return a+b[2]},0)/4,shade:side.shade}}).sort(function(a,b){return b.depth-a.depth});faces.innerHTML=ordered.map(function(face){var ps=face.p.map(function(p){return p[0].toFixed(1)+','+p[1].toFixed(1)}).join(' ');return '<polygon points="'+ps+'" fill="'+colour(color,face.shade)+'" stroke="#ffffff" stroke-opacity=".58" stroke-width="2.2" stroke-linejoin="round"/>'}).join('');updateLabels()}
 function setZoom(v){scale=Number(v)/100;zoom.value=v;zoomValue.textContent=v+'%';draw()}
-stage.addEventListener('pointerdown',function(e){dragging=true;lastX=e.clientX;lastY=e.clientY;stage.classList.add('dragging');stage.setPointerCapture(e.pointerId)});
+function setRotation(deg){ry=Number(deg)*Math.PI/180;draw()}
+document.querySelectorAll('.swatch').forEach(function(btn){btn.addEventListener('click',function(){color=btn.dataset.color;finishName.textContent=btn.dataset.name;document.querySelectorAll('.swatch').forEach(function(b){b.setAttribute('aria-pressed',b===btn?'true':'false')});draw()})});
+stage.addEventListener('pointerdown',function(e){dragging=true;lastX=e.clientX;lastY=e.clientY;stage.classList.add('dragging');if(stage.setPointerCapture)stage.setPointerCapture(e.pointerId)});
 stage.addEventListener('pointermove',function(e){if(!dragging)return;var dx=e.clientX-lastX,dy=e.clientY-lastY;lastX=e.clientX;lastY=e.clientY;ry+=dx*.009;rx=Math.max(-1.35,Math.min(1.35,rx-dy*.009));draw()});
 function stop(){dragging=false;stage.classList.remove('dragging')}
 stage.addEventListener('pointerup',stop);stage.addEventListener('pointercancel',stop);stage.addEventListener('lostpointercapture',stop);
 stage.addEventListener('wheel',function(e){e.preventDefault();setZoom(Math.max(65,Math.min(150,Number(zoom.value)+(e.deltaY<0?5:-5))))},{passive:false});
-finish.addEventListener('change',draw);zoom.addEventListener('input',function(){setZoom(this.value)});
-reset.addEventListener('click',function(){rx=-.48;ry=.62;setZoom(100);draw()});
+zoom.addEventListener('input',function(){setZoom(this.value)});rotation.addEventListener('input',function(){setRotation(this.value)});
+document.getElementById('zoomIn').addEventListener('click',function(){setZoom(Math.min(150,Number(zoom.value)+10))});
+document.getElementById('zoomOut').addEventListener('click',function(){setZoom(Math.max(65,Number(zoom.value)-10))});
+document.getElementById('reset').addEventListener('click',function(){rx=-.48;ry=.62;setZoom(100);draw()});
 draw();
 })();
 </script>
