@@ -55,3 +55,8 @@
 .model-gallery-note{color:var(--muted);font-size:11px;line-height:1.8;margin:20px 0}.gallery-main-cta{margin-top:4px}
 @media(max-width:760px){.model-gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.model-tile{min-height:165px;padding:12px}.model-tile strong{font-size:17px}.model-tile-number,.model-tile-action{font-size:8px}.project-visit{font-size:8px;padding:10px;gap:8px}.project-details{align-items:flex-start;flex-direction:column}.project-visit{align-self:flex-start}}
 @media(max-width:420px){.model-tile{min-height:150px}.model-tile strong{font-size:15px}}
+
+.model-tile{min-height:250px}
+.model-tile-viewer{display:block;width:100%;height:145px;min-height:145px;background:transparent;--poster-color:transparent;position:relative;z-index:2;pointer-events:auto}
+.model-tile strong{font-size:20px}
+@media(max-width:760px){.model-tile{min-height:225px}.model-tile-viewer{height:125px;min-height:125px}.model-tile strong{font-size:16px}}
