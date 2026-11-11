@@ -42,12 +42,12 @@
 <model-viewer id="productViewer" src="../assets/models/running-sneaker.glb" alt="Interactive 3D running sneaker" camera-controls auto-rotate rotation-per-second="18deg" shadow-intensity="1" exposure="1.1" environment-image="neutral" camera-orbit="35deg 70deg auto" field-of-view="28deg" min-camera-orbit="auto auto auto" max-camera-orbit="auto auto auto" interaction-prompt="auto" loading="eager" reveal="auto"></model-viewer>
 </div>
 <div class="model-picker" aria-label="Select a 3D model">
-<button class="model-choice active" data-name="Running sneaker" data-type="FOOTWEAR / GLB" data-src="../assets/models/running-sneaker.glb" data-alt="Detailed 3D running sneaker"><b>01 / Running sneaker</b><small>Textured footwear model</small></button>
-<button class="model-choice" data-name="Portable speaker" data-type="ELECTRONICS / GLB" data-src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/BoomBox/glTF-Binary/BoomBox.glb" data-alt="3D portable boombox speaker"><b>02 / Portable speaker</b><small>Glowing front panel</small></button>
-<button class="model-choice" data-name="Avocado" data-type="FOOD / GLB" data-src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/Avocado/glTF-Binary/Avocado.glb" data-alt="3D cut avocado with pit"><b>03 / Avocado</b><small>Hand-painted textures</small></button>
-<button class="model-choice" data-name="Water bottle" data-type="LIFESTYLE / GLB" data-src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/WaterBottle/glTF-Binary/WaterBottle.glb" data-alt="3D metal water bottle"><b>04 / Water bottle</b><small>PBR material showcase</small></button>
-<button class="model-choice" data-name="Delivery truck" data-type="VEHICLE / GLB" data-src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/CesiumMilkTruck/glTF-Binary/CesiumMilkTruck.glb" data-alt="3D delivery milk truck"><b>05 / Delivery truck</b><small>Detailed vehicle model</small></button>
-<button class="model-choice" data-name="Toy car" data-type="VEHICLE / GLB" data-src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/ToyCar/glTF-Binary/ToyCar.glb" data-alt="3D toy car model"><b>06 / Toy car</b><small>Compact product model</small></button>
+<button id="model-1" class="model-choice active" data-name="Running sneaker" data-type="FOOTWEAR / GLB" data-src="../assets/models/running-sneaker.glb" data-alt="Detailed 3D running sneaker"><b>01 / Running sneaker</b><small>Textured footwear model</small></button>
+<button id="model-2" class="model-choice" data-name="Portable speaker" data-type="ELECTRONICS / GLB" data-src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/BoomBox/glTF-Binary/BoomBox.glb" data-alt="3D portable boombox speaker"><b>02 / Portable speaker</b><small>Glowing front panel</small></button>
+<button id="model-3" class="model-choice" data-name="Avocado" data-type="FOOD / GLB" data-src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/Avocado/glTF-Binary/Avocado.glb" data-alt="3D cut avocado with pit"><b>03 / Avocado</b><small>Hand-painted textures</small></button>
+<button id="model-4" class="model-choice" data-name="Water bottle" data-type="LIFESTYLE / GLB" data-src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/WaterBottle/glTF-Binary/WaterBottle.glb" data-alt="3D metal water bottle"><b>04 / Water bottle</b><small>PBR material showcase</small></button>
+<button id="model-5" class="model-choice" data-name="Delivery truck" data-type="VEHICLE / GLB" data-src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/CesiumMilkTruck/glTF-Binary/CesiumMilkTruck.glb" data-alt="3D delivery milk truck"><b>05 / Delivery truck</b><small>Detailed vehicle model</small></button>
+<button id="model-6" class="model-choice" data-name="Toy car" data-type="VEHICLE / GLB" data-src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/ToyCar/glTF-Binary/ToyCar.glb" data-alt="3D toy car model"><b>06 / Toy car</b><small>Compact product model</small></button>
 </div>
 <div class="model-note">Models: Shopify / Khronos glTF Sample Assets. Sneaker is CC BY 4.0; speaker, avocado, water bottle and toy car are CC0; delivery truck is CC BY 4.0. <a href="https://github.com/KhronosGroup/glTF-Sample-Assets" target="_blank" rel="noopener">View model sources ↗</a></div>
 </div>
@@ -103,6 +103,7 @@ document.querySelectorAll('.model-choice').forEach(function(btn){btn.addEventLis
 document.querySelectorAll('.model-choice').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');
 showLoader();type.textContent=btn.dataset.type;viewer.alt=btn.dataset.alt;viewer.src=btn.dataset.src;viewer.cameraOrbit='35deg 70deg auto';
 });});
+var requestedModel=location.hash.match(/^#model-(\\d)$/);if(requestedModel){var target=document.getElementById('model-'+requestedModel[1]);if(target){target.click();setTimeout(function(){target.scrollIntoView({behavior:'smooth',block:'center'});},250);}}
 viewer.addEventListener('model-visibility',function(){});
 showLoader();
 })();
