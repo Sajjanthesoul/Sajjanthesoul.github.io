@@ -1,20 +1,32 @@
-# Sajjan Ali — Portfolio
+# Sajjan Ali — Developer Portfolio
 
-Personal portfolio for web development and interactive 3D product experiences.
+Personal portfolio showcasing web application development, WordPress engineering and interactive 3D experiments.
 
-## Live site
-https://Sajjanthesoul.github.io/
+**Live website:** https://sajjanthesoul.github.io/
 
-## Included
-- Responsive portfolio landing page
-- Multi-model 3D product studio (sneaker, speaker, avocado and water bottle)
-- Interactive 3D T-shirt configurator with colour and artwork customisation
-- Analytics dashboard UI concept (illustrative sample metrics)
+## Portfolio features
 
-## Publish with GitHub Pages
-1. Open repository **Settings → Pages**.
-2. Under **Build and deployment**, choose **Deploy from a branch**.
-3. Select branch **main** and folder **/(root)**, then Save.
-4. Wait for GitHub Pages to publish the site.
+- Responsive, accessible navigation and mobile layout
+- Animated hero artwork and rotating technical focus
+- Scroll progress indicator and reveal-on-scroll transitions
+- Filterable project gallery
+- Professional experience timeline and technical expertise sections
+- Interactive 3D product studio and sneaker viewer
+- Analytics dashboard UI concept with clearly labelled illustrative data
+- Reduced-motion support and semantic page structure
 
-The 3D studio uses model-viewer and locally hosted Three.js. Product sample models are loaded on demand from the Khronos glTF Sample Assets repository.
+## Technology
+
+HTML5, CSS3, JavaScript, PHP, Laravel, MySQL, WordPress, WooCommerce, Three.js, WebGL, GSAP and model-viewer.
+
+## Local development
+
+This is a static GitHub Pages site. Open `index.html` in a local static server to preview it, or publish from the `main` branch using GitHub Pages.
+
+## Project demos
+
+- [Interactive 3D Product Studio](https://sajjanthesoul.github.io/demos/3d-studio.html)
+- [3D Sneaker Viewer](https://sajjanthesoul.github.io/demos/product-preview-2026.html)
+- [Analytics Dashboard Concept](https://sajjanthesoul.github.io/demos/dashboard.html)
+
+Third-party sample 3D models retain their original licences and attribution in the relevant demo.
