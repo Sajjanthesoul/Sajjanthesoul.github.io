@@ -9,6 +9,7 @@
 
   // Accessible mobile navigation
   const menu = document.querySelector(".menu");
+  const nav = document.querySelector(".navlinks");
   const closeMenu = () => {
     if (!menu || !nav) return;
     nav.classList.remove("open");
