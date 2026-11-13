@@ -3,61 +3,6 @@
   const year = document.getElementById("year");
   if (year) year.textContent = new Date().getFullYear();
 
-  // Load the focused backend portfolio styles without changing the existing design.
-  const backendStyles = document.createElement("link");
-  backendStyles.rel = "stylesheet";
-  backendStyles.href = "assets/backend-section.css";
-  document.head.appendChild(backendStyles);
-
-  // Make the PHP / Laravel experience easy for recruiters to find.
-  const nav = document.querySelector(".navlinks");
-  if (nav && !nav.querySelector('a[href="#backend"]')) {
-    const backendLink = document.createElement("a");
-    backendLink.href = "#backend";
-    backendLink.textContent = "PHP Work";
-    const workLink = nav.querySelector('a[href="#work"]');
-    if (workLink) workLink.insertAdjacentElement("afterend", backendLink);
-    else nav.prepend(backendLink);
-  }
-
-  // A truthful backend-focused overview, based on professional experience.
-  const modelsSection = document.getElementById("models");
-  if (modelsSection && !document.getElementById("backend")) {
-    const section = document.createElement("section");
-    section.id = "backend";
-    section.className = "section backend-section";
-    section.innerHTML = `
-      <div class="wrap">
-        <div class="section-heading">
-          <div><p class="eyebrow">02 / PHP & BACKEND EXPERIENCE</p><h2>Built for real<br><em>business workflows.</em></h2></div>
-          <p class="section-lead">My core professional work is PHP-based application development, database-backed systems and practical web platforms.</p>
-        </div>
-        <p class="backend-intro">Selected experience highlights. Some employer systems and client deliverables are private, so this section explains the engineering context without exposing confidential screens, data or source code.</p>
-        <div class="backend-grid">
-          <article class="backend-card backend-card-primary">
-            <span class="backend-card-index">01 / HEALTHCARE SYSTEMS</span>
-            <h3>Hospital Management Information System</h3>
-            <p>Contributed to a PHP and MySQL healthcare information system, working on application maintenance, operational workflows, reporting and data-driven features across a multi-branch environment.</p>
-            <div class="backend-card-meta"><span>PHP</span><span>MySQL</span><span>HMIS</span><span>Reporting</span></div>
-          </article>
-          <article class="backend-card">
-            <span class="backend-card-index">02 / WEB DEVELOPMENT</span>
-            <h3>Business Web Platforms</h3>
-            <p>Professional web development experience covering website functionality, interface implementation and ongoing improvements within a software team.</p>
-            <div class="backend-card-meta"><span>PHP</span><span>JavaScript</span><span>Web Development</span></div>
-          </article>
-          <article class="backend-card">
-            <span class="backend-card-index">03 / CMS & COMMERCE</span>
-            <h3>WordPress & WooCommerce</h3>
-            <p>Built and customised content-managed websites and e-commerce experiences, with attention to maintainability, responsive behaviour and client requirements.</p>
-            <div class="backend-card-meta"><span>WordPress</span><span>WooCommerce</span><span>ACF</span><span>Elementor</span></div>
-          </article>
-        </div>
-        <p class="backend-foot">PRIMARY STACK: PHP · LARAVEL · MYSQL · WORDPRESS <a href="#contact">LET'S DISCUSS A PROJECT ↗</a></p>
-      </div>`;
-    modelsSection.parentNode.insertBefore(section, modelsSection);
-  }
-
   // Correct public Fiverr seller profile destination.
   const fiverrLink = document.querySelector('.freelance-platform a[href*="fiverr.com"]');
   if (fiverrLink) fiverrLink.href = "https://www.fiverr.com/sajjan_web_pro";
