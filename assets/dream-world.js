@@ -248,11 +248,14 @@ import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.m
 
   const clock = new THREE.Clock();
   let raf = 0;
+  let running = true;
   const animate = () => {
+    if (!running) return;
     raf = requestAnimationFrame(animate);
     const t = clock.getElapsedTime();
-    if (!reduceMotion) scrollCurrent += (scrollTarget - scrollCurrent) * 0.055;
-    const progress = reduceMotion ? 0 : scrollCurrent;
+    if (reduceMotion) scrollCurrent = scrollTarget;
+    else scrollCurrent += (scrollTarget - scrollCurrent) * 0.055;
+    const progress = scrollCurrent;
     const track = progress * (roomSpacing * (rooms.length - 1));
     const targetZ = 8 - track;
     camera.position.x = Math.sin(progress * Math.PI * 5) * (mobile ? 0.12 : 0.42);
@@ -279,8 +282,8 @@ import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.m
   animate();
 
   document.addEventListener("visibilitychange", () => {
-    if (document.hidden) cancelAnimationFrame(raf);
-    else if (!raf) animate();
+    if (document.hidden) { running = false; cancelAnimationFrame(raf); }
+    else if (!running) { running = true; animate(); }
   });
-  window.addEventListener("pagehide", () => { cancelAnimationFrame(raf); renderer.dispose(); });
+  window.addEventListener("pagehide", () => { running = false; cancelAnimationFrame(raf); renderer.dispose(); });
 })();
