@@ -236,8 +236,24 @@ import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.m
     const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
     scrollTarget = Math.min(1, Math.max(0, window.scrollY / max));
   };
-  window.addEventListener("scroll", getScroll, { passive: true });
+  const contentPanels = Array.from(document.querySelectorAll("main > section:not(.trust-strip)"));
+  const updateContentPanels = () => {
+    const viewport = Math.max(1, window.innerHeight);
+    contentPanels.forEach(section => {
+      const rect = section.getBoundingClientRect();
+      const offset = (rect.top + rect.height * 0.5 - viewport * 0.5) / viewport;
+      const tilt = Math.max(-2.2, Math.min(2.2, -offset * 1.35));
+      const lift = Math.max(-8, Math.min(8, -offset * 4));
+      section.style.setProperty("--world-panel-tilt", tilt.toFixed(2) + "deg");
+      section.style.setProperty("--world-panel-lift", lift.toFixed(1) + "px");
+    });
+  };
+  window.addEventListener("scroll", () => {
+    getScroll();
+    updateContentPanels();
+  }, { passive: true });
   getScroll();
+  updateContentPanels();
 
   const resize = () => {
     const w = window.innerWidth, h = window.innerHeight;
