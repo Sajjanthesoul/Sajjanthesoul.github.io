@@ -21,3 +21,142 @@
 .world-room-label{font:10px var(--mono);letter-spacing:2px}
 @media(max-width:700px){.world-hud{top:82px;right:12px;padding:9px 11px}.world-hud-kicker{font-size:7px}.world-hud strong{font-size:9px}.world-scroll-hint{right:12px;bottom:12px;font-size:7px}.world-vignette{background:linear-gradient(90deg,#080b0990,transparent 80%),linear-gradient(0deg,#080b09b0,transparent 45%)}.dream-world-enabled .hero{background:linear-gradient(90deg,#080b09c9,transparent)}}
 @media(prefers-reduced-motion:reduce){.world-scroll-hint{display:none}}
+
+
+/* Immersive correction: make the existing portfolio content feel embedded in the 3D rooms,
+   instead of presenting an opaque second website over the world. */
+.dream-world-enabled {
+  background: #080d09;
+}
+.dream-world-enabled .site-header {
+  background: rgba(7, 12, 8, .58);
+  border-bottom: 1px solid rgba(184, 220, 150, .16);
+  backdrop-filter: blur(16px);
+}
+.dream-world-enabled main > section:not(.trust-strip) {
+  background: transparent !important;
+  border-color: transparent !important;
+}
+.dream-world-enabled main > section.wrap {
+  width: min(1160px, calc(100% - 40px));
+  margin: 30px auto;
+  padding: clamp(30px, 5vw, 66px);
+  border: 1px solid rgba(184, 220, 150, .22);
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(10, 18, 12, .76), rgba(9, 15, 12, .56)) !important;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, .28), inset 0 1px rgba(225, 255, 210, .08);
+  backdrop-filter: blur(9px);
+  transform: perspective(1600px) rotateX(.35deg);
+  transform-style: preserve-3d;
+}
+.dream-world-enabled main > section:not(.wrap):not(.trust-strip) > .wrap {
+  width: min(1160px, calc(100% - 40px));
+  margin: 30px auto;
+  padding: clamp(30px, 5vw, 66px);
+  border: 1px solid rgba(184, 220, 150, .22);
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(10, 18, 12, .76), rgba(9, 15, 12, .56));
+  box-shadow: 0 28px 90px rgba(0, 0, 0, .28), inset 0 1px rgba(225, 255, 210, .08);
+  backdrop-filter: blur(9px);
+  transform: perspective(1600px) rotateX(.35deg);
+  transform-style: preserve-3d;
+}
+.dream-world-enabled .hero {
+  min-height: 660px;
+  padding-top: 86px;
+  padding-bottom: 58px;
+  background: linear-gradient(110deg, rgba(7, 13, 9, .78), rgba(7, 13, 9, .36)) !important;
+}
+.dream-world-enabled .trust-strip {
+  background: rgba(8, 15, 10, .62);
+  border-block: 1px solid rgba(184, 220, 150, .18);
+  backdrop-filter: blur(14px);
+}
+.dream-world-enabled .backend-card,
+.dream-world-enabled .expertise-card,
+.dream-world-enabled .freelance-panel,
+.dream-world-enabled .project-details,
+.dream-world-enabled .timeline-item,
+.dream-world-enabled .model-tile {
+  background-color: rgba(12, 21, 14, .68);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 14px 38px rgba(0, 0, 0, .18), inset 0 1px rgba(220, 255, 205, .06);
+  transform-style: preserve-3d;
+}
+.dream-world-enabled .project-art {
+  background-color: rgba(16, 25, 18, .72);
+  backdrop-filter: blur(6px);
+}
+.dream-world-enabled .expertise-section,
+.dream-world-enabled .backend-section,
+.dream-world-enabled .about-section,
+.dream-world-enabled .freelance-section,
+.dream-world-enabled .model-gallery-section {
+  background: transparent !important;
+}
+.dream-world-enabled .contact-section {
+  padding: 30px 0;
+  background: transparent !important;
+  color: var(--text);
+}
+.dream-world-enabled .contact-inner {
+  background: linear-gradient(135deg, rgba(10, 18, 12, .82), rgba(9, 15, 12, .64));
+  border: 1px solid rgba(184, 220, 150, .3);
+  border-radius: 22px;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, .3);
+  backdrop-filter: blur(12px);
+}
+.dream-world-enabled .contact-section .eyebrow,
+.dream-world-enabled .contact-inner > p:not(.eyebrow),
+.dream-world-enabled .contact-secondary,
+.dream-world-enabled .contact-email {
+  color: #c6d3bd;
+}
+.dream-world-enabled .contact-inner h2,
+.dream-world-enabled .contact-inner h2 em {
+  color: #f0f5e9;
+}
+.dream-world-enabled .contact-inner h2 em { color: var(--lime); }
+.dream-world-enabled .footer {
+  padding: 24px 30px;
+  border: 1px solid rgba(184, 220, 150, .16);
+  border-radius: 16px;
+  background: rgba(8, 14, 10, .68);
+  backdrop-filter: blur(12px);
+}
+.dream-world-enabled .section-heading,
+.dream-world-enabled .project,
+.dream-world-enabled .backend-card,
+.dream-world-enabled .expertise-card,
+.dream-world-enabled .timeline-item,
+.dream-world-enabled .model-tile {
+  transform-style: preserve-3d;
+}
+.dream-world-enabled .backend-card:hover,
+.dream-world-enabled .expertise-card:hover,
+.dream-world-enabled .model-tile:hover {
+  transform: translateY(-6px) rotateX(1deg) rotateY(-1deg);
+}
+@media (max-width: 700px) {
+  .dream-world-enabled main > section.wrap,
+  .dream-world-enabled main > section:not(.wrap):not(.trust-strip) > .wrap {
+    width: calc(100% - 22px);
+    margin: 16px auto;
+    padding: 26px 18px;
+    border-radius: 16px;
+    transform: none;
+  }
+  .dream-world-enabled .hero {
+    min-height: auto;
+    padding-top: 88px;
+    padding-bottom: 36px;
+  }
+  .dream-world-enabled .contact-section { padding: 16px 0; }
+  .dream-world-enabled .footer { margin: 12px; padding: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dream-world-enabled main > section.wrap,
+  .dream-world-enabled main > section:not(.wrap):not(.trust-strip) > .wrap {
+    transform: none;
+  }
+}
