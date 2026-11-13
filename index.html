@@ -15,8 +15,12 @@
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
 <link rel="stylesheet" href="assets/style.css">
 <link rel="stylesheet" href="assets/backend-section.css">
+<link rel="stylesheet" href="assets/dream-world.css">
 </head>
-<body>
+<body class="dream-world-enabled">
+<div id="dream-world" aria-hidden="true"><canvas id="dream-canvas"></canvas><div class="world-vignette"></div></div>
+<div class="world-hud" aria-live="polite"><span class="world-hud-kicker">SA / DIGITAL UNIVERSE</span><strong id="world-room-name">THE DREAM OFFICE</strong><span id="world-room-index">01 — 06</span></div>
+<div class="world-scroll-hint" aria-hidden="true"><span></span> SCROLL TO TRAVEL</div>
 <div class="scroll-progress" aria-hidden="true"></div>
 <div class="ambient ambient-a" aria-hidden="true"></div><div class="ambient ambient-b" aria-hidden="true"></div>
 <header class="site-header">
@@ -164,5 +168,6 @@
 </main>
 <footer class="footer wrap"><a class="brand" href="#top">SA<span>.</span></a><span>© <span id="year"></span> Sajjan Ali. Designed & built with care.</span><a href="#top" class="back-top">BACK TO TOP ↑</a></footer>
 <script src="assets/main.js"></script>
+<script type="module" src="assets/dream-world.js"></script>
 </body>
 </html>
