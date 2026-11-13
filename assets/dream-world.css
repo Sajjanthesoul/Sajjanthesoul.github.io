@@ -1,0 +1,23 @@
+/* Full 3D scroll-driven workplace */
+#dream-world{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:radial-gradient(ellipse at 50% 30%,#18241a,#080b09 75%)}
+#dream-canvas{display:block;width:100%;height:100%;outline:0}
+.world-vignette{position:absolute;inset:0;background:linear-gradient(90deg,#080b09a8,transparent 38%,transparent 70%,#080b0970),linear-gradient(0deg,#080b09a8,transparent 35%,#080b0940);pointer-events:none}
+.dream-world-enabled .site-header,.dream-world-enabled main,.dream-world-enabled .footer{position:relative;z-index:2}
+.dream-world-enabled .site-header{background:#080b09a8}
+.dream-world-enabled .hero{background:linear-gradient(90deg,#080b09b8 0%,#080b0970 56%,transparent 100%)}
+.dream-world-enabled .trust-strip{background:#0b100dc9;backdrop-filter:blur(10px)}
+.dream-world-enabled .backend-section,.dream-world-enabled .expertise-section,.dream-world-enabled .about-section{background:#0b100dc9;backdrop-filter:blur(8px)}
+.dream-world-enabled .project-art{background-color:#101811dd}
+.dream-world-enabled .project-details{background:#0b100d99}
+.dream-world-enabled .freelance-panel{backdrop-filter:blur(12px)}
+.world-hud{position:fixed;z-index:12;right:28px;top:102px;display:grid;gap:7px;text-align:right;pointer-events:none;padding:13px 15px;border:1px solid #a6c87540;background:#09100bd9;backdrop-filter:blur(14px);box-shadow:0 12px 45px #0005}
+.world-hud-kicker{font:8px var(--mono);letter-spacing:1.7px;color:#94a98a}
+.world-hud strong{font:600 11px var(--mono);letter-spacing:1px;color:var(--lime)}
+.world-hud>span:last-child{font:8px var(--mono);color:#71816d}
+.world-scroll-hint{position:fixed;z-index:12;right:28px;bottom:25px;display:flex;align-items:center;gap:10px;color:#b5c3aa;font:8px var(--mono);letter-spacing:1.5px;pointer-events:none;transition:opacity .4s}
+.world-scroll-hint span{width:22px;height:34px;border:1px solid #b6d28b88;border-radius:14px;position:relative}
+.world-scroll-hint span:after{content:"";position:absolute;width:3px;height:6px;left:8px;top:6px;background:var(--lime);border-radius:3px;animation:worldScroll 1.4s ease-in-out infinite}
+@keyframes worldScroll{to{transform:translateY(12px);opacity:0}}
+.world-room-label{font:10px var(--mono);letter-spacing:2px}
+@media(max-width:700px){.world-hud{top:82px;right:12px;padding:9px 11px}.world-hud-kicker{font-size:7px}.world-hud strong{font-size:9px}.world-scroll-hint{right:12px;bottom:12px;font-size:7px}.world-vignette{background:linear-gradient(90deg,#080b0990,transparent 80%),linear-gradient(0deg,#080b09b0,transparent 45%)}.dream-world-enabled .hero{background:linear-gradient(90deg,#080b09c9,transparent)}}
+@media(prefers-reduced-motion:reduce){.world-scroll-hint{display:none}}
