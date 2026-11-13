@@ -238,3 +238,35 @@ html body.dream-world-enabled {
   height: auto !important;
   overflow-x: hidden !important;
 }
+
+
+/* WLT-inspired immersive portfolio mode: the experience is the 3D world itself.
+   Keep the scroll track, remove every conventional DOM layer from the viewport. */
+html:has(body.dream-world-enabled), body.dream-world-enabled {
+  margin: 0 !important; padding: 0 !important; width: 100%;
+  background: #070b09 !important; overflow-x: hidden !important;
+}
+body.dream-world-enabled { min-height: 720vh !important; height: auto !important; }
+.dream-world-enabled #dream-world {
+  position: fixed !important; inset: 0 !important; z-index: 9999 !important;
+  display: block !important; width: 100vw !important; height: 100vh !important;
+  height: 100dvh !important; opacity: 1 !important; pointer-events: none !important;
+  background: #070b09 !important;
+}
+.dream-world-enabled #dream-canvas { display:block !important; width:100% !important; height:100% !important; }
+.dream-world-enabled .site-header,
+.dream-world-enabled main,
+.dream-world-enabled .footer,
+.dream-world-enabled .world-hud,
+.dream-world-enabled .world-scroll-hint,
+.dream-world-enabled .scroll-progress,
+.dream-world-enabled .ambient,
+.dream-world-enabled .world-vignette { display:none !important; }
+.dream-world-enabled main {
+  position:absolute !important; left:-100000px !important; top:0 !important;
+  width:1px !important; height:1px !important; overflow:hidden !important;
+}
+@media (max-width:700px) {
+  body.dream-world-enabled { min-height:720vh !important; }
+  .dream-world-enabled #dream-world { height:100dvh !important; }
+}
