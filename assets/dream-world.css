@@ -160,3 +160,50 @@
     transform: none;
   }
 }
+
+
+/* True full-screen 3D mode: no conventional page layer in front of the world.
+   The document remains tall only to provide the scroll input for the camera journey. */
+html:has(body.dream-world-enabled) {
+  background: #080d09;
+  scroll-behavior: auto;
+}
+body.dream-world-enabled {
+  position: relative;
+  min-height: 600vh;
+  height: auto;
+  margin: 0;
+  overflow-x: hidden;
+  background: #080d09;
+}
+.dream-world-enabled #dream-world {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+.dream-world-enabled #dream-canvas {
+  width: 100vw;
+  height: 100dvh;
+}
+.dream-world-enabled .world-vignette,
+.dream-world-enabled .world-hud,
+.dream-world-enabled .world-scroll-hint,
+.dream-world-enabled .scroll-progress,
+.dream-world-enabled .ambient,
+.dream-world-enabled .site-header,
+.dream-world-enabled main,
+.dream-world-enabled .footer {
+  display: none !important;
+}
+.dream-world-enabled main {
+  position: absolute !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+@media (max-width: 700px) {
+  body.dream-world-enabled { min-height: 600vh; }
+  .dream-world-enabled #dream-world { inset: 0; }
+  .dream-world-enabled #dream-canvas { width: 100vw; height: 100dvh; }
+}
