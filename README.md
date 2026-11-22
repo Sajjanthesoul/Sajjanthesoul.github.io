@@ -25,6 +25,7 @@ This is a static GitHub Pages site. Open `index.html` in a local static server t
 
 ## Project demos
 
+- [Paw & Polish — Pet Grooming E-commerce Concept](https://sajjanthesoul.github.io/demos/paw-polish/)
 - [Interactive 3D Product Studio](https://sajjanthesoul.github.io/demos/3d-studio.html)
 - [3D Sneaker Viewer](https://sajjanthesoul.github.io/demos/product-preview-2026.html)
 - [Analytics Dashboard Concept](https://sajjanthesoul.github.io/demos/dashboard.html)
